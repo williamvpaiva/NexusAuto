@@ -1,216 +1,184 @@
-# Polymarketing - AI Factory Full Stack
+# NexusAuto / Polymarketing
 
-> Estrutura de fábrica de software com agentes IA especializados para desenvolvimento full stack.
+> Assistente de marketing inteligente com orquestração autônoma por agentes de IA.
 
-## 🏗️ Estrutura do Projeto
-
-```
-polymarketing/
-├── .ai-factory/           # Agentes, workflows, standards
-│   ├── agents/           # Definições de agentes (analyst, architect, devs, etc)
-│   ├── skills/           # Habilidades transversais
-│   ├── standards/        # Padrões obrigatórios
-│   ├── workflows/        # Fluxos de trabalho
-│   ├── handoffs/         # Regras de transição
-│   └── prompts/          # Prompts reutilizáveis
-├── frontend/             # Aplicação React
-│   └── src/
-├── backend/              # API Express
-│   └── src/
-├── docs/                 # Documentação
-│   ├── adr/             # Architecture Decision Records
-│   └── analysis/        # Análise de requisitos
-└── docker-compose.yml    # Infraestrutura
-```
-
-## 🚀 Quick Start
-
-### 1. Instalar dependências
-```bash
-npm install
-```
-
-### 2. Configurar ambiente
-```bash
-copy .env.example .env
-```
-
-### 3. Subir infraestrutura (opcional)
-```bash
-npm run docker:up
-```
-
-### 4. Rodar aplicação
-```bash
-npm run dev
-```
-
-## 🌐 Endpoints
-
-| Serviço | URL |
-|---------|-----|
-| Frontend | http://localhost:5173 |
-| Backend | http://localhost:3000 |
-| Health API | http://localhost:3000/api/v1/health |
-| PostgreSQL | localhost:5432 |
-| Redis | localhost:6379 |
-
-## 📋 Scripts Disponíveis
-
-```bash
-# Desenvolvimento
-npm run dev              # Frontend + Backend
-npm run dev:frontend     # Apenas frontend
-npm run dev:backend      # Apenas backend
-
-# Build
-npm run build            # Build completo
-npm run build:backend    # Build backend
-npm run build:frontend   # Build frontend
-
-# Testes
-npm run test             # Todos os testes
-npm run test:backend     # Testes backend
-npm run test:frontend    # Testes frontend
-
-# Docker
-npm run docker:up        # Sobe PostgreSQL + Redis
-npm run docker:down      # Para containers
-npm run docker:logs      # Logs dos containers
-```
-
-## 🤖 AI Factory - Como Usar
-
-### Em Qualquer IDE
-
-1. **Leia o contexto do projeto:**
-   ```
-   .ai-factory/PROJECT_CONTEXT.md
-   ```
-
-2. **Verifique a fase atual em:**
-   ```
-   .ai-factory/PROGRESS.md
-   ```
-
-3. **Assuma o agente da fase:**
-   ```
-   .ai-factory/agents/{agente}.md
-   ```
-
-4. **Siga o workflow:**
-   ```
-   .ai-factory/workflows/{workflow}.md
-   ```
-
-### Agentes Disponíveis
-
-| Agente | Responsabilidade |
-|--------|------------------|
-| `product-owner` | Definição de problema e prioridade |
-| `analyst` | Levantamento de requisitos |
-| `architect` | Design de arquitetura |
-| `frontend-dev` | Desenvolvimento frontend |
-| `backend-dev` | Desenvolvimento backend |
-| `security` | Auditoria de segurança |
-| `performance` | Otimização de performance |
-| `qa-tester` | Garantia de qualidade |
-| `devops` | Deploy e operação |
-
-### Workflows
-
-- **new-feature:** Implementação de nova funcionalidade
-- **bugfix:** Correção de bugs
-- **refactor:** Refatoração de código
-- **release:** Deploy em produção
-
-## 📚 Documentação
-
-### AI Factory
-- [ORCHESTRATOR.md](./.ai-factory/ORCHESTRATOR.md) - Como usar a fábrica
-- [PROJECT_CONTEXT.md](./.ai-factory/PROJECT_CONTEXT.md) - Contexto do projeto
-- [PROGRESS.md](./.ai-factory/PROGRESS.md) - Progresso atual
-
-### Standards
-- [Code Style](./.ai-factory/standards/code-style.md) - Padrões de código
-- [Testing Policy](./.ai-factory/standards/testing-policy.md) - Política de testes
-- [Backend Patterns](./.ai-factory/standards/backend-patterns.md) - Padrões backend
-- [Frontend Patterns](./.ai-factory/standards/frontend-patterns.md) - Padrões frontend
-
-## 🛠️ Stack Tecnológico
-
-### Frontend
-- React 18+
-- TypeScript
-- Vite
-- React Router
-- CSS Modules / Tailwind
-
-### Backend
-- Node.js 18+
-- Express
-- TypeScript
-- Zod (validação)
-- Vitest (testes)
-
-### Infraestrutura
-- Docker + Docker Compose
-- PostgreSQL 15
-- Redis 7
-
-## 📝 Convenções
-
-### Commits
-Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-feat: Nova funcionalidade
-fix: Correção de bug
-docs: Documentação
-style: Formatação
-refactor: Refatoração
-test: Testes
-chore: Configurações
-```
-
-### Branches
-```
-feat/US-001-descricao
-fix/BUG-042-descricao
-hotfix/critico-prod
-```
-
-## 🔒 Segurança
-
-- ✅ Secrets em variáveis de ambiente
-- ✅ Validação de inputs com Zod
-- ✅ CORS configurado
-- ✅ Helmet (security headers)
-- ✅ Rate limiting
-- ✅ Hash de senhas (bcrypt)
-
-## 📊 Métricas de Qualidade
-
-| Métrica | Target |
-|---------|--------|
-| Cobertura de testes (backend) | > 80% |
-| Cobertura de testes (frontend) | > 70% |
-| Lighthouse Performance | > 90 |
-| Lighthouse Accessibility | > 90 |
-| Zero bugs críticos em produção | ✅ |
-
-## 🤝 Contribuindo
-
-1. Leia `.ai-factory/ORCHESTRATOR.md`
-2. Verifique `PROJECT_CONTEXT.md` para a fase atual
-3. Assuma o agente correspondente
-4. Siga o workflow definido
-5. Registre handoff em `PROGRESS.md`
-
-## 📄 Licença
-
-Proprietário - Todos os direitos reservados.
+Este projeto é um **sistema de marketing aumentado por IA** — uma plataforma full stack (React + Express + SQLite) que integra agentes especializados para análise de dados, criação de conteúdo SEO, gestão de redes sociais e automação de campanhas. A inteligência do sistema é orquestrada pelo **TECH-LEAD.md**, que deve ser invocado sempre que novos arquivos forem adicionados ao projeto.
 
 ---
 
-**Próxima ação:** Leia [`.ai-factory/ORCHESTRATOR.md`](./.ai-factory/ORCHESTRATOR.md) para entender como operar com agentes IA.
+## Fluxo de Trabalho
+
+```
+1. Coloque os arquivos no diretório do projeto
+2. Invoque TECH-LEAD.md (via Claude, Cursor, Copilot, etc.)
+3. O TECH-LEAD orquestra tudo automaticamente
+```
+
+Não há interface — o projeto funciona 100% via arquivos e agentes de IA.
+
+---
+
+## Estrutura do Projeto
+
+```
+nexusauto/
+├── .ai-factory/              # Núcleo de agentes e orquestração
+│   ├── agents/               # 10 agentes especializados (tech-lead, po, devs, etc)
+│   ├── skills/               # Habilidades transversais dos agentes
+│   ├── standards/            # Padrões obrigatórios de código e testes
+│   ├── workflows/            # Fluxos: new-feature, bugfix
+│   ├── handoffs/             # Regras de transição entre agentes
+│   ├── prompts/              # Prompts reutilizáveis
+│   ├── templates/            # Templates para tarefas
+│   ├── checklists/           # Checklists de qualidade
+│   ├── scripts/              # Scripts de automação (auto-analyze, init)
+│   ├── logs/                 # Logs de execução
+│   ├── token-manager/        # Gerenciamento de tokens
+│   ├── MELHORIAS/            # 22 áreas de melhoria contínua com tarefas
+│   │   ├── INDEX.md          # Dashboard com progresso por área
+│   │   ├── 01-ARQUITETURA/   # Tarefas de arquitetura
+│   │   ├── 08-SEGURANCA/     # Tarefas de segurança
+│   │   ├── 09-TESTES/        # Tarefas de testes
+│   │   └── ...               # Total: 22 áreas
+│   ├── ORCHESTRATOR.md       # Como usar a fábrica de software
+│   ├── PROJECT_CONTEXT.md    # Contexto completo do projeto
+│   └── PROGRESS.md           # Registro de progresso
+│
+├── backend/                  # API REST (Express + TypeScript)
+│   └── src/
+│       ├── config/           # Configurações (env, database)
+│       ├── controllers/      # Controladores (memory, users)
+│       ├── middleware/        # Error handler
+│       ├── repositories/     # Acesso a dados (SQLite)
+│       ├── routes/           # Rotas (health, users, memory)
+│       ├── services/         # Lógica de negócio
+│       ├── types/            # Tipos TypeScript
+│       └── utils/            # Utilitários (AppError)
+│
+├── frontend/                 # SPA React (Vite + TypeScript)
+│   └── src/
+│       ├── components/       # Layout, MemoryList
+│       ├── pages/            # HomePage, HealthPage, MemoryDashboard
+│       ├── lib/              # API client
+│       └── styles/           # CSS global
+│
+├── docs/                     # Documentação
+│   └── adr/                  # Architecture Decision Records
+│
+├── .github/
+│   └── workflows/            # CI/CD (GitHub Actions)
+│
+├── scripts/                  # Scripts utilitários
+├── docker-compose.yml        # PostgreSQL + Redis
+├── TECH-LEAD.md              # → ORQUESTRADOR PRINCIPAL ←
+├── AI-FACTORY.md             # Visão geral da fábrica de IA
+├── SETUP.md                  # Guia de instalação
+└── package.json              # Monorepo root
+```
+
+---
+
+## Como Executar
+
+```bash
+# 1. Instalar dependências
+npm install
+
+# 2. Configurar ambiente
+copy .env.example .env
+
+# 3. Subir banco (opcional — SQLite é usado por padrão)
+npm run docker:up
+
+# 4. Rodar aplicação
+npm run dev
+```
+
+| Serviço      | URL                              |
+|-------------|----------------------------------|
+| Frontend    | http://localhost:5173            |
+| Backend     | http://localhost:3000            |
+| Health      | http://localhost:3000/api/v1/health |
+
+---
+
+## Stack
+
+| Camada       | Tecnologia                                         |
+|-------------|----------------------------------------------------|
+| Frontend    | React 18, TypeScript, Vite, React Router           |
+| Backend     | Node.js, Express, TypeScript, Zod, SQLite, Vitest  |
+| Infra       | Docker Compose (PostgreSQL 15, Redis 7 opcionais)  |
+| CI/CD       | GitHub Actions                                     |
+
+---
+
+## Endpoints da API
+
+### Health
+- `GET /api/v1/health` — Status do servidor
+
+### Users (in-memory)
+- `GET /api/v1/users` — Listar usuários
+- `GET /api/v1/users/:id` — Buscar usuário
+- `POST /api/v1/users` — Criar usuário
+- `PUT /api/v1/users/:id` — Atualizar usuário
+- `DELETE /api/v1/users/:id` — Remover usuário
+
+### Memory (SQLite)
+- `GET /api/v1/memory/stats` — Estatísticas
+- `GET /api/v1/memory/conversations` — Listar conversas
+- `GET /api/v1/memory/messages` — Listar mensagens
+- `GET /api/v1/memory/error-logs` — Logs de erro
+- `GET /api/v1/memory/search` — Busca textual
+- `GET /api/v1/memory/query-cache` — Cache de queries
+
+---
+
+## Agentes da AI Factory
+
+| Agente           | Responsabilidade                          |
+|-----------------|-------------------------------------------|
+| `tech-lead`     | Orquestração geral e decisões técnicas    |
+| `product-owner` | Definição de problema e prioridade        |
+| `analyst`       | Levantamento de requisitos                |
+| `architect`     | Design de arquitetura                     |
+| `frontend-dev`  | Desenvolvimento frontend                  |
+| `backend-dev`   | Desenvolvimento backend                   |
+| `security`      | Auditoria de segurança                    |
+| `performance`   | Otimização de performance                 |
+| `qa-tester`     | Garantia de qualidade                     |
+| `devops`        | Deploy e operação                         |
+
+---
+
+## Melhoria Contínua
+
+O diretório `.ai-factory/MELHORIAS/` contém 22 áreas de melhoria com tarefas para evolução contínua do projeto:
+
+| # | Área                           | Prioridade |
+|---|-------------------------------|------------|
+| 01 | Arquitetura                   | Alta       |
+| 02 | Debugging                     | Alta       |
+| 03 | Sistemas                      | Alta       |
+| 04 | Performance                   | Alta       |
+| 05 | Clean Architecture            | Média      |
+| 06 | Multiagente                   | Média      |
+| 07 | UI Components                 | Média      |
+| 08 | Segurança                     | Alta       |
+| 09 | Testes                        | Alta       |
+| 10 | CI/CD                         | Média      |
+| 11 | Documentação                  | Média      |
+| 12 | Banco de Dados                | Alta       |
+| 13 | Monitoramento                 | Média      |
+| 14 | Acessibilidade                | Baixa      |
+| 15 | SEO e Analytics               | Média      |
+| 16 | Gestão de Erros               | Alta       |
+| 17 | Gestão de Estado              | Média      |
+| 18 | API e Integrações             | Alta       |
+| 19 | Onboarding e DX               | Média      |
+| 20 | Compliance e LGPD             | Baixa      |
+| 21 | Limpeza e Housekeeping        | Baixa      |
+| 22 | Pentest e Seg. Avançada       | Baixa      |
+
+---
