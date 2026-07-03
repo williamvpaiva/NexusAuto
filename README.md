@@ -1,4 +1,4 @@
-# NexusAuto / Polymarketing
+# NexusAuto
 
 > Assistente de marketing inteligente com orquestração autônoma por agentes de IA.
 
