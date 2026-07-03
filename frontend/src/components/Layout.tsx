@@ -16,6 +16,9 @@ export function Layout({ children }: PropsWithChildren) {
           <Link className={location.pathname === '/' ? 'active' : ''} to="/">
             Usuários
           </Link>
+          <Link className={location.pathname === '/veiculos' ? 'active' : ''} to="/veiculos">
+            Veículos
+          </Link>
           <Link className={location.pathname === '/health' ? 'active' : ''} to="/health">
             Health
           </Link>

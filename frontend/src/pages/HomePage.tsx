@@ -1,7 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { createUser, listUsers, deleteUser, type User } from '../lib/api';
+import { sanitizeText } from '../utils/sanitize';
+import { useToast } from '../context/ToastContext';
 
 export function HomePage() {
+  const toast = useToast();
   const [users, setUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +21,9 @@ export function HomePage() {
       const data = await listUsers();
       setUsers(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar usuários');
+      const message = err instanceof Error ? err.message : 'Erro ao carregar usuários';
+      setError(message);
+      toast.error('Erro ao carregar', message);
     } finally {
       setLoading(false);
     }
@@ -38,10 +43,14 @@ export function HomePage() {
       await createUser({ name, email });
       setName('');
       setEmail('');
-      setSuccess('Usuário criado com sucesso!');
+      const successMessage = 'Usuário criado com sucesso!';
+      setSuccess(successMessage);
+      toast.success('Usuário criado', successMessage);
       await loadUsers();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao criar usuário');
+      const message = err instanceof Error ? err.message : 'Erro ao criar usuário';
+      setError(message);
+      toast.error('Erro ao criar', message);
     } finally {
       setSaving(false);
     }
@@ -54,10 +63,14 @@ export function HomePage() {
 
     try {
       await deleteUser(id);
-      setSuccess('Usuário removido com sucesso!');
+      const successMessage = 'Usuário removido com sucesso!';
+      setSuccess(successMessage);
+      toast.success('Usuário removido', successMessage);
       await loadUsers();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao remover usuário');
+      const message = err instanceof Error ? err.message : 'Erro ao remover usuário';
+      setError(message);
+      toast.error('Erro ao remover', message);
     }
   }
 
@@ -93,8 +106,8 @@ export function HomePage() {
           </button>
         </form>
 
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{success}</p>}
+        {error && <p className="error" role="alert">{error}</p>}
+        {success && <p className="success" role="status">{success}</p>}
       </section>
 
       <section className="card">
@@ -116,8 +129,8 @@ export function HomePage() {
             {users.map((user) => (
               <li key={user.id} className="list-item">
                 <div className="user-info">
-                  <strong>{user.name}</strong>
-                  <span className="email">{user.email}</span>
+                  <strong>{sanitizeText(user.name)}</strong>
+                  <span className="email">{sanitizeText(user.email)}</span>
                   <small className="date">
                     {new Date(user.createdAt).toLocaleString('pt-BR')}
                   </small>
@@ -125,7 +138,7 @@ export function HomePage() {
                 <button
                   onClick={() => handleDelete(user.id)}
                   className="danger"
-                  aria-label={`Remover ${user.name}`}
+                  aria-label={`Remover ${sanitizeText(user.name)}`}
                 >
                   Remover
                 </button>

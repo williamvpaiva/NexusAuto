@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { sanitizeText } from '../utils/sanitize';
 
 interface Conversation {
   id: string;
@@ -158,11 +159,11 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {conversation.title}
+                  {sanitizeText(conversation.title)}
                 </h3>
                 <div className="mt-2 grid grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <div>
-                    <span className="font-medium">Agent:</span> {conversation.agent_id}
+                    <span className="font-medium">Agent:</span> {sanitizeText(conversation.agent_id)}
                   </div>
                   <div>
                     <span className="font-medium">Messages:</span> {conversation.message_count}
@@ -230,12 +231,12 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-              {selectedConvDetails.title}
+              {sanitizeText(selectedConvDetails.title)}
             </h2>
             <div className="space-y-3 text-gray-700 dark:text-gray-300">
-              <div><strong>ID:</strong> {selectedConvDetails.id}</div>
-              <div><strong>Agent:</strong> {selectedConvDetails.agent_id}</div>
-              <div><strong>Session:</strong> {selectedConvDetails.session_id}</div>
+              <div><strong>ID:</strong> {sanitizeText(selectedConvDetails.id)}</div>
+              <div><strong>Agent:</strong> {sanitizeText(selectedConvDetails.agent_id)}</div>
+              <div><strong>Session:</strong> {sanitizeText(selectedConvDetails.session_id)}</div>
               <div><strong>Mensagens:</strong> {selectedConvDetails.message_count}</div>
               <div><strong>Tokens:</strong> {selectedConvDetails.token_count.toLocaleString()}</div>
               <div><strong>Criado:</strong> {new Date(selectedConvDetails.created_at).toLocaleString()}</div>
