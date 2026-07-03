@@ -42,6 +42,25 @@
 | 🟡 Médio | 2 | 3 | ~1.000 | Components, utils, CSS |
 | 🟢 Cache | 3 | 0 | ~50 | Hash inalterado |
 
+### Scoring para Escalonamento (NOVO)
+
+Além da matriz V&V, usar **scoring** para decidir nível de escalonamento:
+
+| Fator | Score |
+|-------|-------|
+| Auth/Pagamento envolvido | +5 |
+| Schema change | +4 |
+| Multi-agent handoff | +3 |
+| Nova dependência | +2 |
+| Apenas UI/CSS | +1 |
+
+**Escalonamento:**
+- **Score >= 8:** 🔴 Crítico → V&V Nível 1 (7 passos), 2 agents, daily report
+- **Score 4-7:** 🟡 Alto → V&V Nível 2 (3 passos), 1 agent senior
+- **Score < 4:** 🟢 Normal → V&V Nível 2 ou 3 (cache)
+
+**Consulta:** Ver `.ai-factory/chains/README.md` para cadeias de problemas compostos.
+
 **Verificação automática:**
 ```bash
 node scripts/check-cache.js backend/src/auth/login.ts
@@ -193,6 +212,41 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 | **23-MEMORIA** | `tech-lead` | Todos os agentes | 5k tokens |
 
 **Regra:** Se tarefa estimada > budget da área → dividir em subtarefas com `token-budget.js`
+
+### Hunt Skills (NOVO — Detecção por Classe de Problema)
+
+Para **auditorias específicas**, TECH-LEAD aciona **hunt skills** especializadas:
+
+| Hunt Skill | Problema Detectado | Quando Acionar |
+|------------|-------------------|----------------|
+| `hunt-n-plus-one-queries` | N+1 queries em loops | "lentidão no banco", "timeout" |
+| `hunt-missing-input-validation` | Inputs sem validação | "segurança dos inputs", auditoria OWASP |
+| `hunt-hardcoded-secrets` | Secrets hardcoded | Code review, pré-push, pós-incidente |
+| `hunt-dead-code` | Código morto/inalcançável | "limpeza de código", pré-refatoração |
+| `hunt-missing-error-handling` | Promises/calls sem try-catch | "erros silenciosos", auditoria de resiliência |
+
+**Fluxo:**
+1. TECH-LEAD detecta necessidade (ex: "auditar N+1")
+2. Carrega hunt skill específica de `.ai-factory/hunt/`
+3. Skill executa detecção sistemática
+4. Reporta findings com score calculado
+5. TECH-LEAD atribui fix para agente apropriado
+6. QA valida fix com mesma hunt skill
+
+**Consulta:** Ver `.ai-factory/hunt/README.md` para catálogo completo.
+
+### Technical Debt Chains (NOVO — Problemas Compostos)
+
+Quando **2+ problemas se combinam** → impacto exponencial. TECH-LEAD deve identificar chains:
+
+| Chain | Ingredientes | Score | Ação |
+|-------|-------------|-------|------|
+| A: Database Collapse | N+1 Queries + Missing Index | 14+ | V&V Nível 1, architect + backend-dev |
+| B: SQL Injection | Missing Validation + Raw SQL | 16+ | V&V Nível 1, security + backend-dev |
+| C: Secret Exposure | Hardcoded Secrets + Public Repo | 13+ | V&V Nível 1, security + devops, rotacionar IMEDIATO |
+| D: Cascade Failure | Missing Error Handling + Retry Without Backoff | 11+ | V&V Nível 2, backend-dev + performance |
+
+**Consulta:** Ver `.ai-factory/chains/README.md` para catálogo completo de chains.
 
 ---
 
