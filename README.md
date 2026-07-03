@@ -1,8 +1,8 @@
 # NexusAuto
 
-> Assistente de marketing inteligente com orquestração autônoma por agentes de IA.
+> Fábrica de software autônoma — orquestradora de projetos SaaS com 10 agentes de IA especializados.
 
-Este projeto é um **sistema de marketing aumentado por IA** — uma plataforma full stack (React + Express + SQLite) que integra agentes especializados para análise de dados, criação de conteúdo SEO, gestão de redes sociais e automação de campanhas. A inteligência do sistema é orquestrada pelo **TECH-LEAD.md**, que deve ser invocado sempre que novos arquivos forem adicionados ao projeto.
+NexusAuto é um **orquestrador autônomo de projetos de software**. Você descreve o que precisa construir (SaaS, API, sistema web, etc.), e 10 agentes de IA especializados — product owner, architect, devs, security, QA, devops — se coordenam via markdown para planejar, arquitetar, desenvolver, testar e entregar. Tudo orquestrado pelo **TECH-LEAD.md**.
 
 ---
 
