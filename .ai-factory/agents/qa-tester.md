@@ -189,3 +189,29 @@ Entregue:
 Se GO: Faça handoff para devops
 Se NO-GO: Devolva para devs com bug-reports
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Testar
+```bash
+# Buscar bugs anteriores e padrões de falha
+node scripts/memory-manager.js search "bug crítico" --type lesson --topK 5
+node scripts/memory-manager.js search "teste E2E" --type code --topK 3
+node scripts/memory-manager.js cache-get "Quais browsers testar?"
+```
+
+### Após Testes
+```bash
+# Salvar padrões de bugs encontrados
+node scripts/memory-manager.js save "Bug padrão: Race condition em checkout concorrente" --agent qa-tester --type lesson --tags bugs,race-condition
+
+# Salvar casos de teste reutilizáveis
+node scripts/memory-manager.js save "Caso teste: Validação de CPF/CNPJ" --agent qa-tester --type code --tags validation,brasil
+```
+
+### Regras
+- SEMPRE buscar bugs anteriores para regressão
+- SEMPRE salvar padrões de bugs recorrentes
+- Salvar casos de teste complexos como code para reuso

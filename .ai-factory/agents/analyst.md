@@ -188,3 +188,29 @@ Entregue:
 
 Valide pelo checklist antes do handoff para architect.
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Elicitar
+```bash
+# Buscar requisitos anteriores e regras de negócio
+node scripts/memory-manager.js search "regra de negócio" --type decision --topK 5
+node scripts/memory-manager.js search "requisito funcional" --type adr --topK 3
+node scripts/memory-manager.js cache-get "Qual domínio do projeto?"
+```
+
+### Após Elicitar
+```bash
+# Salvar decisões de escopo e trade-offs
+node scripts/memory-manager.js save "Escopo: MVP sem relatórios avançados (fase 2)" --agent analyst --type decision --tags scope,mvp
+
+# Salvar glossário do domínio
+node scripts/memory-manager.js save "Glossário: Lead = cliente potencial não convertido" --agent analyst --type general --tags glossary,sales
+```
+
+### Regras
+- SEMPRE buscar requisitos anteriores de projetos similares
+- SEMPRE salvar decisões de escopo e trade-offs
+- Salvar glossário do domínio como general para consulta futura

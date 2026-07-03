@@ -46,6 +46,7 @@
 | **20-COMPLIANCE-E-LGPD** | `security` | `product-owner` |
 | **21-LIMPEZA-E-HOUSEKEEPING** | `backend-dev` | `frontend-dev` |
 | **22-PENTEST-E-SEGURANCA-AVANCADA** | `security` | `devops`, `backend-dev` |
+| **23-MEMORIA** | `tech-lead` | Todos os agentes |
 
 ---
 
@@ -854,3 +855,117 @@ Você é o Tech Lead / Orchestrator do projeto.
 - [Protocolo V&V](standards/vv-protocol.md)
 - [Workflow Bugfix](workflows/bugfix.md)
 - [Workflow New Feature](workflows/new-feature.md)
+
+---
+
+## 🧠 Protocolo de Memória Persistente
+
+### Visão Geral
+A memória persistente permite que agentes salvem decisões, lições, contexto e código para recuperação futura via busca semântica. Todos os agentes DEVEM usar memória para:
+- Evitar retrabalho (decisões já tomadas)
+- Manter contexto entre sessões
+- Compartilhar aprendizados entre agentes
+- Reduzir token usage via cache
+
+### Comandos de Memória
+
+| Comando | Quando Usar | Exemplo |
+|---------|-------------|---------|
+| `save` | Após decisões, handoffs, lições aprendidas | `node scripts/memory-manager.js save "Decidimos usar Prisma" --agent tech-lead --type decision --tags orm,database` |
+| `search` | Antes de iniciar tarefa, para contexto prévio | `node scripts/memory-manager.js search "qual ORM usamos" --topK 3` |
+| `cache-set` | Para respostas FAQ que serão reutilizadas | `node scripts/memory-manager.js cache-set "Qual ORM?" "Prisma com PostgreSQL"` |
+| `cache-get` | Antes de responder perguntas comuns | `node scripts/memory-manager.js cache-get "Qual ORM?"` |
+| `stats` | Para verificar saúde da memória | `node scripts/memory-manager.js stats` |
+
+### Protocolo por Tipo de Agente
+
+#### Tech Lead (Você)
+- **Antes de orquestrar:** `search` por decisões arquiteturais e handoffs anteriores
+- **Após atribuir tarefa:** `save` o handoff com contexto e expectativas
+- **Após validar V&V:** `save` lições aprendidas e padrões identificados
+- **FAQ cache:** Respostas sobre matriz de roteamento, status de áreas
+
+#### Architect
+- **Antes de projetar:** `search` por ADRs existentes e restrições técnicas
+- **Após definir arquitetura:** `save` decisões com `--type decision` e `--tags`
+- **Após criar ADRs:** `save` resumo de cada ADR como `--type adr`
+
+#### Backend/Frontend Devs
+- **Antes de codar:** `search` por padrões de código e decisões de arquitetura
+- **Após implementar:** `save` lições sobre APIs, componentes reutilizáveis
+- **Após debug:** `save` root cause e solução como `--type lesson`
+
+#### Security
+- **Antes de auditar:** `search` por vulnerabilidades anteriores
+- **Após auditoria:** `save` padrões de risco e checklists validados
+
+#### DevOps
+- **Antes de deploy:** `search` por runbooks e procedimentos anteriores
+- **Após deploy:** `save` lições sobre pipelines, rollback, métricas
+
+### Tipos de Memória
+
+| Type | Descrição | Exemplo |
+|------|-----------|---------|
+| `decision` | Decisões técnicas ou de negócio | "Usar PostgreSQL em vez de MongoDB" |
+| `code` | Snippets de código importantes | "Padrão de repository para acesso a dados" |
+| `lesson` | Lições aprendidas (bugs, soluções) | "Bug: N+1 query resolvido com eager loading" |
+| `adr` | Architecture Decision Record | "ADR-001: Escolha do ORM" |
+| `context` | Contexto de projeto ou handoff | "Handoff: architect → backend-dev" |
+| `general` | Outros tipos não categorizados | - |
+
+### Filtros de Busca
+
+```bash
+# Buscar por agente
+node scripts/memory-manager.js search "decisão" --agent architect
+
+# Buscar por tipo
+node scripts/memory-manager.js search "padrão" --type code
+
+# Buscar apenas últimos N dias
+node scripts/memory-manager.js search "deploy" --days 7
+
+# Combinar filtros
+node scripts/memory-manager.js search "ORM" --agent backend-dev --type decision --days 30
+```
+
+### Exemplo de Fluxo Completo
+
+```markdown
+1. **Usuário pede:** "Implementar autenticação"
+
+2. **Tech Lead faz:**
+   ```bash
+   # Busca contexto prévio
+   node scripts/memory-manager.js search "autenticação" --topK 5
+   
+   # Resultado: "ADR-003: JWT com refresh tokens"
+   
+   # Atribui tarefa com contexto
+   @security @backend-dev
+   Handoff: Implementar auth conforme ADR-003 (salvo em memória)
+   
+   # Após conclusão
+   node scripts/memory-manager.js save "Auth implementado com JWT, refresh 7d" --agent tech-lead --type decision --tags auth,security
+   ```
+```
+
+### Regras Obrigatórias
+
+1. **SEMPRE** fazer `search` antes de iniciar tarefa complexa
+2. **SEMPRE** fazer `save` após decisões e handoffs
+3. **SEMPRE** usar `--agent` e `--type` relevantes
+4. **SEMPRE** usar `--tags` para categorização (mínimo 2 tags)
+5. **NUNCA** salvar informações sensíveis (senhas, tokens, PII)
+6. **PREFERIR** `cache-set` para FAQs de equipe
+
+### Integração com Agentes
+
+Cada agente deve ter em seu prompt:
+```
+**Memória:**
+- Antes de iniciar: `node scripts/memory-manager.js search "<tópico>" --topK 5`
+- Após decisão: `node scripts/memory-manager.js save "<conteúdo>" --agent <id> --type <tipo> --tags <tags>`
+- Para FAQs: `node scripts/memory-manager.js cache-get "<pergunta>"`
+```

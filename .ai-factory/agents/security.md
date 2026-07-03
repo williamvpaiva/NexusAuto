@@ -147,3 +147,29 @@ Classifique vulnerabilidades: CRÍTICA, ALTA, MÉDIA, BAIXA
 Se houver CRÍTICA ou ALTA: DEVOLVA para devs com plano de correção
 Se aprovado: Faça handoff para qa-tester
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Auditar
+```bash
+# Buscar vulnerabilidades anteriores e padrões de risco
+node scripts/memory-manager.js search "vulnerabilidade" --type lesson --topK 5
+node scripts/memory-manager.js search "OWASP" --type decision --topK 3
+node scripts/memory-manager.js cache-get "Quais security headers?"
+```
+
+### Após Auditoria
+```bash
+# Salvar padrões de risco identificados
+node scripts/memory-manager.js save "Padrão: SQL injection em queries concatenadas" --agent security --type lesson --tags owasp,injection
+
+# Salvar checklist validado
+node scripts/memory-manager.js save "Checklist auth: JWT com expiração 15min, refresh 7d" --agent security --type decision --tags auth,jwt
+```
+
+### Regras
+- SEMPRE buscar vulnerabilidades anteriores do projeto
+- SEMPRE salvar padrões de risco para prevenção futura
+- Salvar configurações de segurança validadas como decision

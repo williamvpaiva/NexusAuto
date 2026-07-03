@@ -24,7 +24,7 @@ export class MemoryRepository {
       [id, data.title, data.agent_id, data.session_id || id, now, now, JSON.stringify(data.metadata || {})]
     );
 
-    return this.getConversationById(id);
+    return (await this.getConversationById(id))!;
   }
 
   async getConversationById(id: string): Promise<Conversation | undefined> {
@@ -240,7 +240,7 @@ export class MemoryRepository {
       ]
     );
 
-    return this.getErrorLogById(id);
+    return (await this.getErrorLogById(id))!;
   }
 
   async getErrorLogById(id: string): Promise<ErrorLog | undefined> {
@@ -349,7 +349,7 @@ export class MemoryRepository {
       [...values, id]
     );
 
-    return this.getErrorLogById(id);
+    return (await this.getErrorLogById(id))!;
   }
 
   async deleteErrorLog(id: string): Promise<void> {

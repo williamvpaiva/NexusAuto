@@ -1,4 +1,5 @@
 import { memoryRepository } from '../repositories/memory.repository';
+import { AppError, NotFoundError } from '../utils/app-error';
 import {
   CreateConversationDTO,
   CreateMessageDTO,
@@ -100,6 +101,11 @@ export class MemoryService {
     savedTokens: number;
   }> {
     const messages = await memoryRepository.getMessagesByConversation(conversationId);
+
+    if (messages.data.length === 0) {
+      throw new AppError('Conversation has no messages to optimize', 400);
+    }
+
     const originalTokens = messages.data.reduce((sum, msg) => sum + msg.token_count, 0);
 
     let optimizedTokens = originalTokens;
@@ -164,7 +170,7 @@ export class MemoryService {
   }> {
     const conversation = await memoryRepository.getConversationById(conversationId);
     if (!conversation) {
-      throw new Error(`Conversation ${conversationId} not found`);
+      throw new NotFoundError('Conversation');
     }
 
     const messagesResult = await memoryRepository.getMessagesByConversation(conversationId, {

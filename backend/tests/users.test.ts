@@ -1,6 +1,15 @@
 import request from 'supertest';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeAll } from 'vitest';
 import { app } from '../src/app';
+
+let token: string;
+
+beforeAll(async () => {
+  const loginRes = await request(app)
+    .post('/api/v1/auth/login')
+    .send({ email: 'admin@polymarketing.com', password: 'admin123' });
+  token = loginRes.body.data.token;
+});
 
 describe('GET /api/v1/health', () => {
   it('should return health payload', async () => {
@@ -15,7 +24,9 @@ describe('GET /api/v1/health', () => {
 
 describe('GET /api/v1/users', () => {
   it('should return list of users', async () => {
-    const response = await request(app).get('/api/v1/users');
+    const response = await request(app)
+      .get('/api/v1/users')
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -33,6 +44,7 @@ describe('POST /api/v1/users', () => {
 
     const response = await request(app)
       .post('/api/v1/users')
+      .set('Authorization', `Bearer ${token}`)
       .send(newUser);
 
     expect(response.status).toBe(201);
@@ -45,6 +57,7 @@ describe('POST /api/v1/users', () => {
   it('should reject invalid email', async () => {
     const response = await request(app)
       .post('/api/v1/users')
+      .set('Authorization', `Bearer ${token}`)
       .send({ name: 'Test', email: 'invalid' });
 
     expect(response.status).toBe(422);
@@ -54,6 +67,7 @@ describe('POST /api/v1/users', () => {
   it('should reject short name', async () => {
     const response = await request(app)
       .post('/api/v1/users')
+      .set('Authorization', `Bearer ${token}`)
       .send({ name: 'A', email: 'test@example.com' });
 
     expect(response.status).toBe(422);

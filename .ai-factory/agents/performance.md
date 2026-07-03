@@ -148,3 +148,29 @@ Compare métricas com budgets.
 Se budget crítico estourado: DEVOLVA para devs com plano
 Se aprovado: Faça handoff para qa-tester
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Auditar
+```bash
+# Buscar otimizações anteriores e gargalos conhecidos
+node scripts/memory-manager.js search "otimização query" --type lesson --topK 5
+node scripts/memory-manager.js search "cache strategy" --type decision --topK 3
+node scripts/memory-manager.js cache-get "Qual budget de latência?"
+```
+
+### Após Auditoria
+```bash
+# Salvar otimizações validadas
+node scripts/memory-manager.js save "Otimização: Índice composto reduziu query de 2s para 50ms" --agent performance --type lesson --tags database,index
+
+# Salvar configurações de cache
+node scripts/memory-manager.js save "Cache: Redis com TTL 5min para dados de catálogo" --agent performance --type decision --tags cache,redis
+```
+
+### Regras
+- SEMPRE buscar otimizações anteriores antes de auditar
+- SEMPRE salvar otimizações validadas com métricas antes/depois
+- Salvar budgets de performance como decision

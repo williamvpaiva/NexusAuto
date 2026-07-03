@@ -203,3 +203,29 @@ Entregue:
 
 Valide checklist antes do handoff para devs.
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Projetar
+```bash
+# Buscar decisões arquiteturais anteriores
+node scripts/memory-manager.js search "arquitetura" --topK 5
+node scripts/memory-manager.js search "ADR" --type adr --topK 5
+node scripts/memory-manager.js cache-get "Qual stack usamos?"
+```
+
+### Após Definir Arquitetura
+```bash
+# Salvar decisão principal
+node scripts/memory-manager.js save "Arquitetura: Microserviços com Node.js + PostgreSQL" --agent architect --type decision --tags arquitetura,microservicos
+
+# Salvar resumo de cada ADR
+node scripts/memory-manager.js save "ADR-001: PostgreSQL escolhido por ACID e JSONB" --agent architect --type adr --tags database,postgresql
+```
+
+### Regras
+- SEMPRE buscar ADRs existentes antes de criar novos
+- SEMPRE salvar decisões com tags relevantes
+- NUNCA salvar secrets ou dados sensíveis

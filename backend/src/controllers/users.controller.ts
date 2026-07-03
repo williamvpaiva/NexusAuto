@@ -1,6 +1,6 @@
-import type { Request, Response } from 'express';
 import { z } from 'zod';
 import { usersService } from '../services/users.service';
+import { asyncHandler } from '../utils/async-handler';
 
 const createUserSchema = z.object({
   name: z.string().trim().min(2, 'Nome deve ter pelo menos 2 caracteres'),
@@ -12,71 +12,29 @@ const updateUserSchema = z.object({
   email: z.string().trim().email().optional()
 });
 
-/**
- * GET /api/v1/users
- * Lista todos os usuários
- */
-export function listUsers(_req: Request, res: Response) {
-  const users = usersService.list();
+export const listUsers = asyncHandler(async (_req, res) => {
+  const users = await usersService.list();
+  res.json({ success: true, data: users, meta: { total: users.length } });
+});
 
-  return res.status(200).json({
-    success: true,
-    data: users,
-    meta: {
-      total: users.length
-    }
-  });
-}
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await usersService.findById(req.params.id);
+  res.json({ success: true, data: user });
+});
 
-/**
- * GET /api/v1/users/:id
- * Busca usuário por ID
- */
-export function getUserById(req: Request, res: Response) {
-  const user = usersService.findById(req.params.id);
-
-  return res.status(200).json({
-    success: true,
-    data: user
-  });
-}
-
-/**
- * POST /api/v1/users
- * Cria novo usuário
- */
-export function createUser(req: Request, res: Response) {
+export const createUser = asyncHandler(async (req, res) => {
   const payload = createUserSchema.parse(req.body);
+  const user = await usersService.create(payload);
+  res.status(201).json({ success: true, data: user });
+});
 
-  const user = usersService.create(payload);
-
-  return res.status(201).json({
-    success: true,
-    data: user
-  });
-}
-
-/**
- * PUT /api/v1/users/:id
- * Atualiza usuário (completo)
- */
-export function updateUser(req: Request, res: Response) {
+export const updateUser = asyncHandler(async (req, res) => {
   const payload = updateUserSchema.parse(req.body);
+  const user = await usersService.update(req.params.id, payload);
+  res.json({ success: true, data: user });
+});
 
-  const user = usersService.update(req.params.id, payload);
-
-  return res.status(200).json({
-    success: true,
-    data: user
-  });
-}
-
-/**
- * DELETE /api/v1/users/:id
- * Remove usuário
- */
-export function deleteUser(req: Request, res: Response) {
-  usersService.delete(req.params.id);
-
-  return res.status(204).send();
-}
+export const deleteUser = asyncHandler(async (req, res) => {
+  await usersService.delete(req.params.id);
+  res.status(204).send();
+});

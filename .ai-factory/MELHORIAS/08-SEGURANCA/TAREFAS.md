@@ -1,80 +1,91 @@
-# [ÁREA] — Tarefas de Melhoria
-
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
+# 08-SEGURANÇA — Tarefas de Melhoria
 
 ## Status Geral da Área
 
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+**Status:** 🟡 Em Progresso
+**Progresso:** 0% concluído (0 de 3 tarefas)
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
-
----
-
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
-
-### TAREFA [N]: [Nome da Tarefa]
+### TAREFA SEG-001: Implementar middleware de autenticação JWT
 
 | Campo              | Detalhe                                      |
 |--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
+| 📌 Status          | 🔴 Pendente                                  |
+| 🗓️ Iniciado em     | -                                            |
+| ✅ Concluído em    | -                                            |
+| 👤 Responsável     | security / backend-dev                       |
+| ⚡ Prioridade      | 🔴 Crítica                                   |
 
 #### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
+`JWT_SECRET` e `JWT_EXPIRES_IN` definidos em `.env.example` e validados em `env.ts`. Classe `UnauthorizedError` existe em `utils/app-error.ts`. Mas **nenhum middleware de autenticação** foi implementado — todas as rotas são públicas.
 
 #### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
+Criar middleware `auth.middleware.ts` que valida token JWT do header `Authorization: Bearer <token>`, extrai payload (`userId`, `role`), e injeta no `req`. Implementar rota `POST /api/v1/auth/login` e proteger rotas de memória e users.
 
 #### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
+Rotas expostas publicamente permitem que qualquer um acesse/crie dados; JWT é requisito para segurança em produção.
 
 #### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
+- [ ] `middleware/auth.middleware.ts` — verifica e decodifica JWT
+- [ ] `controllers/auth.controller.ts` — login com validação de credenciais
+- [ ] `routes/auth.routes.ts` — rota pública de login
+- [ ] Rotas de memória e users protegidas com `requireAuth`
+- [ ] Testes: login válido, token inválido, ausência de token, expiração
 
 ---
 
-## 📊 Instruções de Uso
+### TAREFA SEG-002: Rate limiting nas rotas da API
 
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
+| Campo              | Detalhe                                      |
+|--------------------|----------------------------------------------|
+| 📌 Status          | 🔴 Pendente                                  |
+| 🗓️ Iniciado em     | -                                            |
+| ✅ Concluído em    | -                                            |
+| 👤 Responsável     | security                                     |
+| ⚡ Prioridade      | 🟡 Média                                     |
+
+#### 🔍 O que existe hoje:
+Nenhum limite de requisição implementado — ataques de força bruta ou DoS podem sobrecarregar o SQLite.
+
+#### 🎯 O que deve ser feito:
+Adicionar `express-rate-limit` com limites configuráveis por rota (ex: 100 req/min para `/api/v1/memory`, 20 req/min para `/api/v1/auth/login`).
+
+#### ❓ Por que corrigir:
+Proteção básica contra abuso de API; requisito OWASP ASVS.
+
+#### 📦 Entregáveis:
+- [ ] `middleware/rate-limit.middleware.ts` — factory de rate limiters
+- [ ] Limite estrito em `/auth/login` (prevenir brute force)
+- [ ] Limite moderado em `/memory` e `/users`
+
+---
+
+### TAREFA SEG-003: Validação e sanitização de entrada em todas as rotas
+
+| Campo              | Detalhe                                      |
+|--------------------|----------------------------------------------|
+| 📌 Status          | 🔴 Pendente                                  |
+| 🗓️ Iniciado em     | -                                            |
+| ✅ Concluído em    | -                                            |
+| 👤 Responsável     | security / backend-dev                       |
+| ⚡ Prioridade      | 🟡 Média                                     |
+
+#### 🔍 O que existe hoje:
+Users controller usa Zod (bom). Memory controller usa `res.status(400).json(...)` com validação manual inconsistente. Não há sanitização de strings longas ou caracteres especiais.
+
+#### 🎯 O que deve ser feito:
+Migrar validação do `memory.controller.ts` para schemas Zod (mesmo padrão de `users.controller.ts`). Adicionar limites de tamanho em campos `content`, `title`, `error_message`.
+
+#### ❓ Por que corrigir:
+Previne injeção de conteúdo malicioso no banco de memória; Zod garante erros tipados e consistentes.
+
+#### 📦 Entregáveis:
+- [ ] Schemas Zod em `types/memory.ts` para `CreateConversationDTO`, `CreateMessageDTO`, `CreateErrorLogDTO`
+- [ ] Validação via middleware `validate(schema)` em todas as rotas de memória
+- [ ] Limites de tamanho (ex: `title` max 255, `content` max 10000)
 
 ---
 

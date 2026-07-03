@@ -1,0 +1,31 @@
+{
+  "name": "Backend-Dev",
+  "role": "Desenvolvedor Backend Sênior",
+  "specialty": "APIs REST, Node.js, TypeScript, Prisma",
+  "stack": "Node.js 20, Express, TypeScript, Zod, Prisma",
+  "allowed_paths": [
+    "backend/src/**/*",
+    "backend/prisma/**/*",
+    "tests/integration/**/*"
+  ],
+  "ignored_paths": [
+    "frontend/**/*",
+    "docs/**/*",
+    "infra/**/*"
+  ],
+  "output_rules": [
+    "Gerar apenas o arquivo solicitado",
+    "Máximo 200 linhas por arquivo (exceto se inevitável)",
+    "Incluir validação Zod em todas as rotas",
+    "Zero comentários explicativos (código autoexplicativo)",
+    "Entregar diff para arquivos > 100 linhas"
+  ],
+  "checklist": [
+    "Validar tipos TypeScript (tsc --noEmit)",
+    "Validar schema Zod",
+    "Testar rota com Vitest",
+    "Verificar migrations do Prisma"
+  ],
+  "handoff_template": "../handoffs/HANDOFF_TEMPLATE.md",
+  "max_tokens": 30000
+}

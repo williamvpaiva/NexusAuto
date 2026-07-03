@@ -169,3 +169,29 @@ Entregue:
 
 Valide checklist antes do handoff para qa-tester.
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Codar
+```bash
+# Buscar padrões de componentes e decisões de UI
+node scripts/memory-manager.js search "componentes reutilizáveis" --type code --topK 3
+node scripts/memory-manager.js search "design system" --type decision --topK 3
+node scripts/memory-manager.js cache-get "Qual framework frontend?"
+```
+
+### Após Implementar
+```bash
+# Salvar componentes reutilizáveis
+node scripts/memory-manager.js save "Componente: Button com variants primary/secondary" --agent frontend-dev --type code --tags components,ui
+
+# Salvar lições de performance
+node scripts/memory-manager.js save "Otimização: Lazy loading reduziu bundle em 40%" --agent frontend-dev --type lesson --tags performance,bundle
+```
+
+### Regras
+- SEMPRE buscar componentes existentes antes de criar novos
+- SEMPRE salvar componentes reutilizáveis para equipe
+- Salvar otimizações de performance como lesson

@@ -221,3 +221,29 @@ Entregue:
 
 Valide checklist antes do handoff para security e performance.
 ```
+
+---
+
+## 🧠 Protocolo de Memória
+
+### Antes de Codar
+```bash
+# Buscar padrões de código e decisões de API
+node scripts/memory-manager.js search "padrão repository" --type code --topK 3
+node scripts/memory-manager.js search "API design" --type decision --topK 3
+node scripts/memory-manager.js cache-get "Qual ORM usamos?"
+```
+
+### Após Implementar
+```bash
+# Salvar lições sobre APIs e padrões
+node scripts/memory-manager.js save "Padrão: Repository com Prisma para acesso a dados" --agent backend-dev --type code --tags patterns,prisma
+
+# Salvar lições de debug
+node scripts/memory-manager.js save "Bug: N+1 query resolvido com include() no Prisma" --agent backend-dev --type lesson --tags performance,database
+```
+
+### Regras
+- SEMPRE buscar decisões de arquitetura antes de implementar
+- SEMPRE salvar padrões de código reutilizáveis
+- Salvar root cause de bugs complexos como lesson

@@ -1,13 +1,19 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
-import { Conversation, Message, ErrorLog, TokenOptimization } from '../types/memory';
+import * as fs from 'fs';
+import * as path from 'path';
+import { Conversation, Message, ErrorLog, TokenOptimization } from '../types/memory'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export class Database {
   private db: sqlite3.Database;
   private static instance: Database;
 
   private constructor() {
-    this.db = new sqlite3.Database('./data/memory.db');
+    const dbPath = './data/memory.db';
+    const dir = path.dirname(dbPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    this.db = new sqlite3.Database(dbPath);
   }
 
   static getInstance(): Database {
@@ -19,7 +25,7 @@ export class Database {
 
   async run(sql: string, params: unknown[] = []): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.db.run(sql, params, (err) => {
+      this.db.run(sql, params, (err: Error | null) => {
         if (err) reject(err);
         else resolve();
       });
@@ -28,7 +34,7 @@ export class Database {
 
   async get<T>(sql: string, params: unknown[] = []): Promise<T | undefined> {
     return new Promise((resolve, reject) => {
-      this.db.get(sql, params, (err, row) => {
+      this.db.get(sql, params, (err: Error | null, row: unknown) => {
         if (err) reject(err);
         else resolve(row as T);
       });
@@ -37,7 +43,7 @@ export class Database {
 
   async all<T>(sql: string, params: unknown[] = []): Promise<T[]> {
     return new Promise((resolve, reject) => {
-      this.db.all(sql, params, (err, rows) => {
+      this.db.all(sql, params, (err: Error | null, rows: unknown[]) => {
         if (err) reject(err);
         else resolve(rows as T[]);
       });
@@ -46,7 +52,7 @@ export class Database {
 
   async close(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.db.close((err) => {
+      this.db.close((err: Error | null) => {
         if (err) reject(err);
         else resolve();
       });
@@ -54,6 +60,9 @@ export class Database {
   }
 
   async initialize(): Promise<void> {
+    await this.run(`PRAGMA journal_mode=WAL`);
+    await this.run(`PRAGMA busy_timeout=5000`);
+    await this.run(`PRAGMA foreign_keys=ON`);
     await this.run(`
       CREATE TABLE IF NOT EXISTS conversations (
         id TEXT PRIMARY KEY,
@@ -124,17 +133,26 @@ export class Database {
       )
     `);
 
-    // Índices para performance
     await this.run(`
-      CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversation_id);
-      CREATE INDEX IF NOT EXISTS idx_messages_created ON messages(created_at);
-      CREATE INDEX IF NOT EXISTS idx_conversations_agent ON conversations(agent_id);
-      CREATE INDEX IF NOT EXISTS idx_conversations_session ON conversations(session_id);
-      CREATE INDEX IF NOT EXISTS idx_errors_status ON error_logs(status);
-      CREATE INDEX IF NOT EXISTS idx_errors_conversation ON error_logs(conversation_id);
-      CREATE INDEX IF NOT EXISTS idx_cache_query ON query_cache(query_hash);
-      CREATE INDEX IF NOT EXISTS idx_cache_expires ON query_cache(expires_at);
+      CREATE TABLE IF NOT EXISTS users (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
     `);
+
+    // Índices para performance
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversation_id)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_messages_created ON messages(created_at)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_conversations_agent ON conversations(agent_id)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_conversations_session ON conversations(session_id)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_errors_status ON error_logs(status)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_errors_conversation ON error_logs(conversation_id)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_cache_query ON query_cache(query_hash)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_cache_expires ON query_cache(expires_at)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
   }
 }
 

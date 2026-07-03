@@ -6,6 +6,89 @@
 
 ---
 
+## 💰 Token Economy (Prioridade Máxima)
+
+### Regras de Ouro
+
+1. **Contexto em Camadas**
+   - Layer 1: `CONTEXT_SUMMARY.md` (sempre, ~200 tokens)
+   - Layer 2: `PROJECT_CONTEXT.md` (apenas se necessário)
+   - Layer 3: `scripts/retrieve-context.js` (código específico via RAG)
+
+2. **Handoffs Resumidos**
+   - Usar obrigatoriamente: `handoffs/HANDOFF_TEMPLATE.md`
+   - Máximo 200 tokens
+   - Incluir hash do git para cache
+
+3. **Validação por Cache**
+   - Sempre verificar: `scripts/check-cache.js <arquivo>`
+   - Cache hit = pular V&V (economiza ~3.000 tokens)
+   - Cache miss = aplicar V&V nível apropriado
+
+4. **Token Budget**
+   - Executar antes de cada tarefa: `scripts/token-budget.js <prompt.txt>`
+   - Limite: 50.000 tokens/tarefa
+   - Se exceder → dividir automaticamente em subtarefas
+
+5. **Diff-based Updates**
+   - Arquivos > 100 linhas → entregar apenas diff/patch
+   - Próximo agente aplica: `scripts/apply-diff.js old.ts new.ts`
+
+### Matriz de V&V Adaptativo
+
+| Tipo | Nível | Passos | Tokens | Critério |
+|------|-------|--------|--------|----------|
+| 🔴 Crítico | 1 | 7 | ~3.000 | Auth, pagamentos, schema |
+| 🟡 Médio | 2 | 3 | ~1.000 | Components, utils, CSS |
+| 🟢 Cache | 3 | 0 | ~50 | Hash inalterado |
+
+**Verificação automática:**
+```bash
+node scripts/check-cache.js backend/src/auth/login.ts
+# Output: {"cacheHit": true, "action": "SKIP_VV"}
+```
+
+### Scripts de Economia
+
+| Script | Propósito | Uso |
+|--------|-----------|-----|
+| `retrieve-context.js` | Busca semântica (TF-IDF) | `node scripts/retrieve-context.js "criar login"` |
+| `token-budget.js` | Estima e divide tarefas | `node scripts/token-budget.js task.txt` |
+| `check-cache.js` | Verifica cache de validação | `node scripts/check-cache.js file.ts` |
+| `apply-diff.js` | Aplica patches | `node scripts/apply-diff.js old.ts new.ts` |
+| `memory-manager.js` | Memória persistente (SQLite + busca semântica) | `node scripts/memory-manager.js save "decisão" --agent architect` |
+
+### Memória Persistente (Token Economy)
+
+**Arquivo:** `scripts/memory-manager.js` | **DB:** `nexusauto_memory.db`
+
+Memória compartilhada entre todos os agents usando SQLite + embeddings. Reduz tokens ao eliminar a necessidade de reexplicar decisões passadas.
+
+**Protocolo obrigatório:**
+
+1. **Antes de executar tarefa →** `search` por memórias similares (evita redescobrir)
+2. **Após decisão importante →** `save` com tipo `decision` ou `adr`
+3. **Handoff entre agents →** `save` com tipo `context` para preservar estado
+4. **Perguntas frequentes →** `cache-set` / `cache-get` (evita recomputação de respostas)
+
+**Exemplo de ciclo completo:**
+```bash
+# 1. Tech-lead verifica memórias existentes antes de atribuir
+node scripts/memory-manager.js search "ORM decisão" --type decision
+
+# 2. Agent salva decisão após implementar
+node scripts/memory-manager.js save "Usar Prisma com PostgreSQL por type-safety" --agent backend-dev --type decision --tags orm,prisma
+
+# 3. Outro agent consulta sem precisar perguntar
+node scripts/memory-manager.js search "qual ORM" --topK 1
+→ Retorna: "Usar Prisma com PostgreSQL por type-safety"
+
+# 4. Cache de resposta comum
+node scripts/memory-manager.js cache-set "porta do banco" "5432"
+```
+
+---
+
 ## 🚀 Como Usar (Início Rápido)
 
 ### **Opção 1: Projeto Novo (Nunca usou AI Factory)**
@@ -38,6 +121,11 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 
 **Ação:** Elaborar questionário completo de 12 seções (ver detalhe abaixo)
 
+**Token Economy:**
+- Carregar apenas `CONTEXT_SUMMARY.md` (Layer 1)
+- Não carregar `PROJECT_CONTEXT.md` nesta fase
+- Usar `retrieve-context.js` se necessário código específico
+
 ---
 
 ### **Cenário 2: Projeto Existente**
@@ -46,6 +134,11 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 
 **Ação:** Executar análise completa do estado atual + perguntar próximo passo
 
+**Token Economy:**
+- Verificar `VALIDATION_CACHE.md` antes de validar
+- Usar handoff template para todas as comunicações
+- Executar `token-budget.js` antes de tarefas grandes
+
 ---
 
 ### **Cenário 3: Outros**
@@ -53,6 +146,9 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 **Gatilho:** Re-inicialização, mudança de contexto, comando manual
 
 **Ação:** Pergunta direta sobre o que executar
+
+**Token Economy:**
+- Seguir regras padrão de economia
 
 ---
 
@@ -70,30 +166,33 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 
 ## 🧠 Matriz de Roteamento (Quem Faz O Quê)
 
-| Área | Agente Responsável | Agents de Apoio |
-|------|-------------------|-----------------|
-| **01-ARQUITETURA** | `architect` | `backend-dev`, `frontend-dev` |
-| **02-DEBUGGING** | `backend-dev` ou `frontend-dev` | `qa-tester` |
-| **03-SISTEMAS** | `architect` | `devops`, `security` |
-| **04-PERFORMANCE** | `performance` | `backend-dev`, `frontend-dev` |
-| **05-CLEAN-ARCHITECTURE** | `architect` | `backend-dev`, `frontend-dev` |
-| **06-MULTIAGENTE** | `tech-lead` (você) | Todos os agentes |
-| **07-UI-COMPONENTS** | `frontend-dev` | `qa-tester` |
-| **08-SEGURANCA** | `security` | `backend-dev`, `devops` |
-| **09-TESTES** | `qa-tester` | `backend-dev`, `frontend-dev` |
-| **10-CI-CD** | `devops` | `backend-dev` |
-| **11-DOCUMENTACAO** | `tech-lead` | Todos os agentes |
-| **12-BANCO-DE-DADOS** | `architect` | `backend-dev` |
-| **13-MONITORAMENTO** | `devops` | `backend-dev` |
-| **14-ACESSIBILIDADE** | `frontend-dev` | `qa-tester` |
-| **15-SEO-E-ANALYTICS** | `frontend-dev` | `product-owner` |
-| **16-GESTAO-DE-ERROS** | `backend-dev` | `frontend-dev` |
-| **17-GESTAO-DE-ESTADO** | `frontend-dev` | `architect` |
-| **18-API-E-INTEGRACOES** | `backend-dev` | `architect` |
-| **19-ONBOARDING-E-DX** | `devops` | `tech-lead` |
-| **20-COMPLIANCE-E-LGPD** | `security` | `product-owner` |
-| **21-LIMPEZA-E-HOUSEKEEPING** | `backend-dev` | `frontend-dev` |
-| **22-PENTEST-E-SEGURANCA-AVANCADA** | `security` | `devops`, `backend-dev` |
+| Área | Agente Responsável | Agents de Apoio | Token Budget |
+|------|-------------------|-----------------|--------------|
+| **01-ARQUITETURA** | `architect` | `backend-dev`, `frontend-dev` | 40k tokens |
+| **02-DEBUGGING** | `backend-dev` ou `frontend-dev` | `qa-tester` | 25k tokens |
+| **03-SISTEMAS** | `architect` | `devops`, `security` | 40k tokens |
+| **04-PERFORMANCE** | `performance` | `backend-dev`, `frontend-dev` | 30k tokens |
+| **05-CLEAN-ARCHITECTURE** | `architect` | `backend-dev`, `frontend-dev` | 40k tokens |
+| **06-MULTIAGENTE** | `tech-lead` (você) | Todos os agentes | 50k tokens |
+| **07-UI-COMPONENTS** | `frontend-dev` | `qa-tester` | 25k tokens |
+| **08-SEGURANCA** | `security` | `backend-dev`, `devops` | 35k tokens |
+| **09-TESTES** | `qa-tester` | `backend-dev`, `frontend-dev` | 30k tokens |
+| **10-CI-CD** | `devops` | `backend-dev` | 30k tokens |
+| **11-DOCUMENTACAO** | `tech-lead` | Todos os agentes | 20k tokens |
+| **12-BANCO-DE-DADOS** | `architect` | `backend-dev` | 35k tokens |
+| **13-MONITORAMENTO** | `devops` | `backend-dev` | 30k tokens |
+| **14-ACESSIBILIDADE** | `frontend-dev` | `qa-tester` | 25k tokens |
+| **15-SEO-E-ANALYTICS** | `frontend-dev` | `product-owner` | 25k tokens |
+| **16-GESTAO-DE-ERROS** | `backend-dev` | `frontend-dev` | 30k tokens |
+| **17-GESTAO-DE-ESTADO** | `frontend-dev` | `architect` | 30k tokens |
+| **18-API-E-INTEGRACOES** | `backend-dev` | `architect` | 35k tokens |
+| **19-ONBOARDING-E-DX** | `devops` | `tech-lead` | 25k tokens |
+| **20-COMPLIANCE-E-LGPD** | `security` | `product-owner` | 30k tokens |
+| **21-LIMPEZA-E-HOUSEKEEPING** | `backend-dev` | `frontend-dev` | 20k tokens |
+| **22-PENTEST-E-SEGURANCA-AVANCADA** | `security` | `devops`, `backend-dev` | 40k tokens |
+| **23-MEMORIA** | `tech-lead` | Todos os agentes | 5k tokens |
+
+**Regra:** Se tarefa estimada > budget da área → dividir em subtarefas com `token-budget.js`
 
 ---
 
@@ -145,6 +244,7 @@ const agentePorTipo = {
 | "SEO", "analytics", "meta tags" | `frontend-dev` | 15 |
 | "documento", "README", "onboarding" | `tech-lead` | 11, 19 |
 | "limpeza", "dead code", "refatoração" | `backend-dev` ou `frontend-dev` | 21 |
+| "memória", "aprender", "contexto", "handoff" | `tech-lead` | 23 |
 
 ---
 
@@ -242,6 +342,11 @@ done
 
 ### Passo 3: Atribuir e Notificar
 
+**Token Economy:**
+- Handoff usa obrigatoriamente `HANDOFF_TEMPLATE.md` (~200 tokens)
+- Não copiar código inteiro entre agentes
+- Referenciar arquivos por nome, não por conteúdo
+
 ```markdown
 @agent-name
 
@@ -251,38 +356,60 @@ done
 - **Tarefa:** TAREFA 3: Auditar endpoints contra OWASP Top 10
 - **Prioridade:** 🔴 Crítica
 - **Deadline:** 2 dias
+- **Token Budget:** 35.000 tokens
 
-**Contexto:**
-> O que existe hoje: API sem validação de rate limiting
-> O que deve ser feito: Implementar rate limiting por IP e usuário
+**Contexto (Layer 1 apenas):**
+> Stack: Node.js + Express + TypeScript
+> Ver: CONTEXT_SUMMARY.md
+
+**Contexto Específico (via RAG):**
+> node scripts/retrieve-context.js "OWASP endpoints"
+> → Retorna: backend/src/routes/auth.ts, backend/src/middleware/rateLimit.ts
 
 **Handoff de:** tech-lead  
 **Para:** security-agent
 
+**Handoff Template:** `.ai-factory/handoffs/HANDOFF_TEMPLATE.md`
+
 **Inicie agora:**
-1. Leia .ai-factory/MELHORIAS/08-SEGURANCA/TAREFAS.md
-2. Execute a tarefa
-3. Preencha RELATÓRIO V&V
-4. Atualize status para 🟢
-5. Notifique tech-lead
+1. Leia CONTEXT_SUMMARY.md (Layer 1)
+2. Execute retrieve-context.js para código relevante
+3. Execute a tarefa
+4. Preencha HANDOFF_TEMPLATE.md (máx 200 tokens)
+5. Atualize status para 🟡
+6. Notifique tech-lead
 ```
 
 ### Passo 4: Monitorar Execução
 
-- Verificar a cada 30 minutos se tarefa saiu de 🟡 para 🟢
+**Token Economy:**
+- Verificar handoffs a cada 30 minutos
+- Se handoff > 200 tokens → rejeitar e pedir resumo
+- Se tarefa > token budget → dividir automaticamente
+
 - Se > 2 dias em 🟡 → Enviar alerta de bloqueio
 - Se V&V ❌ → Retornar para correção
 
 ### Passo 5: Validar V&V Antes de Concluir
 
+**Token Economy:**
+1. Verificar cache: `node scripts/check-cache.js <arquivo>`
+2. Cache hit → pular V&V (economiza ~3.000 tokens)
+3. Cache miss → aplicar nível apropriado:
+   - 🔴 Crítico: Nível 1 (7 passos, ~3.000 tokens)
+   - 🟡 Médio: Nível 2 (3 passos, ~1.000 tokens)
+   - 🟢 Baixa: Nível 2 (3 passos, ~1.000 tokens)
+
 ```markdown
 CHECKLIST DE VALIDAÇÃO:
+- [ ] Cache verificado (check-cache.js)
+- [ ] Nível V&V apropriado selecionado (VV_PROTOCOL_ADAPTATIVE.md)
 - [ ] RELATÓRIO V&V preenchido com ✅ APROVADO
-- [ ] Todos os 7 passos verificados
-- [ ] Registro em LOG-VALIDACOES.md
+- [ ] Todos os passos verificados (conforme nível)
+- [ ] Registro em LOG-VALIDACOES.md e VALIDATION_CACHE.md
 - [ ] Código commitado com mensagem Conventional Commits
 - [ ] Testes passando no CI
-- [ ] Handoff para próxima etapa (se aplicável)
+- [ ] Handoff para próxima etapa (template, máx 200 tokens)
 ```
 
 ### Passo 6: Atualizar INDEX.md
@@ -324,7 +451,25 @@ const taxaAprovacaoVV = (aprovados / totalValidacoes) * 100;
 
 ## 🛡️ Protocolo V&V (Verificação & Validação)
 
-Após **CADA** alteração, 7 passos obrigatórios:
+### V&V Adaptativo (Token-Efficient)
+
+Após **CADA** alteração, verificar cache primeiro:
+
+```bash
+node scripts/check-cache.js backend/src/app.ts
+# Se cacheHit: true → Pular V&V
+# Se cacheHit: false → Aplicar nível conforme criticidade
+```
+
+### Níveis de V&V
+
+| Nível | Tipo | Passos | Tokens | Critério |
+|-------|------|--------|--------|----------|
+| **1** | 🔴 Crítico | 7 | ~3.000 | Auth, pagamentos, schema |
+| **2** | 🟡 Médio | 3 | ~1.000 | Components, utils, CSS |
+| **3** | 🟢 Cache | 0 | ~50 | Hash inalterado |
+
+### Passos do Nível 1 (Crítico)
 
 | # | Verificação | Status |
 |---|-------------|--------|
@@ -336,7 +481,20 @@ Após **CADA** alteração, 7 passos obrigatórios:
 | 6 | ⚡ Performance (sem degradação) | ⬜ |
 | 7 | ✅ Validação Final | ⬜ |
 
-**Regra de Ouro:** Tarefa SÓ vira 🟢 **Concluída** se **V&V = ✅ APROVADO**
+### Passos do Nível 2 (Médio)
+
+| # | Verificação | Status |
+|---|-------------|--------|
+| 1 | 🧪 Lint (ESLint/Prettier) | ⬜ |
+| 2 | 🔗 Type Check (TypeScript) | ⬜ |
+| 3 | 🧨 Smoke Test | ⬜ |
+
+### Nível 3 (Cache)
+
+- **Ação:** Pular validação
+- **Registro:** Atualizar `VALIDATION_CACHE.md` com "Cache Hit"
+
+**Regra de Ouro:** Tarefa SÓ vira 🟢 **Concluída** se **V&V = ✅ APROVADO** ou **Cache Hit**
 
 ---
 
