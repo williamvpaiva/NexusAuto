@@ -1,0 +1,60 @@
+{
+  "mes": "julho",
+  "ano": 2026,
+  "data_inicio": "2026-07-01",
+  "data_fim": "2026-07-31",
+  
+  "resumo_mes": {
+    "total_tarefas": 0,
+    "total_tokens": 0,
+    "custo_total_usd": 0.00,
+    "custo_total_brl": 0.00,
+    "tempo_total_horas": 0.00,
+    "economia_usd": 0.00,
+    "economia_percentual": "0%"
+  },
+  
+  "resumo_por_semana": {
+    "semana-27": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "semana-28": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "semana-29": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "semana-30": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "semana-31": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    }
+  },
+  
+  "distribuicao_por_modelo": {},
+  
+  "projecao_anual": {
+    "consumo_estimado_tokens": 0,
+    "custo_estimado_usd": 0.00,
+    "economia_estimada_usd": 0.00
+  },
+  
+  "top_projetos": [],
+  
+  "otimizacoes_do_mes": [],
+  
+  "roi_otimizacoes": [],
+  
+  "ultima_atualizacao": "2026-07-02T14:30:00Z"
+}

@@ -1,0 +1,701 @@
+{
+  "session_id": "SESSAO-2026-07-03T00-19-20",
+  "projeto": "POLYMARKETING",
+  "data": "2026-07-03T00:19:20.677Z",
+  "skills_executadas": [
+    {
+      "skill": "systematic-debugging",
+      "status": "success",
+      "tempo_execucao": 134,
+      "achados": []
+    },
+    {
+      "skill": "error-pattern-matcher",
+      "status": "success",
+      "tempo_execucao": 17,
+      "achados": []
+    },
+    {
+      "skill": "root-cause-analyzer",
+      "status": "success",
+      "tempo_execucao": 2,
+      "achados": [
+        {
+          "tipo": "root-cause",
+          "metodo": "5 Whys",
+          "status": "requer_input_humano",
+          "nota": "Forneça a descrição do bug para análise de causa raiz"
+        }
+      ]
+    },
+    {
+      "skill": "debug-session-recorder",
+      "status": "success",
+      "tempo_execucao": 1,
+      "achados": [
+        {
+          "tipo": "session-recorder",
+          "session_id": "SESSAO-2026-07-03T00-19-20",
+          "projeto": "POLYMARKETING",
+          "data": "2026-07-03T00:19:20.851Z",
+          "status": "sessao_iniciada",
+          "nota": "Sessão registrada para consulta futura"
+        }
+      ]
+    },
+    {
+      "skill": "edge-case-detector",
+      "status": "success",
+      "tempo_execucao": 78,
+      "achados": []
+    },
+    {
+      "skill": "regression-test-generator",
+      "status": "success",
+      "tempo_execucao": 25,
+      "achados": [
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\app.ts",
+          "severidade": "media",
+          "recomendacao": "Criar app.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\config\\database.ts",
+          "severidade": "media",
+          "recomendacao": "Criar database.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\config\\env.ts",
+          "severidade": "media",
+          "recomendacao": "Criar env.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+          "severidade": "media",
+          "recomendacao": "Criar memory.controller.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\controllers\\users.controller.ts",
+          "severidade": "media",
+          "recomendacao": "Criar users.controller.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\middleware\\error-handler.ts",
+          "severidade": "media",
+          "recomendacao": "Criar error-handler.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+          "severidade": "media",
+          "recomendacao": "Criar memory.repository.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\routes\\health.routes.ts",
+          "severidade": "media",
+          "recomendacao": "Criar health.routes.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\routes\\index.ts",
+          "severidade": "media",
+          "recomendacao": "Criar index.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\routes\\users.routes.ts",
+          "severidade": "media",
+          "recomendacao": "Criar users.routes.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\server.ts",
+          "severidade": "media",
+          "recomendacao": "Criar server.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\services\\memory.service.ts",
+          "severidade": "media",
+          "recomendacao": "Criar memory.service.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\services\\users.service.ts",
+          "severidade": "media",
+          "recomendacao": "Criar users.service.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\types\\memory.ts",
+          "severidade": "media",
+          "recomendacao": "Criar memory.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\types\\user.ts",
+          "severidade": "media",
+          "recomendacao": "Criar user.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\src\\utils\\app-error.ts",
+          "severidade": "media",
+          "recomendacao": "Criar app-error.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\tests\\memory.test.ts",
+          "severidade": "media",
+          "recomendacao": "Criar memory.test.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\tests\\users.test.ts",
+          "severidade": "media",
+          "recomendacao": "Criar users.test.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "backend\\vitest.config.ts",
+          "severidade": "media",
+          "recomendacao": "Criar vitest.config.test.ts"
+        },
+        {
+          "tipo": "regression-test",
+          "arquivo": "fabrica_projeto\\backend\\src\\app.ts",
+          "severidade": "media",
+          "recomendacao": "Criar app.test.ts"
+        }
+      ]
+    },
+    {
+      "skill": "architecture-analyzer",
+      "status": "success",
+      "tempo_execucao": 0,
+      "achados": [
+        {
+          "tipo": "arquitetura",
+          "padrao": "Separated UI and Backend",
+          "qualidade": "boa"
+        },
+        {
+          "tipo": "arquitetura",
+          "padrao": "AI Factory integrada",
+          "qualidade": "excelente"
+        }
+      ]
+    },
+    {
+      "skill": "pattern-matcher",
+      "status": "success",
+      "tempo_execucao": 73,
+      "achados": [
+        {
+          "tipo": "pattern",
+          "padrao": "Singleton",
+          "arquivo": "backend\\src\\config\\database.ts",
+          "severidade": "info",
+          "recomendacao": "Avaliar se Singleton é realmente necessário"
+        },
+        {
+          "tipo": "pattern",
+          "padrao": "Herança (class extends)",
+          "arquivo": "backend\\src\\utils\\app-error.ts",
+          "severidade": "info",
+          "recomendacao": "Preferir composição sobre herança"
+        },
+        {
+          "tipo": "pattern",
+          "padrao": "Singleton",
+          "arquivo": "fabrica_projeto\\backend\\src\\config\\database.ts",
+          "severidade": "info",
+          "recomendacao": "Avaliar se Singleton é realmente necessário"
+        },
+        {
+          "tipo": "pattern",
+          "padrao": "Herança (class extends)",
+          "arquivo": "fabrica_projeto\\backend\\src\\utils\\app-error.ts",
+          "severidade": "info",
+          "recomendacao": "Preferir composição sobre herança"
+        }
+      ]
+    },
+    {
+      "skill": "coupling-detector",
+      "status": "success",
+      "tempo_execucao": 94,
+      "achados": []
+    },
+    {
+      "skill": "adr-generator",
+      "status": "success",
+      "tempo_execucao": 1,
+      "achados": [
+        {
+          "tipo": "adr",
+          "titulo": "Adoção do AI Factory como orquestrador",
+          "status": "proposto",
+          "contexto": "Projeto utiliza .ai-factory para automação de skills",
+          "consequencia": "Padroniza análise e documentação",
+          "severidade": "info"
+        }
+      ]
+    },
+    {
+      "skill": "tech-debt-calculator",
+      "status": "success",
+      "tempo_execucao": 68,
+      "achados": [
+        {
+          "tipo": "tech-debt-summary",
+          "total_pontos": 28,
+          "arquivos_afetados": 6,
+          "items": [
+            {
+              "tipo": "tech-debt",
+              "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+              "linhas": 621,
+              "todos_encontrados": 0,
+              "pontuacao": 8
+            },
+            {
+              "tipo": "tech-debt",
+              "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+              "linhas": 500,
+              "todos_encontrados": 0,
+              "pontuacao": 3
+            },
+            {
+              "tipo": "tech-debt",
+              "arquivo": "backend\\tests\\memory.test.ts",
+              "linhas": 313,
+              "todos_encontrados": 0,
+              "pontuacao": 3
+            },
+            {
+              "tipo": "tech-debt",
+              "arquivo": "fabrica_projeto\\backend\\src\\controllers\\memory.controller.ts",
+              "linhas": 621,
+              "todos_encontrados": 0,
+              "pontuacao": 8
+            },
+            {
+              "tipo": "tech-debt",
+              "arquivo": "fabrica_projeto\\backend\\src\\repositories\\memory.repository.ts",
+              "linhas": 500,
+              "todos_encontrados": 0,
+              "pontuacao": 3
+            },
+            {
+              "tipo": "tech-debt",
+              "arquivo": "fabrica_projeto\\backend\\tests\\memory.test.ts",
+              "linhas": 313,
+              "todos_encontrados": 0,
+              "pontuacao": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "modularity-optimizer",
+      "status": "success",
+      "tempo_execucao": 2,
+      "achados": []
+    },
+    {
+      "skill": "code-smell-detector",
+      "status": "success",
+      "tempo_execucao": 63,
+      "achados": [
+        {
+          "tipo": "Large File",
+          "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+          "linhas": 621,
+          "severidade": "alta"
+        },
+        {
+          "tipo": "Large File",
+          "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+          "linhas": 500,
+          "severidade": "alta"
+        },
+        {
+          "tipo": "Large File",
+          "arquivo": "fabrica_projeto\\backend\\src\\controllers\\memory.controller.ts",
+          "linhas": 621,
+          "severidade": "alta"
+        },
+        {
+          "tipo": "Large File",
+          "arquivo": "fabrica_projeto\\backend\\src\\repositories\\memory.repository.ts",
+          "linhas": 500,
+          "severidade": "alta"
+        }
+      ]
+    },
+    {
+      "skill": "refactoring-advisor",
+      "status": "success",
+      "tempo_execucao": 69,
+      "achados": []
+    },
+    {
+      "skill": "complexity-analyzer",
+      "status": "success",
+      "tempo_execucao": 16,
+      "achados": [
+        {
+          "files_analisados": 44,
+          "complexidade_media": 5.5,
+          "max_complexidade": 15
+        }
+      ]
+    },
+    {
+      "skill": "dead-code-eliminator",
+      "status": "success",
+      "tempo_execucao": 64,
+      "achados": []
+    },
+    {
+      "skill": "naming-improver",
+      "status": "success",
+      "tempo_execucao": 70,
+      "achados": []
+    },
+    {
+      "skill": "function-simplifier",
+      "status": "success",
+      "tempo_execucao": 65,
+      "achados": []
+    }
+  ],
+  "agentes_envolvidos": [],
+  "tarefas_concluidas": 0,
+  "bugs_encontrados": 0,
+  "smells_identificados": 4,
+  "adrs_gerados": 0,
+  "metricas_antes": {
+    "arquitetura": 2,
+    "complexidade": {
+      "files_analisados": 44,
+      "complexidade_media": 5.5,
+      "max_complexidade": 15
+    }
+  },
+  "metricas_depois": {},
+  "licoes_aprendidas": [],
+  "stack": "Node.js/polymarketing",
+  "prioridades": {
+    "critico": [],
+    "alto": [
+      {
+        "tipo": "arquitetura",
+        "padrao": "Separated UI and Backend",
+        "qualidade": "boa",
+        "skill_origem": "architecture-analyzer"
+      },
+      {
+        "tipo": "arquitetura",
+        "padrao": "AI Factory integrada",
+        "qualidade": "excelente",
+        "skill_origem": "architecture-analyzer"
+      },
+      {
+        "tipo": "Large File",
+        "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+        "linhas": 621,
+        "severidade": "alta",
+        "skill_origem": "code-smell-detector"
+      },
+      {
+        "tipo": "Large File",
+        "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+        "linhas": 500,
+        "severidade": "alta",
+        "skill_origem": "code-smell-detector"
+      },
+      {
+        "tipo": "Large File",
+        "arquivo": "fabrica_projeto\\backend\\src\\controllers\\memory.controller.ts",
+        "linhas": 621,
+        "severidade": "alta",
+        "skill_origem": "code-smell-detector"
+      },
+      {
+        "tipo": "Large File",
+        "arquivo": "fabrica_projeto\\backend\\src\\repositories\\memory.repository.ts",
+        "linhas": 500,
+        "severidade": "alta",
+        "skill_origem": "code-smell-detector"
+      }
+    ],
+    "medio": [
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\app.ts",
+        "severidade": "media",
+        "recomendacao": "Criar app.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\config\\database.ts",
+        "severidade": "media",
+        "recomendacao": "Criar database.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\config\\env.ts",
+        "severidade": "media",
+        "recomendacao": "Criar env.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+        "severidade": "media",
+        "recomendacao": "Criar memory.controller.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\controllers\\users.controller.ts",
+        "severidade": "media",
+        "recomendacao": "Criar users.controller.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\middleware\\error-handler.ts",
+        "severidade": "media",
+        "recomendacao": "Criar error-handler.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+        "severidade": "media",
+        "recomendacao": "Criar memory.repository.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\routes\\health.routes.ts",
+        "severidade": "media",
+        "recomendacao": "Criar health.routes.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\routes\\index.ts",
+        "severidade": "media",
+        "recomendacao": "Criar index.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\routes\\users.routes.ts",
+        "severidade": "media",
+        "recomendacao": "Criar users.routes.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\server.ts",
+        "severidade": "media",
+        "recomendacao": "Criar server.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\services\\memory.service.ts",
+        "severidade": "media",
+        "recomendacao": "Criar memory.service.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\services\\users.service.ts",
+        "severidade": "media",
+        "recomendacao": "Criar users.service.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\types\\memory.ts",
+        "severidade": "media",
+        "recomendacao": "Criar memory.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\types\\user.ts",
+        "severidade": "media",
+        "recomendacao": "Criar user.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\src\\utils\\app-error.ts",
+        "severidade": "media",
+        "recomendacao": "Criar app-error.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\tests\\memory.test.ts",
+        "severidade": "media",
+        "recomendacao": "Criar memory.test.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\tests\\users.test.ts",
+        "severidade": "media",
+        "recomendacao": "Criar users.test.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "backend\\vitest.config.ts",
+        "severidade": "media",
+        "recomendacao": "Criar vitest.config.test.ts",
+        "skill_origem": "regression-test-generator"
+      },
+      {
+        "tipo": "regression-test",
+        "arquivo": "fabrica_projeto\\backend\\src\\app.ts",
+        "severidade": "media",
+        "recomendacao": "Criar app.test.ts",
+        "skill_origem": "regression-test-generator"
+      }
+    ],
+    "baixo": [
+      {
+        "tipo": "root-cause",
+        "metodo": "5 Whys",
+        "status": "requer_input_humano",
+        "nota": "Forneça a descrição do bug para análise de causa raiz",
+        "skill_origem": "root-cause-analyzer"
+      },
+      {
+        "tipo": "session-recorder",
+        "session_id": "SESSAO-2026-07-03T00-19-20",
+        "projeto": "POLYMARKETING",
+        "data": "2026-07-03T00:19:20.851Z",
+        "status": "sessao_iniciada",
+        "nota": "Sessão registrada para consulta futura",
+        "skill_origem": "debug-session-recorder"
+      },
+      {
+        "tipo": "pattern",
+        "padrao": "Singleton",
+        "arquivo": "backend\\src\\config\\database.ts",
+        "severidade": "info",
+        "recomendacao": "Avaliar se Singleton é realmente necessário",
+        "skill_origem": "pattern-matcher"
+      },
+      {
+        "tipo": "pattern",
+        "padrao": "Herança (class extends)",
+        "arquivo": "backend\\src\\utils\\app-error.ts",
+        "severidade": "info",
+        "recomendacao": "Preferir composição sobre herança",
+        "skill_origem": "pattern-matcher"
+      },
+      {
+        "tipo": "pattern",
+        "padrao": "Singleton",
+        "arquivo": "fabrica_projeto\\backend\\src\\config\\database.ts",
+        "severidade": "info",
+        "recomendacao": "Avaliar se Singleton é realmente necessário",
+        "skill_origem": "pattern-matcher"
+      },
+      {
+        "tipo": "pattern",
+        "padrao": "Herança (class extends)",
+        "arquivo": "fabrica_projeto\\backend\\src\\utils\\app-error.ts",
+        "severidade": "info",
+        "recomendacao": "Preferir composição sobre herança",
+        "skill_origem": "pattern-matcher"
+      },
+      {
+        "tipo": "adr",
+        "titulo": "Adoção do AI Factory como orquestrador",
+        "status": "proposto",
+        "contexto": "Projeto utiliza .ai-factory para automação de skills",
+        "consequencia": "Padroniza análise e documentação",
+        "severidade": "info",
+        "skill_origem": "adr-generator"
+      },
+      {
+        "tipo": "tech-debt-summary",
+        "total_pontos": 28,
+        "arquivos_afetados": 6,
+        "items": [
+          {
+            "tipo": "tech-debt",
+            "arquivo": "backend\\src\\controllers\\memory.controller.ts",
+            "linhas": 621,
+            "todos_encontrados": 0,
+            "pontuacao": 8
+          },
+          {
+            "tipo": "tech-debt",
+            "arquivo": "backend\\src\\repositories\\memory.repository.ts",
+            "linhas": 500,
+            "todos_encontrados": 0,
+            "pontuacao": 3
+          },
+          {
+            "tipo": "tech-debt",
+            "arquivo": "backend\\tests\\memory.test.ts",
+            "linhas": 313,
+            "todos_encontrados": 0,
+            "pontuacao": 3
+          },
+          {
+            "tipo": "tech-debt",
+            "arquivo": "fabrica_projeto\\backend\\src\\controllers\\memory.controller.ts",
+            "linhas": 621,
+            "todos_encontrados": 0,
+            "pontuacao": 8
+          },
+          {
+            "tipo": "tech-debt",
+            "arquivo": "fabrica_projeto\\backend\\src\\repositories\\memory.repository.ts",
+            "linhas": 500,
+            "todos_encontrados": 0,
+            "pontuacao": 3
+          },
+          {
+            "tipo": "tech-debt",
+            "arquivo": "fabrica_projeto\\backend\\tests\\memory.test.ts",
+            "linhas": 313,
+            "todos_encontrados": 0,
+            "pontuacao": 3
+          }
+        ],
+        "skill_origem": "tech-debt-calculator"
+      },
+      {
+        "files_analisados": 44,
+        "complexidade_media": 5.5,
+        "max_complexidade": 15,
+        "skill_origem": "complexity-analyzer"
+      }
+    ]
+  },
+  "tarefas_atribuidas": []
+}

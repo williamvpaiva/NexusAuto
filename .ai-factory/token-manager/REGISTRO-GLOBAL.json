@@ -1,0 +1,53 @@
+{
+  "versao": "1.0.0",
+  "projeto": "POLYMARKETING",
+  "data_criacao": "2026-07-02T14:30:00Z",
+  
+  "resumo_geral": {
+    "total_tarefas": 0,
+    "total_tokens_entrada": 0,
+    "total_tokens_saida": 0,
+    "total_tokens_geral": 0,
+    "custo_total_usd": 0.00,
+    "custo_total_brl": 0.00,
+    "tempo_total_segundos": 0,
+    "tempo_total_formatado": "0h 0min",
+    "economia_total_usd": 0.00,
+    "economia_total_percentual": "0%"
+  },
+  
+  "registros": [],
+  
+  "por_modelo": {},
+  
+  "por_agente": {},
+  
+  "por_area": {},
+  
+  "otimizacoes_aplicadas": [],
+  
+  "alertas_disparados": [],
+  
+  "metas": {
+    "diaria": {
+      "limite_usd": 10.00,
+      "consumido_usd": 0.00,
+      "percentual": "0%",
+      "status": "within_limit"
+    },
+    "semanal": {
+      "limite_usd": 50.00,
+      "consumido_usd": 0.00,
+      "percentual": "0%",
+      "status": "within_limit"
+    },
+    "mensal": {
+      "limite_usd": 200.00,
+      "consumido_usd": 0.00,
+      "percentual": "0%",
+      "status": "within_limit"
+    }
+  },
+  
+  "ultima_atualizacao": "2026-07-02T14:30:00Z"
+}

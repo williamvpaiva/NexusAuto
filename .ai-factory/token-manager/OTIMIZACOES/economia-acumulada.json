@@ -1,0 +1,43 @@
+{
+  "total_economia_acumulada_usd": 0.00,
+  "total_economia_acumulada_brl": 0.00,
+  "total_tokens_economizados": 0,
+  
+  "por_tipo_otimizacao": {
+    "contexto_comprimido": {
+      "vezes_aplicada": 0,
+      "tokens_economizados": 0,
+      "usd_economizados": 0.00
+    },
+    "modelo_adequado": {
+      "vezes_aplicada": 0,
+      "tokens_economizados": 0,
+      "usd_economizados": 0.00
+    },
+    "prompt_reutilizado": {
+      "vezes_aplicada": 0,
+      "tokens_economizados": 0,
+      "usd_economizados": 0.00
+    },
+    "instrucoes_enxutas": {
+      "vezes_aplicada": 0,
+      "tokens_economizados": 0,
+      "usd_economizados": 0.00
+    },
+    "cache_contexto": {
+      "vezes_aplicada": 0,
+      "tokens_economizados": 0,
+      "usd_economizados": 0.00
+    }
+  },
+  
+  "historico_economia": [],
+  
+  "projecao_anual": {
+    "economia_estimada_usd": 0.00,
+    "economia_estimada_brl": 0.00,
+    "tokens_estimados_economizados": 0
+  },
+  
+  "ultima_atualizacao": "2026-07-02T14:30:00Z"
+}

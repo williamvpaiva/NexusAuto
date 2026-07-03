@@ -1,0 +1,50 @@
+{
+  "projeto": "POLYMARKETING",
+  "data_criacao": "2026-07-02T14:30:00Z",
+  
+  "resumo": {
+    "total_tarefas": 0,
+    "total_tokens_entrada": 0,
+    "total_tokens_saida": 0,
+    "total_tokens_geral": 0,
+    "custo_total_usd": 0.00,
+    "custo_total_brl": 0.00,
+    "tempo_total_segundos": 0,
+    "tempo_total_formatado": "0h 0min",
+    "economia_total_usd": 0.00,
+    "economia_total_percentual": "0%"
+  },
+  
+  "fases": {
+    "inicializacao": {
+      "tokens": 0,
+      "custo_usd": 0.00,
+      "percentual": "0%"
+    },
+    "configuracao": {
+      "tokens": 0,
+      "custo_usd": 0.00,
+      "percentual": "0%"
+    },
+    "desenvolvimento": {
+      "tokens": 0,
+      "custo_usd": 0.00,
+      "percentual": "0%"
+    },
+    "revisao": {
+      "tokens": 0,
+      "custo_usd": 0.00,
+      "percentual": "0%"
+    }
+  },
+  
+  "tarefas": [],
+  
+  "top_tarefas_mais_caras": [],
+  
+  "gargalos": [],
+  
+  "otimizacoes_especificas": [],
+  
+  "ultima_atualizacao": "2026-07-02T14:30:00Z"
+}

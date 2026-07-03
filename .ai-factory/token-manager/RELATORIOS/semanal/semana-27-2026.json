@@ -1,0 +1,70 @@
+{
+  "semana": 27,
+  "ano": 2026,
+  "data_inicio": "2026-07-01",
+  "data_fim": "2026-07-07",
+  
+  "resumo_semana": {
+    "total_tarefas": 0,
+    "total_tokens": 0,
+    "custo_total_usd": 0.00,
+    "custo_total_brl": 0.00,
+    "tempo_total_horas": 0.00,
+    "economia_usd": 0.00,
+    "economia_percentual": "0%"
+  },
+  
+  "resumo_por_dia": {
+    "2026-07-01": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-02": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-03": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-04": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-05": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-06": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    },
+    "2026-07-07": {
+      "tarefas": 0,
+      "tokens": 0,
+      "custo_usd": 0.00
+    }
+  },
+  
+  "top_projetos": [],
+  
+  "top_tarefas_mais_caras": [],
+  
+  "otimizacoes_da_semana": [],
+  
+  "comparacao_semana_anterior": {
+    "variacao_tokens": "0%",
+    "variacao_custo": "0%",
+    "variacao_economia": "0%"
+  },
+  
+  "tendencias": [],
+  
+  "ultima_atualizacao": "2026-07-02T14:30:00Z"
+}
