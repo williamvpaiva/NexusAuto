@@ -109,27 +109,7 @@ nexusauto/
 
 ---
 
-## Endpoints da API
 
-### Health
-- `GET /api/v1/health` — Status do servidor
-
-### Users (in-memory)
-- `GET /api/v1/users` — Listar usuários
-- `GET /api/v1/users/:id` — Buscar usuário
-- `POST /api/v1/users` — Criar usuário
-- `PUT /api/v1/users/:id` — Atualizar usuário
-- `DELETE /api/v1/users/:id` — Remover usuário
-
-### Memory (SQLite)
-- `GET /api/v1/memory/stats` — Estatísticas
-- `GET /api/v1/memory/conversations` — Listar conversas
-- `GET /api/v1/memory/messages` — Listar mensagens
-- `GET /api/v1/memory/error-logs` — Logs de erro
-- `GET /api/v1/memory/search` — Busca textual
-- `GET /api/v1/memory/query-cache` — Cache de queries
-
----
 
 ## Agentes da AI Factory
 
