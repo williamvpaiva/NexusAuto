@@ -81,24 +81,20 @@ nexusauto/
 ## Como Executar
 
 ```bash
-# 1. Instalar dependências
-npm install
-
-# 2. Configurar ambiente
-copy .env.example .env
-
-# 3. Subir banco (opcional — SQLite é usado por padrão)
-npm run docker:up
-
-# 4. Rodar aplicação
-npm run dev
+# 1. Coloque os arquivos do projeto no diretório
+# 2. Invoque o TECH-LEAD.md no seu agente de IA favorito
+#    (Claude Code, Cursor, Copilot, Gemini, etc.)
+# 3. O TECH-LEAD orquestra automaticamente todos os agentes
 ```
 
-| Serviço      | URL                              |
-|-------------|----------------------------------|
-| Frontend    | http://localhost:5173            |
-| Backend     | http://localhost:3000            |
-| Health      | http://localhost:3000/api/v1/health |
+> O projeto funciona 100% via arquivos markdown e agentes de IA — não há interface gráfica tradicional.
+
+### Fluxo Detalhado
+
+1. **Contextualização** → TECH-LEAD.md lê o contexto do projeto e identifica o que precisa ser feito
+2. **Orquestração** → O tech-lead delega tarefas para agentes especializados (architect, backend-dev, frontend-dev, security, etc.)
+3. **Execução** → Cada agente executa sua tarefa seguindo os padrões definidos em `.ai-factory/standards/`
+4. **Validação** → QA e segurança revisam o resultado antes de finalizar
 
 ---
 
