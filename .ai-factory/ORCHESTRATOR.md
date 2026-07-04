@@ -6,6 +6,49 @@
 
 Identifique a fase atual do projeto e assuma o agente apropriado.
 
+## 🧠 Nova Arquitetura: Cognição Evolutiva
+
+O NexusAuto agora possui **memória persistente**, **busca semântica** e **otimização de tokens**.
+
+### Componentes Principais
+
+1. **Memória Persistente** ([[brain/Memories]])
+   - SQLite + sqlite-vec para busca semântica
+   - Embeddings locais (@xenova/transformers)
+   - Cache de respostas e embeddings
+   - Nenhuma sessão começa do zero
+
+2. **Slash Commands** (via Tech Lead)
+   - `/nl-standup` - Resumo do status (≤200 tokens)
+   - `/nl-session-start` - Carrega contexto essencial
+   - `/nl-log-decision "texto"` - Registra decisão
+   - `/nl-search "termo"` - Busca semântica
+   - `/nl-brag "conquista"` - Registra win
+   - `/nl-retrospective` - Análise de sprint
+
+3. **Skills Padronizadas** ([[brain/Skills]])
+   - Formato SKILL.md com frontmatter YAML
+   - Descobrimento automático
+   - Carregamento progressivo (apenas relevantes)
+
+4. **Token Budget** ([[brain/Patterns#token-budget]])
+   - Limite de 50k tokens por tarefa
+   - Divisão automática de tarefas grandes
+   - Cache e sumarização obrigatórios
+
+### SessionStart Hook
+
+No início de CADA sessão, o Tech Lead deve:
+
+```
+1. Carregar brain/North Star.md (essencial, ~100 tokens)
+2. Buscar últimas 3 memórias relevantes (busca semântica)
+3. Verificar cache de respostas para a tarefa atual
+4. Carregar apenas skills necessárias para a tarefa
+```
+
+**Total estimado:** 300-500 tokens de contexto inicial (vs 10k+ antes)
+
 ## 🤖 Modo Automático com Tech Lead
 
 Para execução automática de tarefas em `MELHORIAS/`, use o **Tech Lead** como orquestrador:
@@ -92,11 +135,33 @@ Leia .ai-factory/agents/{agente}.md
 ```
 .ai-factory/
 ├── ORCHESTRATOR.md         # Este arquivo
+├── SOUL.md                 # ← NOVO: Filosofia do NexusAuto
 ├── PROJECT_CONTEXT.md      # Contexto atual do projeto
 ├── PROGRESS.md             # Registro de progresso
 ├── factory.config.yml      # Configurações
+├── brain/                  # ← NOVO: Memória e conhecimento
+│   ├── North Star.md       # Visão, missão, objetivos
+│   ├── Key Decisions.md    # ADRs consolidados
+│   ├── Patterns.md         # Padrões de implementação
+│   ├── Skills.md           # Catálogo de habilidades
+│   ├── Memories.md         # Log de sessões e lições
+│   └── Brag Doc.md         # Conquistas e wins
+├── org/                    # ← NOVO: Pessoas e agentes
+│   ├── Agents.md           # Catálogo de agentes
+│   └── Stakeholders.md     # Quem usa o software
+├── bases/                  # ← NOVO: Templates
+│   ├── agent-template.md   # Template para novos agentes
+│   ├── task-template.md    # Template para novas tarefas
+│   └── decision-template.md# Template para decisões (ADR)
+├── skills/                 # ← NOVO: Habilidades padronizadas
+│   ├── development/        # Skills de desenvolvimento
+│   ├── security/           # Skills de segurança
+│   ├── documentation/      # Skills de documentação
+│   └── automation/         # Skills de automação
 ├── agents/                 # Definições de agentes
-├── skills/                 # Habilidades transversais
+├── scripts/                # Scripts utilitários
+│   ├── memory-manager.js   # ← NOVO: Gerencia memória SQLite
+│   └── token-budget.js     # ← NOVO: Controla tokens
 ├── standards/              # Padrões obrigatórios
 ├── workflows/              # Fluxos de trabalho
 ├── handoffs/               # Regras de transição
