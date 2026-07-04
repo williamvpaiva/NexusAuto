@@ -1,0 +1,3 @@
+[submodule "cowagent"]
+	path = cowagent
+	url = https://github.com/zhayujie/CowAgent.git

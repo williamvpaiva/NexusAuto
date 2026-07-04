@@ -196,23 +196,55 @@ O Tech Lead reconhece os seguintes comandos:
 
 **Output:**
 ```markdown
-## Skills Disponíveis
+## Skills Disponíveis (27 skills)
 
-### Development (2)
+### 🔍 Code & Quality (4)
+- [[skills/code-review/SKILL]] - Revisão expert (18.6k stars) - Bugs, security, performance
+- [[skills/security-audit/SKILL]] - 250+ checks, weighted scoring
+- [[skills/refactor/SKILL]] - Clean Code + SOLID + patterns (36k stars)
+- [[skills/testing/SKILL]] - Unit, Integration, E2E coverage
+
+### 📚 Documentation & Knowledge (3)
+- [[skills/documentation/SKILL]] - API docs, architecture, user guides
+- [[skills/knowledge-management/SKILL]] - Second brain, PKM (8.7k stars)
+- [[skills/academic-research/SKILL]] - Pesquisa acadêmica (36k stars)
+
+### 🚀 DevOps & Infrastructure (5)
+- [[skills/deployment/SKILL]] - Deploy em 1 comando (3.7k stars)
+- [[skills/docker/SKILL]] - Multi-stage, security hardening
+- [[skills/kubernetes/SKILL]] - Production-ready clusters
+- [[skills/terraform/SKILL]] - IaC enterprise
+- [[skills/monitoring/SKILL]] - Observability completa
+
+### 💾 Backend & Performance (5)
+- [[skills/database/SKILL]] - Query tuning, indexing
+- [[skills/api-design/SKILL]] - REST/GraphQL/gRPC design
+- [[skills/performance/SKILL]] - Bottleneck detection
+- [[skills/debugging/SKILL]] - Root cause analysis
+- [[skills/git-workflow/SKILL]] - Advanced Git workflows
+
+### 🎨 Creative & Content (5)
+- [[skills/seo/SKILL]] - Technical SEO, E-E-A-T (10.5k stars)
+- [[skills/content-writing/SKILL]] - Conteúdo que converte (36k stars)
+- [[skills/image-generation/SKILL]] - 10,000+ prompts (3.5k stars)
+- [[skills/diagram-generation/SKILL]] - Architecture, UML (5.1k stars)
+- [[skills/game-development/SKILL]] - 49 agents, 72 workflows (22.6k stars)
+
+### 🛠️ Development (1)
 - [[skills/development/criar-componente-react]] - React + TypeScript + Tailwind
-- [[skills/development/integrar-api-rest]] - Integração API REST
 
-### Security (1)
+### 🔒 Security (1)
 - [[skills/security/auditar-cors]] - Auditoria CORS
 
-### Documentation (1)
+### 📝 Documentation (1)
 - [[skills/documentation/gerar-changelog]] - Changelog via Git
 
-### Automation (2)
+### 🤖 Automation (2)
 - [[skills/automation/github-create-issue]] - Cria issues no GitHub
 - [[skills/automation/slack-notify]] - Notifica no Slack
 
-**Total:** 6 skills
+**Total:** 27 skills
+**Inspiração:** Top skills do GitHub (18k-36k stars)
 ```
 
 ---
@@ -404,6 +436,56 @@ const optimized = tokenBudget.optimizeContext(context, 500);
 ```javascript
 const cost = tokenBudget.estimateCost(tokens);
 // { inputCost: 0.0025, outputCost: 0.0075, totalCost: 0.01 }
+```
+
+---
+
+## Matriz de Skills por Agente
+
+O Tech Lead deve usar esta matriz para atribuir skills aos agentes corretos:
+
+| Agente | Skills Disponíveis |
+|--------|-------------------|
+| **tech-lead** | code-review, refactor, debugging, git-workflow, knowledge-management |
+| **backend-dev** | database, api-design, performance, testing, documentation |
+| **frontend-dev** | criar-componente-react, diagram-generation, testing |
+| **security** | security-audit, auditar-cors, code-review |
+| **devops** | deployment, docker, kubernetes, terraform, monitoring, git-workflow |
+| **qa-tester** | testing, documentation, gerar-changelog, github-create-issue |
+| **performance** | performance-hunter, database, debugging |
+| **content-marketer** | seo, content-writing, image-generation |
+| **designer** | image-generation, diagram-generation |
+| **game-dev** | game-development, diagram-generation |
+| **researcher** | academic-research, knowledge-management, documentation |
+| **architect** | diagram-generation, api-design, documentation |
+
+---
+
+## Como Carregar Skills Dinamicamente
+
+```javascript
+async function loadRelevantSkills(task) {
+  // Extrair palavras-chave da tarefa
+  const keywords = extractKeywords(task);
+  
+  // Mapear para categorias de skills
+  const categories = mapKeywordsToCategories(keywords);
+  
+  // Carregar skills relevantes
+  const skills = [];
+  for (const category of categories) {
+    const categorySkills = await loadSkillsByCategory(category);
+    skills.push(...categorySkills);
+  }
+  
+  // Otimizar contexto (max 500 tokens)
+  return await optimizeContext(skills, 500);
+}
+
+// Exemplo de uso
+const task = "Preciso criar uma API REST com otimização de queries";
+const skills = await loadRelevantSkills(task);
+// Skills carregadas: api-design, database-optimizer
 ```
 
 ---
