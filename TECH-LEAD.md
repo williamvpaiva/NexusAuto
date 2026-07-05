@@ -109,6 +109,24 @@ node scripts/memory-manager.js cache-set "porta do banco" "5432"
 
 ---
 
+## Slash Commands – The Agency
+
+- `/agency-list` → Lista todas as divisões e perfis disponíveis.
+- `/agency-load "nome-do-perfil"` → Carrega o perfil especificado e injeta sua personalidade, voz e habilidades como contexto extra para o agente atual.
+- `/agency-search "termo"` → Busca perfis por nome, habilidades ou tags.
+- `/agency-create "nome" "divisão"` → Cria um novo perfil a partir do template, com os dados fornecidos.
+- `/agency-export "cursor|claude|copilot"` → Exporta todos os perfis para o formato escolhido.
+
+## Fluxo com The Agency
+
+1. **Antes de uma tarefa:** Use `/agency-search "react"` para encontrar perfis com habilidades relevantes.
+2. **Carregar perfil:** Use `/agency-load "frontend-developer"`. O Tech Lead lerá o arquivo e injetará as seções "Personalidade", "Tom de Comunicação" e "Exemplo de Prompt" no contexto do agente frontend-dev.
+3. **Execução:** O agente executa a tarefa com o contexto enriquecido.
+4. **Registro:** Após a tarefa, registre em `brain/Memories.md` qual perfil foi usado e o resultado.
+5. **Criação:** Se uma nova especialidade for necessária, use `/agency-create` e o perfil será adicionado à agência.
+
+---
+
 ## 🧠 Integração com Spec-Kit (Especificação Primeiro)
 
 > **Especificação primeiro, código depois. O agente sabe exatamente o que construir, em que ordem e por quê.**

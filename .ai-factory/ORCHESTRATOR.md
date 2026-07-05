@@ -185,6 +185,7 @@ Leia .ai-factory/agents/{agente}.md
 
 ## Ciclo de Vida de uma Feature
 
+0.5. **Consulta à Agência (The Agency):** Tech Lead consulta se há um especialista em `.ai-factory/the-agency/profiles/` via `/agency-search` e carrega o perfil via `/agency-load` para injetar personalidade e contexto extra na etapa apropriada.
 1. **Analyst** levanta requisitos
 2. **Architect** desenha solução
 3. **Devs** implementam em paralelo
