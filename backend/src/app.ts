@@ -6,9 +6,12 @@ import { authRoutes } from './routes/auth.routes';
 import { env } from './config/env';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { securityHeaders, clickjackingProtection, apiLimiter } from './middleware/security';
-import { validateCsrf } from './middleware/csrf';
+import { requestId } from './middleware/request-id';
 
 export const app = express();
+
+// Request ID tracking
+app.use(requestId);
 
 // Security headers - Helmet com configuração customizada
 app.use(
@@ -79,9 +82,6 @@ app.get('/', (_req, res) => {
 
 // API routes
 app.use('/api/v1/auth', authRoutes);
-
-// CSRF protection para todas as mutations da API
-app.use('/api/v1', validateCsrf);
 
 // API routes
 app.use('/api/v1', apiRouter);

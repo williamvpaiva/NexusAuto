@@ -1,10 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 
-// Extende Request para incluir session
-interface SessionRequest extends Request {
-  session?: { userId: string };
-}
-
 /**
  * Armazenamento de tokens CSRF (em memória)
  * 
@@ -46,8 +41,6 @@ export function registerCsrfToken(token: string, userId: string, expiresAt: numb
  * router.post('/vehicles', validateCsrf, createVehicle); // Rota específica
  */
 export function validateCsrf(req: Request, res: Response, next: NextFunction) {
-  const sessionReq = req as SessionRequest;
-  
   // Apenas valida mutations (POST, PUT, DELETE, PATCH)
   const method = req.method.toUpperCase();
   const isMutation = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
@@ -98,13 +91,13 @@ export function validateCsrf(req: Request, res: Response, next: NextFunction) {
   }
 
   // Verifica se token pertence ao usuário atual
-  if (sessionReq.session?.userId !== tokenData.userId) {
-    console.warn('[CSRF] Token não corresponde à sessão atual');
+  if (req.user?.userId !== tokenData.userId) {
+    console.warn('[CSRF] Token não corresponde ao usuário atual');
     return res.status(403).json({
       success: false,
       error: { 
         code: 'CSRF_MISMATCH', 
-        message: 'Token CSRF não corresponde à sessão atual. Faça login novamente.' 
+        message: 'Token CSRF não corresponde ao usuário atual. Faça login novamente.' 
       }
     });
   }

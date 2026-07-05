@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const createConversationSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
+  title: z.string().min(1, 'Title is required').max(255, 'Title must be less than 255 characters'),
   agent_id: z.string().min(1, 'agent_id is required'),
   session_id: z.string().optional(),
   metadata: z.record(z.unknown()).optional(),
@@ -10,14 +10,14 @@ export const createConversationSchema = z.object({
 export const createMessageSchema = z.object({
   conversation_id: z.string().min(1, 'conversation_id is required'),
   role: z.enum(['user', 'assistant', 'system']),
-  content: z.string().min(1, 'content is required'),
+  content: z.string().min(1, 'content is required').max(10000, 'content must be less than 10000 characters'),
   metadata: z.record(z.unknown()).optional(),
 });
 
 export const createErrorLogSchema = z.object({
   conversation_id: z.string().optional(),
-  error_code: z.string().min(1, 'error_code is required'),
-  error_message: z.string().min(1, 'error_message is required'),
+  error_code: z.string().min(1, 'error_code is required').max(50, 'error_code must be less than 50 characters'),
+  error_message: z.string().min(1, 'error_message is required').max(2000, 'error_message must be less than 2000 characters'),
   error_stack: z.string().optional(),
   context: z.record(z.unknown()).optional(),
   resolution_steps: z.array(z.string()).optional(),

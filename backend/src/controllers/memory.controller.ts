@@ -10,12 +10,12 @@ import {
   resolveErrorSchema,
   optimizeTokensSchema,
 } from '../validators/memory.validator';
+import { validate } from '../middleware/validate.middleware';
 
 const router = Router();
 
-router.post('/conversations', asyncHandler(async (req, res) => {
-  const data = createConversationSchema.parse(req.body);
-  const conversation = await memoryService.createConversation(data);
+router.post('/conversations', validate(createConversationSchema), asyncHandler(async (req, res) => {
+  const conversation = await memoryService.createConversation(req.body);
   res.status(201).json({ success: true, data: conversation });
 }));
 
@@ -53,9 +53,8 @@ router.delete('/conversations/:id', asyncHandler(async (req, res) => {
   res.status(204).send();
 }));
 
-router.post('/messages', asyncHandler(async (req, res) => {
-  const data = createMessageSchema.parse(req.body);
-  const message = await memoryService.createMessage(data);
+router.post('/messages', validate(createMessageSchema), asyncHandler(async (req, res) => {
+  const message = await memoryService.createMessage(req.body);
   res.status(201).json({ success: true, data: message });
 }));
 
@@ -73,9 +72,8 @@ router.delete('/messages/:id', asyncHandler(async (req, res) => {
   res.status(204).send();
 }));
 
-router.post('/errors', asyncHandler(async (req, res) => {
-  const data = createErrorLogSchema.parse(req.body);
-  const errorLog = await memoryService.createErrorLog(data);
+router.post('/errors', validate(createErrorLogSchema), asyncHandler(async (req, res) => {
+  const errorLog = await memoryService.createErrorLog(req.body);
   res.status(201).json({ success: true, data: errorLog });
 }));
 
@@ -96,14 +94,13 @@ router.get('/errors/:id', asyncHandler(async (req, res) => {
   res.json({ success: true, data: errorLog });
 }));
 
-router.patch('/errors/:id', asyncHandler(async (req, res) => {
-  const data = updateErrorLogSchema.parse(req.body);
-  const errorLog = await memoryService.updateErrorLog(req.params.id, data);
+router.patch('/errors/:id', validate(updateErrorLogSchema), asyncHandler(async (req, res) => {
+  const errorLog = await memoryService.updateErrorLog(req.params.id, req.body);
   res.json({ success: true, data: errorLog });
 }));
 
-router.post('/errors/:id/resolve', asyncHandler(async (req, res) => {
-  const { resolution_summary, resolution_steps } = resolveErrorSchema.parse(req.body);
+router.post('/errors/:id/resolve', validate(resolveErrorSchema), asyncHandler(async (req, res) => {
+  const { resolution_summary, resolution_steps } = req.body;
   const errorLog = await memoryService.resolveError(req.params.id, resolution_summary, resolution_steps);
   res.json({ success: true, data: errorLog });
 }));
@@ -113,8 +110,8 @@ router.delete('/errors/:id', asyncHandler(async (req, res) => {
   res.status(204).send();
 }));
 
-router.post('/conversations/:id/optimize', asyncHandler(async (req, res) => {
-  const { strategy } = optimizeTokensSchema.parse(req.body);
+router.post('/conversations/:id/optimize', validate(optimizeTokensSchema), asyncHandler(async (req, res) => {
+  const { strategy } = req.body;
   const result = await memoryService.optimizeConversationTokens(req.params.id, strategy);
   res.json({ success: true, data: result });
 }));

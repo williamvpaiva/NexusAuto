@@ -1,85 +1,68 @@
-# [ÁREA] — Tarefas de Melhoria
+# 06 — MULTIAGENTE
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Sistema multiagente: orquestração, handoff, memória distribuída, skills registry e coordenação
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** 03-SISTEMAS (Redis/filas), 01-ARQUITETURA
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### MTA-001 — Skill Registry Service
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar serviço de registro de skills (agentes) com descoberta, metadata (nome, versão, capacidades, dependências) e health check
+- **Critério de aceite:** Skill pode ser registrada em runtime; `/skills` lista skills ativas com status (online/offline); health check periódico
+- **Esforço:** 5h
+- **Prioridade:** Alta
+
+### MTA-002 — Handoff Protocol entre Agentes
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar protocolo de handoff entre agentes com contexto serializado, timeout, fallback e chain de responsabilidade
+- **Critério de aceite:** Agente A chama agente B com contexto → B processa → B retorna resultado → A continua; timeout de 30s com fallback
+- **Esforço:** 6h
+- **Prioridade:** Alta
+
+### MTA-003 — Memória Distribuída (Redis/Valkey)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Camada de memória compartilhada entre agentes via Redis com TTL, namespaces por skill e suporte a cache de conversas
+- **Critério de aceite:** Agente escreve `memoria:skill-a:key` → agente B lê; TTL configuravel por namespace; LRU eviction
+- **Esforço:** 4h
+- **Prioridade:** Alta
+
+### MTA-004 — Orchestrator Brain (Router de Skills)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar "orquestrador central" que analisa intent do usuário, roteia para skill apropriada e consolida respostas multi-skill
+- **Critério de aceite:** Mensagem "quero criar lead" → roteia para skill CRM → resposta consolidada; fallback se nenhuma skill cobre o intent
+- **Esforço:** 8h
+- **Prioridade:** Alta
+
+### MTA-005 — Chain of Thought + Reflexão Pós-Ação
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar ciclo de reflexão: agente executa → avalia resultado → ajusta → reexecuta se necessário (max 3 tentativas)
+- **Critério de aceite:** Log mostra chain: `[pensou] → [agiu] → [refletiu: sucesso/fallha] → [ajustou/repetiu]`; máximo 3 ciclos
+- **Esforço:** 4h
+- **Prioridade:** Média
+
+### MTA-006 — Circuit Breaker por Skill
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar circuit breaker para skills com falha: 5 erros consecutivos → circuito abre → 30s cooldown → half-open → testa
+- **Critério de aceite:** Skill com falha não bloqueia outras skills; log indica "circuito aberto para skill X"; requisições vão para fallback
+- **Esforço:** 3h
+- **Prioridade:** Média
+
+### MTA-007 — Log e Auditoria de Chamadas entre Agentes
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Log estruturado de toda chamada inter-agente: origem, destino, timestamp, payload size, status e duração
+- **Critério de aceite:** Tabela `agent_calls` no SQLite ou Redis; consultável por período, skill origem/destino; retenção de 7 dias
+- **Esforço:** 3h
+- **Prioridade:** Baixa
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 17 — GESTÃO DE ESTADO
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Gerenciamento de estado frontend: cache, sincronização, estado global e offline
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Média
+> **Dependências:** 07-UI-COMPONENTS
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### EST-001 — Estado Global com Context + useReducer
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar estado global com React Context + useReducer para: auth (user, token, permissões) e app (tema, sidebar, notificações)
+- **Critério de aceite:** `useAuth()` retorna user + login/logout; `useApp()` retorna tema + toggle; dispatch actions tipadas
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### EST-002 — Server State com TanStack Query (React Query)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Substituir fetch manual por TanStack Query com cache, stale-while-revalidate, refetch automático e optimistic updates
+- **Critério de aceite:** Dados de API cached por 30s; refetch em focus; mutation atualiza cache sem refetch; loading/error estado do React Query
+- **Esforço:** 4h
+- **Prioridade:** Alta
+
+### EST-003 — Estado de Formulário com React Hook Form + Zod
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** (Já implementado parcialmente) Integrar React Hook Form com validação Zod em todos os formulários, com erros por campo e disabled state durante submit
+- **Critério de aceite:** Submit mostra erros por campo; botão disabled durante submit; validação async (ex: email único) funciona
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### EST-004 — Persistência de Estado (localStorage)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Persistir estado crítico no localStorage: token de autenticação, tema, preferências do usuário, draft de formulários
+- **Critério de aceite:** Refresh mantém sessão; tema persiste; draft de formulário recuperado se página fechar acidentalmente
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### EST-005 — Zustand para Estado Complexo
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Substituir Context por Zustand para estado que muda frequentemente (fila de mensagens, progresso de agente, notificações)
+- **Critério de aceite:** Store Zustand sem re-renderizações desnecessárias; actions imutáveis; devtools integration
+- **Esforço:** 3h
+- **Prioridade:** Baixa
+
+### EST-006 — URL State (Search Params)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Gerenciar estado compartilhável via URL search params: filtros, paginação, busca, abas ativas
+- **Critério de aceite:** `?page=2&search=termo` persiste em navegação; back/forward restaura estado; link compartilhável replica estado
+- **Esforço:** 2h
+- **Prioridade:** Média
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

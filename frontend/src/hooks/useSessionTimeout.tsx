@@ -133,18 +133,9 @@ export function useSessionTimeout({
         window.removeEventListener(event, handleActivity);
       });
     };
-  }, [disabled, events, resetTimer]);
+}, [disabled, events, resetTimer]);
 
-  /**
-   * Converte tempo restante para formato legível
-   */
-  /* eslint-disable */ const getFormattedTime = () => {
-    const minutes = Math.floor(timeRemaining / 60000);
-    const seconds = Math.floor((timeRemaining % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-return {
+  return {
     timeRemaining,
     isWarning,
     isExpired,

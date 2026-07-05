@@ -1,85 +1,54 @@
-# [ÁREA] — Tarefas de Melhoria
+# 15 — SEO E ANALYTICS
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Otimização para motores de busca, métricas de uso e analytics
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Baixa
+> **Dependências:** 07-UI-COMPONENTS, 03-SISTEMAS
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### SEO-001 — Meta Tags e Open Graph
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar meta tags (title, description, keywords), Open Graph (og:title, og:description, og:image) e Twitter Cards no HTML head
+- **Critério de aceite:** Compartilhamento em redes sociais exibe título, descrição e imagem corretos; validador OG não reporta erros
+- **Esforço:** 1h
+- **Prioridade:** Alta
+
+### SEO-002 — Sitemap.xml e Robots.txt
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Gerar sitemap.xml dinâmico com todas as rotas públicas e robots.txt configurado (permitir crawlers, bloquear /api, /admin)
+- **Critério de aceite:** GET /sitemap.xml retorna XML válido; GET /robots.txt retorna com regras; Google Search Console aceita ambos
+- **Esforço:** 1h
+- **Prioridade:** Alta
+
+### SEO-003 — Analytics (Plausible ou similar)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Integrar ferramenta de analytics privacy-friendly (Plausible/Umami) para métricas de página, referrer, device e eventos custom
+- **Critério de aceite:** Script analytics carrega sem bloquear render; dashboard mostra pageviews, bounce rate, top pages e devices
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### SEO-004 — Performance Core Web Vitals
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Otimizar LCP, FID, CLS: lazy loading de imagens, preconnect para origins críticas, font-display: swap, tamanho explícito de assets
+- **Critério de aceite:** Lighthouse Core Web Vitals verdes (LCP < 2.5s, FID < 100ms, CLS < 0.1)
+- **Esforço:** 3h
+- **Prioridade:** Média
+
+### SEO-005 — Structured Data (JSON-LD)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar JSON-LD structured data: Organization, WebSite, BreadcrumbList e SoftwareApplication (tipo SaaS)
+- **Critério de aceite:** Teste de Rich Results do Google não reporta erros; schema.org/SoftwareApplication presente
+- **Esforço:** 2h
+- **Prioridade:** Baixa
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 11 — DOCUMENTAÇÃO
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Documentação técnica: README, Storybook, JSDoc, guias de contribuição e arquitetura
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** Nenhuma
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### DOC-001 — README.md Principal Completo
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Reescrever README.md com: descrição do projeto, stack, pré-requisitos, instalação (local + Docker), configuração, scripts disponíveis, estrutura de diretórios e links para docs
+- **Critério de aceite:** README cobre todas as seções; desenvolvedor novo consegue rodar o projeto em < 10 min seguindo o guia
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### DOC-002 — Guia de Contribuição (CONTRIBUTING.md)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar CONTRIBUTING.md com: Setup, workflow (branch/commit/PR), coding standards, padrão de commits (Conventional Commits), checklist de review
+- **Critério de aceite:** CONTRIBUTING.md linkado no README; cobre todo o ciclo de contribuição
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### DOC-003 — JSDoc/TSDoc em Funções Públicas
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar JSDoc em todas as funções/classes exportadas no backend: @param, @returns, @throws e exemplos de uso
+- **Critério de aceite:** `npx typedoc` (ou similar) gera documentação sem warnings; funções públicas têm JSDoc
+- **Esforço:** 4h
+- **Prioridade:** Média
+
+### DOC-004 — CHANGELOG.md Automatizado
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Configurar CHANGELOG.md gerado a partir de commits (Conventional Commits) via standard-version ou semantic-release
+- **Critério de aceite:** `npm run release` gera CHANGELOG.md com seções Features/Fixes/Breaking; version bump automático
+- **Esforço:** 1h
+- **Prioridade:** Média
+
+### DOC-005 — API Docs (Swagger/OpenAPI)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Documentar todas as rotas da API com OpenAPI/Swagger (swagger-jsdoc + swagger-ui-express)
+- **Critério de aceite:** GET /api-docs exibe UI Swagger com todas as rotas documentadas; schemas de request/response
+- **Esforço:** 4h
+- **Prioridade:** Média
+
+### DOC-006 — Architecture Decision Records (ADR)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar primeiros ADRs para decisões arquiteturais chave: SQLite vs PostgreSQL, Express vs Fastify, estrutura de agentes
+- **Critério de aceite:** ADRs no formato `docs/adr/NNNN-titulo.md`; linkados no README; cada ADR contém contexto, decisão e consequências
+- **Esforço:** 2h
+- **Prioridade:** Baixa
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

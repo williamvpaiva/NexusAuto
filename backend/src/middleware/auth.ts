@@ -21,7 +21,7 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
   if (!header || !header.startsWith('Bearer ')) {
     return _res.status(401).json({
       success: false,
-      error: { code: 'UNAUTHORIZED', message: 'Token não fornecido' },
+      error: { code: 'UNAUTHORIZED', message: 'Token não fornecido', requestId: req.requestId },
     });
   }
 
@@ -34,7 +34,7 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
   } catch {
     return _res.status(401).json({
       success: false,
-      error: { code: 'UNAUTHORIZED', message: 'Token inválido ou expirado' },
+      error: { code: 'UNAUTHORIZED', message: 'Token inválido ou expirado', requestId: req.requestId },
     });
   }
 }

@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 12 — BANCO DE DADOS
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Migrations, seeds, backup, query optimization e evolução do schema SQLite
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** Nenhuma
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### BAN-001 — Sistema de Migrations (SQLite)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar sistema de migrations versionadas (up/down) para SQLite com arquivos SQL sequenciais, lock e rollback
+- **Critério de aceite:** `npm run db:migrate` executa pendentes; `npm run db:rollback` desfaz última; estado tracking em `_migrations` table
+- **Esforço:** 4h
+- **Prioridade:** Alta
+
+### BAN-002 — Seeds de Dados para Desenvolvimento
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Scripts seed que populam banco com dados realistas para dev: usuários, agentes, conversas, mensagens e logs de execução
+- **Critério de aceite:** `npm run db:seed` popula banco em < 2s; dados coerentes (relações válidas); `npm run db:reset` = migrate + seed
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### BAN-003 — Backup Automático (SQLite Dump)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Script de backup que executa `.backup` ou dump SQL, compacta (gzip), rotaciona (últimos 7 dias) e opcionalmente envia para S3/Blob
+- **Critério de aceite:** `npm run db:backup` gera arquivo `.sql.gz`; rotação mantém 7 backups; restauração via `sqlite3 < dump.sql`
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### BAN-004 — Índices e Otimização de Schema
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Auditar e adicionar índices faltantes: busca por usuário, data, status, agente; índices compostos para queries frequentes
+- **Critério de aceite:** EXPLAIN QUERY PLAN mostra apenas index scans para queries principais; cobertura de > 90% das queries
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### BAN-005 — Data Validation Constraints
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar constraints no schema SQLite: NOT NULL, UNIQUE, CHECK, FOREIGN KEY com ON DELETE CASCADE/RESTRICT
+- **Critério de aceite:** Inserir registro duplicado → erro; deletar pai com filhos RESTRICT → erro; ON DELETE CASCADE funciona
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### BAN-006 — Migração futura para PostgreSQL (Doc/Plan)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Documentar plano de migração SQLite → PostgreSQL: mapeamento de tipos, compatibilidade de queries, estratégia de zero-downtime
+- **Critério de aceite:** Documento `docs/adr/0002-postgresql-migration.md` com análise de impacto, riscos e plano passo-a-passo
+- **Esforço:** 2h
+- **Prioridade:** Baixa
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

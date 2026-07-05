@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 05 — CLEAN ARCHITECTURE
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Separação de camadas, DTOs, interfaces, injeção de dependência e isolamento de domínio
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** Nenhuma
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### CLN-001 — Interfaces de Repositório (Contracts)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Extrair interfaces TypeScript para todos os repositórios (IUserRepository, IMessageRepository, IAgentRepository) e injetar via construtor
+- **Critério de aceite:** Repositórios implementam interface; services dependem da interface, não da implementação concreta
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### CLN-002 — DTOs de Entrada e Saída
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar DTOs (Data Transfer Objects) para todas as rotas: request validation (Zod) + response serialization (exclui campos internos)
+- **Critério de aceite:** Controller recebe DTO validado; retorna DTO sem expor props internas (ex: `password_hash`, `deleted_at`)
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### CLN-003 — Error Hierarchy (Domain Errors)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar hierarquia de erros de domínio (NotFoundError, ValidationError, UnauthorizedError, ConflictError) com código HTTP mapeado
+- **Critério de aceite:** Service lança `new NotFoundError('User')` → middleware captura e retorna 404 com `{ error: 'not_found', message }`
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### CLN-004 — Use Cases / Application Services
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Separar lógica de aplicação em Use Cases (ex: CreateUserUseCase, SendMessageUseCase) independentes de framework (Express)
+- **Critério de aceite:** UseCase não importa Express nem HTTP; recebe DTO e retorna resultado; testável sem servidor HTTP
+- **Esforço:** 5h
+- **Prioridade:** Média
+
+### CLN-005 — Validação Centralizada com Zod
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Schema de validação Zod centralizado para todas as entradas (body, query, params), com mensagens de erro padronizadas e i18n-ready
+- **Critério de aceite:** Schema inválido retorna `{ errors: [{ field, message, code }] }`; mensagens em português
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### CLN-006 — Mapper Layer (Entity ↔ DTO)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar mappers para conversão entre entidades do banco (Prisma/SQLite row) e DTOs, com tratamento de datas, enums e relações
+- **Critério de aceite:** `toDTO(entity)` retorna objeto limpo; `toEntity(dto)` prepara para persistência; níveis de profundidade configuráveis
+- **Esforço:** 3h
+- **Prioridade:** Média
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

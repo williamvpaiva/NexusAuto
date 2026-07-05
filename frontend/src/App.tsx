@@ -5,6 +5,7 @@ import { HealthPage } from './pages/HealthPage';
 import { LoginPage } from './pages/LoginPage';
 import { VehicleList } from './components/VehicleList';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { RouteErrorBoundary } from './components/RouteErrorBoundary';
 
 // Placeholder para Dashboard
 function Dashboard() {
@@ -21,45 +22,60 @@ export default function App() {
   return (
     <Routes>
       {/* Rotas Públicas */}
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={
+          <RouteErrorBoundary routeName="login">
+            <LoginPage />
+          </RouteErrorBoundary>
+        }
+      />
       
       {/* Rotas Protegidas */}
       <Route
         path="/"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <HomePage />
-            </Layout>
-          </ProtectedRoute>
+          <RouteErrorBoundary routeName="home">
+            <ProtectedRoute>
+              <Layout>
+                <HomePage />
+              </Layout>
+            </ProtectedRoute>
+          </RouteErrorBoundary>
         }
       />
       <Route
         path="/health"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <HealthPage />
-            </Layout>
-          </ProtectedRoute>
+          <RouteErrorBoundary routeName="health">
+            <ProtectedRoute>
+              <Layout>
+                <HealthPage />
+              </Layout>
+            </ProtectedRoute>
+          </RouteErrorBoundary>
         }
       />
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
+          <RouteErrorBoundary routeName="dashboard">
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          </RouteErrorBoundary>
         }
       />
       <Route
         path="/veiculos"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <VehicleList />
-            </Layout>
-          </ProtectedRoute>
+          <RouteErrorBoundary routeName="veiculos">
+            <ProtectedRoute>
+              <Layout>
+                <VehicleList />
+              </Layout>
+            </ProtectedRoute>
+          </RouteErrorBoundary>
         }
       />
     </Routes>

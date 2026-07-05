@@ -1,0 +1,56 @@
+﻿version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: nexusauto-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - APP_ENV=${APP_ENV:-production}
+      - PORT=3000
+      - FRONTEND_ORIGIN=${FRONTEND_ORIGIN:-http://localhost:5173}
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - JWT_EXPIRES_IN=24h
+      - OPENWA_API_KEY=${OPENWA_API_KEY:-change-me-in-production}
+      - OPENWA_WEBHOOK_BASE_URL=${OPENWA_WEBHOOK_BASE_URL:-http://nexusauto-app:3000}
+    volumes:
+      - app-data:/app/backend/data
+    depends_on:
+      - openwa
+    networks:
+      - nexusauto-network
+
+  openwa:
+    image: ghcr.io/rmyndharis/openwa:latest
+    container_name: openwa
+    restart: unless-stopped
+    ports:
+      - "2785:2785"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=sqlite:/app/data/openwa.db
+      - STORAGE_DRIVER=local
+      - STORAGE_LOCAL_PATH=/app/data/storage
+      - MCP_ENABLED=true
+      - MCP_READONLY=false
+      - API_KEY=${OPENWA_API_KEY:-change-me-in-production}
+      - WEBHOOK_BASE_URL=${OPENWA_WEBHOOK_BASE_URL:-http://nexusauto-app:3000}
+      - RATE_LIMIT_MAX=100
+      - RATE_LIMIT_WINDOW_MS=60000
+    volumes:
+      - openwa-data:/app/data
+    networks:
+      - nexusauto-network
+
+volumes:
+  openwa-data:
+  app-data:
+
+networks:
+  nexusauto-network:
+    driver: bridge

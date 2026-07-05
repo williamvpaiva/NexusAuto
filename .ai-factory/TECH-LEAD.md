@@ -297,6 +297,171 @@ O Tech Lead reconhece os seguintes comandos:
 
 ---
 
+### `/design generate "descrição"`
+**Propósito:** Gera um design system completo a partir de descrição textual
+
+**Execução:**
+1. Chamar UI/UX Pro Max Agent via bridge
+2. Gerar especificação completa (layout, cores, tipografia, efeitos, checklist)
+3. Retornar JSON com todos os elementos
+
+**Exemplo:**
+```bash
+/design generate "Landing page para spa de bem-estar, com foco em relaxamento e natureza"
+```
+
+**Output:**
+```json
+{
+  "layout": "Hero com imagem de fundo + seções Sobre, Serviços, Depoimentos, Contato",
+  "palette": {
+    "primary": "#2C3E50",
+    "secondary": "#8E8E8E",
+    "accent": "#E8D5C4",
+    "background": "#FFFFFF"
+  },
+  "typography": {
+    "headings": "Playfair Display",
+    "body": "Lato"
+  },
+  "css_effects": ["Sombra suave", "Transições 300ms", "Overlays com gradiente"],
+  "anti_patterns": ["Evitar cores vibrantes", "Não usar animações agressivas"],
+  "checklist": ["WCAG 2.1 AA", "Mobile-first", "Performance < 2s"]
+}
+```
+
+---
+
+### `/design save "descrição" "feature-name"`
+**Propósito:** Gera design system e salva como especificação em `specs/feature-name/design-spec.md`
+
+**Execução:**
+1. Chamar UI/UX Pro Max Agent
+2. Gerar especificação completa
+3. Criar diretório `specs/feature-name/`
+4. Salvar `design-spec.md` formatado
+5. Retornar caminho do arquivo
+
+**Exemplo:**
+```bash
+/design save "Landing page para spa de bem-estar 'Serenidade'" "serenidade-landing"
+```
+
+**Output:**
+```
+✅ Design gerado e salvo
+📄 Arquivo: specs/serenidade-landing/design-spec.md
+🎨 Layout: Hero + 4 seções
+🌈 Cores: 4 cores definidas
+🔤 Tipografia: 2 fontes
+✨ Efeitos: 3 efeitos CSS
+✅ Checklist: 3 itens de qualidade
+```
+
+---
+
+### `/design palette "descrição"`
+**Propósito:** Gera apenas a paleta de cores recomendada
+
+**Execução:**
+1. Chamar UI/UX Pro Max Agent
+2. Extrair apenas `palette` do resultado
+3. Retornar cores com hex codes e nomes
+
+**Exemplo:**
+```bash
+/design palette "E-commerce de moda sustentável minimalista"
+```
+
+**Output:**
+```markdown
+## Paleta de Cores Recomendada
+
+| Nome | Hex | Uso |
+|------|-----|-----|
+| Primary | #2C3E50 | Botões, links |
+| Secondary | #8E8E8E | Texto secundário |
+| Accent | #E8D5C4 | Destaques, hover |
+| Background | #FFFFFF | Fundo |
+```
+
+---
+
+### `/design typography "descrição"`
+**Propósito:** Gera apenas a combinação tipográfica recomendada
+
+**Execução:**
+1. Chamar UI/UX Pro Max Agent
+2. Extrair apenas `typography` do resultado
+3. Retornar fontes do Google Fonts com pesos
+
+**Exemplo:**
+```bash
+/design typography "Dashboard administrativo enterprise"
+```
+
+**Output:**
+```markdown
+## Tipografia Recomendada
+
+- **Títulos:** Inter (700, 600)
+- **Corpo:** Roboto (400, 500)
+- **Código:** JetBrains Mono (400)
+- **Escala:** 12px, 14px, 16px, 20px, 24px, 32px
+```
+
+---
+
+### `/design checklist "descrição"`
+**Propósito:** Gera apenas o checklist de qualidade pré-construção
+
+**Execução:**
+1. Chamar UI/UX Pro Max Agent
+2. Extrair apenas `checklist` do resultado
+3. Retornar lista de verificação
+
+**Exemplo:**
+```bash
+/design checklist "Formulário de checkout e-commerce"
+```
+
+**Output:**
+```markdown
+## Checklist de Qualidade
+
+- [ ] Acessibilidade: WCAG 2.1 AA
+- [ ] Responsividade: Mobile-first
+- [ ] Performance: LCP < 2.5s
+- [ ] Formulários: Validação em tempo real
+- [ ] Erros: Mensagens claras e específicas
+- [ ] Loading: Skeleton screens
+```
+
+---
+
+### `/design status`
+**Propósito:** Verifica se o módulo UI/UX Pro Max está disponível e operacional
+
+**Execução:**
+1. Verificar existência do submódulo `ui-ux-pro-max/`
+2. Verificar wrapper Python
+3. Verificar bridge Node.js
+4. Retornar status de cada componente
+
+**Output:**
+```markdown
+## UI/UX Pro Max Status
+
+- Submódulo: ✅ Disponível
+- Wrapper Python: ✅ Operacional
+- Bridge Node.js: ✅ Operacional
+- Core API: ✅ Respondendo
+
+**Status:** 🟢 Pronto para uso
+```
+
+---
+
 ### `/nl-query "termo"`
 **Propósito:** Consulta via QMD (Query Markdown)
 
@@ -440,6 +605,56 @@ const cost = tokenBudget.estimateCost(tokens);
 
 ---
 
+## Integração com UI/UX Pro Max
+
+O Tech Lead usa o `UIUXProMaxBridge` para gerar especificações de design:
+
+### Gerar Design System
+```javascript
+const bridge = new UIUXProMaxBridge();
+const design = await bridge.generateDesign(
+  "Landing page para spa de bem-estar, com foco em relaxamento"
+);
+// Retorna: layout, palette, typography, css_effects, anti_patterns, checklist
+```
+
+### Salvar como Especificação
+```javascript
+const result = await bridge.generateAndSaveSpec(
+  "Sistema de autenticação com login e registro",
+  "auth"
+);
+// Salva em: specs/auth/design-spec.md
+```
+
+### Extrair Elementos Específicos
+```javascript
+// Apenas paleta
+const palette = await bridge.extractPalette("E-commerce minimalista");
+
+// Apenas tipografia
+const typography = await bridge.extractTypography("Dashboard enterprise");
+
+// Apenas checklist
+const checklist = await bridge.extractChecklist("Formulário de checkout");
+```
+
+### Fluxo Completo com Frontend-Dev
+```javascript
+// 1. Gerar design
+const design = await bridge.generateAndSaveSpec(description, featureName);
+
+// 2. Passar para frontend-dev
+await frontendDev.build({
+  specPath: design.specPath,
+  designSpec: design.design
+});
+
+// 3. Frontend-dev usa design-spec.md como guia
+```
+
+---
+
 ## Matriz de Skills por Agente
 
 O Tech Lead deve usar esta matriz para atribuir skills aos agentes corretos:
@@ -499,3 +714,5 @@ const skills = await loadRelevantSkills(task);
 - [[brain/Memories]] - Log de sessões
 - [[SOUL]] - Filosofia do NexusAuto
 - [[ORCHESTRATOR]] - Orquestração de agentes
+- [[workflows/design-workflow]] - Fluxo de geração de design
+- [[ui-ux-pro-max]] - Design System Generator

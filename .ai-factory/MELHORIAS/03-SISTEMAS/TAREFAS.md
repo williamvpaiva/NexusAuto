@@ -1,85 +1,68 @@
-# [ÁREA] — Tarefas de Melhoria
+# 03 — SISTEMAS
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Orquestração de containers, filas, eventos, worker pool e integração OpenWA/MCP
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** Nenhuma
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### SIS-001 — Dockerfile da Aplicação (Backend)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar Dockerfile multi-stage para o backend Node.js com alpine, instalação de deps de produção apenas, copia build e executa com usuário não-root
+- **Critério de aceite:** `docker build` produz imagem < 150 MB; container inicia sem warnings; saúde via HEALTHCHECK
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### SIS-002 — Dockerfile do Frontend (Nginx)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar Dockerfile multi-stage para o frontend Vite + Nginx alpine com compressão gzip/brotli, cache de assets e headers de segurança
+- **Critério de aceite:** Build produz imagem < 50 MB; assets servidos com Content-Encoding, Cache-Control e security headers
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### SIS-003 — docker-compose com Todos os Serviços
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Atualizar docker-compose.yml para incluir backend, frontend, Redis (cache/filas) e PostgreSQL opcional, com redes isoladas, volumes e healthchecks
+- **Critério de aceite:** `docker compose up` deixa app + frontend + Redis acessíveis; `docker compose down --volumes` limpa tudo
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### SIS-004 — Docker Compose Override para Dev
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** `docker-compose.override.yml` com hot-reload (volumes bind), variáveis de ambiente dev e perfil de logs verbose
+- **Critério de aceite:** Alteração no código backend é refletida sem rebuild; frontend Vite HMR funciona
+- **Esforço:** 1h
+- **Prioridade:** Média
+
+### SIS-005 — Fila de Eventos com Bull/BullMQ + Redis
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar fila de processamento assíncrono com Bull (Redis) para webhooks, disparo de MCP e jobs de longa duração
+- **Critério de aceite:** Job enfileirado é processado em até 5s; falhas geram retry com backoff exponencial; dashboard de filas acessível
+- **Esforço:** 6h
+- **Prioridade:** Média
+
+### SIS-006 — Worker Pool para Tarefas MCP
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Worker pool dedicado para execução de comandos MCP/agentes com controle de concorrência, timeout e rate-limit por skill
+- **Critério de aceite:** Até 3 workers simultâneos por skill; timeout global de 60s; fila de espera não bloqueante
+- **Esforço:** 5h
+- **Prioridade:** Baixa
+
+### SIS-007 — Graceful Shutdown
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar shutdown graceful: captura SIGTERM/SIGINT, drena filas, fecha conexões (SQLite/Redis/HTTP) e aguarda jobs ativos terminarem
+- **Critério de aceite:** SIGTERM → servidor rejeita novas reqs → aguarda até 30s → fecha conexões → process.exit(0)
+- **Esforço:** 3h
+- **Prioridade:** Alta
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

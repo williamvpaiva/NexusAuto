@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 16 — GESTÃO DE ERROS
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Tratamento centralizado de erros, mensagens amigáveis, fallbacks e resiliência
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** 02-DEBUGGING (logger), 07-UI-COMPONENTS (ErrorFallback)
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### GER-001 — Middleware Global de Erro (Backend)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Middleware Express que captura todo erro não tratado, loga estruturado, retorna JSON padronizado e não vaza stack trace
+- **Critério de aceite:** Erro síncrono/assíncrono → resposta `{ error: code, message, requestId }`; ambiente dev inclui stack; prod omite
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### GER-002 — Error Boundary no React Router
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Envolver rotas do React Router com ErrorBoundary por rota, com fallback UI e logging para console/sentry
+- **Critério de aceite:** Erro na página Home → ErrorFallback visível → clique "Tentar novamente" → reload da rota; erro não afeta outras rotas
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### GER-003 — Tratamento de Erros de API (Frontend)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Camada de tratamento de erros HTTP no frontend: 401 → redirect login, 403 → "sem permissão", 429 → "muitas requisições", 500 → "tente novamente"
+- **Critério de aceite:** 401 redireciona para /login; 429 exibe toast "Muitas requisições. Aguarde..."; 500 exibe erro amigável
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### GER-004 — Retry Automático com Backoff
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar retry automático para requisições HTTP falhas (5xx, network error) com backoff exponencial e jitter
+- **Critério de aceite:** 502 → retry após 1s, 2s, 4s (max 3); sucesso na 2ª tentativa → sem erro visível ao usuário; todas falham → mostra erro
+- **Esforço:** 3h
+- **Prioridade:** Média
+
+### GER-005 — Erros de Validação Padronizados
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Formato unificado de erro de validação (Zod): `{ errors: [{ field: "email", code: "invalid_string", message: "E-mail inválido" }] }`
+- **Critério de aceite:** Validação de formulário retorna erros mapeados por campo; mensagens internacionalizáveis e em português
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### GER-006 — Graceful Degradation de Funcionalidades
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Identificar funcionalidades não-críticas que podem falhar sem quebrar a app: histórico, notificações, recomendações
+- **Critério de aceite:** Seção "Histórico" falha → seção oculta ou mostra "Indisponível no momento"; app principal continua funcional
+- **Esforço:** 2h
+- **Prioridade:** Média
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

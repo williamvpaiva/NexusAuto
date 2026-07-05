@@ -1,85 +1,54 @@
-# [ÁREA] — Tarefas de Melhoria
+# 02 — DEBUGGING
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Infraestrutura de debug, logging estruturado, tracing e ferramentas de diagnóstico
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** 01-ARQUITETURA (concluído)
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### DBG-001 — Logger Estruturado Centralizado
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Criar logger estruturado (winston/pino) com níveis configuráveis, formato JSON e saída para console + arquivo
+- **Critério de aceite:** `logger.info('msg', { ctx })` produz JSON parseável com timestamp, nível, mensagem, requestId e metadados
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### DBG-002 — Request ID Tracing via Middleware Express
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Middleware Express que injeta `x-request-id` em cada requisição HTTP, propaga para logs e responde com header correlatable
+- **Critério de aceite:** Toda requisição tem requestId único no log, no header de resposta e em erros lançados
+- **Esforço:** 1h
+- **Prioridade:** Alta
+
+### DBG-003 — Endpoint /health + /debug/env
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Endpoints de diagnóstico: `/health` (status Redis/SQLite/uptime) e `/debug/env` (variáveis sanitizadas — valores ocultos)
+- **Critério de aceite:** `/health` retorna 200 com status de dependências; `/debug/env` retorna vars sem expor secrets
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### DBG-004 — Pretty Error Stack no Desenvolvimento
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Plugin/middleware que formata stack traces para leitura humana em dev, com links para arquivos-fonte
+- **Critério de aceite:** Erros não tratados exibem stack formatado com contexto (source maps ou código adjacente)
+- **Esforço:** 1h
+- **Prioridade:** Média
+
+### DBG-005 — Error Tracking Service Abstraction
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Camada de abstração para error tracking (Sentry/Bugsnag/roll-your-own) que captura exceções não tratadas, rejeições de Promise e erros de middleware
+- **Critério de aceite:** Erro não tratado é capturado e enviado ao serviço configurado sem vazar stack para o cliente
+- **Esforço:** 3h
+- **Prioridade:** Alta
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

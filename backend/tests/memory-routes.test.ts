@@ -2,8 +2,10 @@ import request from 'supertest';
 import { describe, expect, it, beforeAll } from 'vitest';
 import { app } from '../src/app';
 import { db } from '../src/config/database';
+import { registerCsrfToken } from '../src/middleware/csrf';
 
 let token: string;
+let csrfToken: string;
 
 beforeAll(async () => {
   await db.initialize();
@@ -11,6 +13,8 @@ beforeAll(async () => {
     .post('/api/v1/auth/login')
     .send({ email: 'admin@polymarketing.com', password: 'admin123' });
   token = loginRes.body.data.token;
+  csrfToken = require('crypto').randomBytes(32).toString('hex');
+  registerCsrfToken(csrfToken, loginRes.body.data.user.id, Date.now() + 3600000);
 });
 
 describe('Memory Routes - Auth', () => {
@@ -34,6 +38,7 @@ describe('Memory Routes - Conversations', () => {
     const res = await request(app)
       .post('/api/v1/memory/conversations')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ title: 'Route Test', agent_id: 'route-agent' });
 
     expect(res.status).toBe(201);
@@ -46,7 +51,8 @@ describe('Memory Routes - Conversations', () => {
   it('should list conversations', async () => {
     const res = await request(app)
       .get('/api/v1/memory/conversations')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
@@ -56,7 +62,8 @@ describe('Memory Routes - Conversations', () => {
   it('should get conversation by id', async () => {
     const res = await request(app)
       .get(`/api/v1/memory/conversations/${conversationId}`)
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(res.body.data.id).toBe(conversationId);
@@ -65,7 +72,8 @@ describe('Memory Routes - Conversations', () => {
   it('should return 404 for non-existent conversation', async () => {
     const res = await request(app)
       .get('/api/v1/memory/conversations/non-existent-id')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(404);
     expect(res.body.success).toBe(false);
@@ -75,6 +83,7 @@ describe('Memory Routes - Conversations', () => {
     const res = await request(app)
       .post('/api/v1/memory/conversations')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ title: '' });
 
     expect(res.status).toBe(422);
@@ -89,6 +98,7 @@ describe('Memory Routes - Messages', () => {
     const res = await request(app)
       .post('/api/v1/memory/conversations')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ title: 'Message Route Test', agent_id: 'msg-route-agent' });
     conversationId = res.body.data.id;
   });
@@ -97,6 +107,7 @@ describe('Memory Routes - Messages', () => {
     const res = await request(app)
       .post('/api/v1/memory/messages')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ conversation_id: conversationId, role: 'user', content: 'Hello via route' });
 
     expect(res.status).toBe(201);
@@ -107,7 +118,8 @@ describe('Memory Routes - Messages', () => {
   it('should list messages by conversation', async () => {
     const res = await request(app)
       .get(`/api/v1/memory/conversations/${conversationId}/messages`)
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
@@ -117,6 +129,7 @@ describe('Memory Routes - Messages', () => {
     const res = await request(app)
       .post('/api/v1/memory/messages')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ role: 'invalid' });
 
     expect(res.status).toBe(422);
@@ -127,7 +140,8 @@ describe('Memory Routes - Stats', () => {
   it('should get stats', async () => {
     const res = await request(app)
       .get('/api/v1/memory/stats')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(res.body.data.totalConversations).toBeGreaterThanOrEqual(0);
@@ -142,6 +156,7 @@ describe('Memory Routes - Error Logs', () => {
     const res = await request(app)
       .post('/api/v1/memory/errors')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ error_code: 'ROUTE_TEST_ERR', error_message: 'Error via route' });
 
     expect(res.status).toBe(201);
@@ -151,7 +166,8 @@ describe('Memory Routes - Error Logs', () => {
   it('should list error logs', async () => {
     const res = await request(app)
       .get('/api/v1/memory/errors')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body.data)).toBe(true);
@@ -161,6 +177,7 @@ describe('Memory Routes - Error Logs', () => {
     const res = await request(app)
       .post(`/api/v1/memory/errors/${errorId}/resolve`)
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ resolution_summary: 'Fixed via route', resolution_steps: ['Step 1', 'Step 2'] });
 
     expect(res.status).toBe(200);
@@ -171,6 +188,7 @@ describe('Memory Routes - Error Logs', () => {
     const res = await request(app)
       .post(`/api/v1/memory/errors/${errorId}/resolve`)
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({});
 
     expect(res.status).toBe(422);
@@ -184,12 +202,14 @@ describe('Memory Routes - Token Optimization', () => {
     const conv = await request(app)
       .post('/api/v1/memory/conversations')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ title: 'Optimize Route', agent_id: 'opt-route-agent' });
     conversationId = conv.body.data.id;
 
     await request(app)
       .post('/api/v1/memory/messages')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ conversation_id: conversationId, role: 'user', content: 'Optimize me' });
   });
 
@@ -197,6 +217,7 @@ describe('Memory Routes - Token Optimization', () => {
     const res = await request(app)
       .post(`/api/v1/memory/conversations/${conversationId}/optimize`)
       .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken)
       .send({ strategy: 'summary' });
 
     if (res.status !== 200) {
@@ -211,7 +232,8 @@ describe('Memory Routes - Search', () => {
   it('should return 400 when query param is missing', async () => {
     const res = await request(app)
       .get('/api/v1/memory/search')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(400);
   });
@@ -219,7 +241,8 @@ describe('Memory Routes - Search', () => {
   it('should search messages', async () => {
     const res = await request(app)
       .get('/api/v1/memory/search?q=hello')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .set('x-csrf-token', csrfToken);
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body.data)).toBe(true);

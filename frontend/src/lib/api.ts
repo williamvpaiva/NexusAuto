@@ -1,85 +1,156 @@
+export class ApiError extends Error {
+  public readonly statusCode: number;
+  public readonly code: string;
+
+  constructor(statusCode: number, code: string, message: string) {
+    super(message);
+    this.name = 'ApiError';
+    this.statusCode = statusCode;
+    this.code = code;
+  }
+}
+
+export const isApiError = (error: unknown): error is ApiError =>
+  error instanceof ApiError;
+
 export type ApiSuccess<T> = {
   success: true;
   data: T;
   meta?: Record<string, unknown>;
 };
 
-export type ApiError = {
-  success: false;
-  error: {
-    code: string;
-    message: string;
-    details?: unknown;
-  };
-};
-
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api/v1';
-const REQUEST_TIMEOUT = 30000; // 30 segundos
+const REQUEST_TIMEOUT = 30000;
+const MAX_RETRIES = 3;
+const BASE_DELAY = 1000;
 
-/**
- * Importa função de CSRF do hook
- */
 import { getCsrfToken } from '../hooks/useCsrfProtection';
 
-/**
- * Faz requisição HTTP com timeout, CSRF e tratamento de erro
- */
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+function getBackoffDelay(attempt: number): number {
+  return BASE_DELAY * Math.pow(2, attempt) + Math.random() * 500;
+}
 
-  const method = (init?.method || 'GET').toUpperCase();
-  const isMutation = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
+interface RequestOptions extends RequestInit {
+  _skipRetry?: boolean;
+}
 
-  // Adiciona token CSRF para mutations
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(init?.headers as Record<string, string> || {})
-  };
+async function request<T>(path: string, init?: RequestOptions): Promise<T> {
+  const lastError: ApiError[] = [];
 
-  if (isMutation) {
-    const csrfToken = getCsrfToken();
-    if (csrfToken) {
-      headers['X-CSRF-Token'] = csrfToken;
-    } else {
-      console.warn('[API] CSRF token não disponível para mutation');
-    }
-  }
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
-  try {
-    const response = await fetch(`${API_BASE}${path}`, {
-      ...init,
-      signal: controller.signal,
-      headers
-    });
+    try {
 
-    clearTimeout(timeoutId);
+      const method = (init?.method || 'GET').toUpperCase();
+      const isMutation = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
 
-    if (!response.ok) {
-      const body = await response.json().catch(() => null);
-      const message = body?.error?.message || `Erro HTTP ${response.status}`;
-      
-      // Log seguro (mascara dados sensíveis)
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...(init?.headers as Record<string, string> || {})
+      };
+
       if (isMutation) {
-        console.warn('[API Error]', { status: response.status, path, message });
+        const csrfToken = getCsrfToken();
+        if (csrfToken) {
+          headers['X-CSRF-Token'] = csrfToken;
+        }
       }
-      
-      throw new Error(message);
-    }
 
-    const body = await response.json();
-    return body.data as T;
-  } catch (error) {
-    clearTimeout(timeoutId);
+      const response = await fetch(`${API_BASE}${path}`, {
+        ...init,
+        signal: controller.signal,
+        headers
+      });
 
-    if (error instanceof Error) {
-      if (error.name === 'AbortError') {
-        throw new Error('Timeout: A requisição demorou muito. Tente novamente.');
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        const code = body?.error?.code || 'UNKNOWN_ERROR';
+        const message = body?.error?.message || `Erro HTTP ${response.status}`;
+
+        if (isMutation) {
+          console.warn('[API Error]', { status: response.status, path, code, message });
+        }
+
+        const apiError = new ApiError(response.status, code, message);
+
+        if (response.status === 401) {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          localStorage.removeItem('refreshToken');
+          window.location.href = '/login';
+          throw apiError;
+        }
+
+        if (response.status === 403) {
+          throw new ApiError(403, 'FORBIDDEN', 'Você não tem permissão para realizar esta ação.');
+        }
+
+        if (response.status === 429) {
+          if (attempt < MAX_RETRIES - 1 && !init?._skipRetry) {
+            lastError.push(apiError);
+            const delay = getBackoffDelay(attempt);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw new ApiError(429, 'RATE_LIMITED', 'Muitas requisições. Aguarde um momento e tente novamente.');
+        }
+
+        if (response.status >= 500) {
+          if (attempt < MAX_RETRIES - 1 && !init?._skipRetry) {
+            lastError.push(apiError);
+            const delay = getBackoffDelay(attempt);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw new ApiError(response.status, 'SERVER_ERROR', 'Erro no servidor. Tente novamente em alguns instantes.');
+        }
+
+        throw apiError;
       }
+
+      const body = await response.json();
+      return body.data as T;
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof ApiError) {
+        if (error.statusCode === 401) throw error;
+        if (error.statusCode >= 500 || error.statusCode === 429) {
+          if (attempt < MAX_RETRIES - 1 && !init?._skipRetry) {
+            lastError.push(error);
+            const delay = getBackoffDelay(attempt);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw error;
+        }
+        throw error;
+      }
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new ApiError(0, 'TIMEOUT', 'A requisição demorou muito. Tente novamente.');
+        }
+
+        if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+          if (attempt < MAX_RETRIES - 1 && !init?._skipRetry) {
+            const delay = getBackoffDelay(attempt);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw new ApiError(0, 'NETWORK_ERROR', 'Sem conexão com o servidor. Verifique sua internet.');
+        }
+      }
+
       throw error;
     }
-    throw new Error('Erro desconhecido na requisição');
   }
+
+  throw lastError[lastError.length - 1] || new ApiError(0, 'UNKNOWN', 'Erro desconhecido');
 }
 
 export type User = {
@@ -99,17 +170,13 @@ export type Health = {
   version: string;
 };
 
-/**
- * Valida dados de usuário antes de retornar
- */
 function validateUser(data: unknown): User {
   if (typeof data !== 'object' || data === null) {
     throw new Error('Dados de usuário inválidos');
   }
-  
+
   const user = data as Record<string, unknown>;
-  
-  // Validações básicas de schema
+
   if (typeof user.id !== 'string' || !user.id) {
     throw new Error('ID de usuário inválido');
   }
@@ -122,13 +189,10 @@ function validateUser(data: unknown): User {
   if (typeof user.createdAt !== 'string') {
     throw new Error('Data de criação inválida');
   }
-  
+
   return user as User;
 }
 
-/**
- * Valida array de usuários
- */
 function validateUsers(data: unknown): User[] {
   if (!Array.isArray(data)) {
     throw new Error('Resposta da API deve ser um array');
@@ -145,14 +209,13 @@ export function listUsers() {
 }
 
 export function createUser(payload: { name: string; email: string }) {
-  // Valida input antes de enviar
   if (!payload.name || payload.name.length < 2) {
     throw new Error('Nome deve ter pelo menos 2 caracteres');
   }
   if (!payload.email || !payload.email.includes('@')) {
     throw new Error('Email inválido');
   }
-  
+
   return request<User>('/users', {
     method: 'POST',
     body: JSON.stringify(payload)
@@ -169,7 +232,7 @@ export function updateUser(id: string, payload: { name?: string; email?: string 
   if (payload.email && !payload.email.includes('@')) {
     throw new Error('Email inválido');
   }
-  
+
   return request<User>(`/users/${id}`, {
     method: 'PUT',
     body: JSON.stringify(payload)
@@ -183,4 +246,17 @@ export function deleteUser(id: string) {
   return request<void>(`/users/${id}`, {
     method: 'DELETE'
   });
+}
+
+export async function withFallback<T>(
+  fn: () => Promise<T>,
+  fallback: T,
+  onError?: (error: unknown) => void
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (error) {
+    if (onError) onError(error);
+    return fallback;
+  }
 }

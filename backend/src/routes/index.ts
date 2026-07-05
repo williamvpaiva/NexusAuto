@@ -3,8 +3,10 @@ import { healthRouter } from './health.routes';
 import { usersRouter } from './users.routes';
 import { authRoutes } from './auth.routes';
 import memoryRouter from '../controllers/memory.controller';
-import { apiLimiter } from '../middleware/rate-limiter';
+import designRouter from './design-routes';
+import { apiLimiter, memoryLimiter, usersLimiter } from '../middleware/rate-limiter';
 import { authenticate } from '../middleware/auth';
+import { validateCsrf } from '../middleware/csrf';
 
 export const apiRouter = Router();
 
@@ -26,6 +28,12 @@ apiRouter.get('/', (_req, res) => {
 // Health check
 apiRouter.use('/health', healthRouter);
 
+// Design System (UI/UX Pro Max) - Pública
+apiRouter.use('/design', designRouter);
+
+// Rotas públicas
+apiRouter.use('/auth', authRoutes);
+
 // Rotas protegidas
-apiRouter.use('/users', authenticate, usersRouter);
-apiRouter.use('/memory', authenticate, memoryRouter);
+apiRouter.use('/users', authenticate, validateCsrf, usersLimiter, usersRouter);
+apiRouter.use('/memory', authenticate, validateCsrf, memoryLimiter, memoryRouter);

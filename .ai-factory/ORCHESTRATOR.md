@@ -6,9 +6,9 @@
 
 Identifique a fase atual do projeto e assuma o agente apropriado.
 
-## 🧠 Nova Arquitetura: Cognição Evolutiva + Spec-Kit
+## 🧠 Nova Arquitetura: Cognição Evolutiva + Spec-Kit + UI/UX Pro Max
 
-O NexusAuto agora possui **memória persistente**, **busca semântica**, **otimização de tokens** e **especificações vivas via Spec-Kit**.
+O NexusAuto agora possui **memória persistente**, **busca semântica**, **otimização de tokens**, **especificações vivas via Spec-Kit** e **design system automatizado via UI/UX Pro Max**.
 
 ### Componentes Principais
 
@@ -58,9 +58,90 @@ No início de CADA sessão, o Tech Lead deve:
 2. Buscar últimas 3 memórias relevantes (busca semântica)
 3. Verificar cache de respostas para a tarefa atual
 4. Carregar apenas skills necessárias para a tarefa
+5. Se for tarefa de frontend/UI, verificar se há design-spec.md
 ```
 
 **Total estimado:** 300-500 tokens de contexto inicial (vs 10k+ antes)
+
+---
+
+## Etapa 0.5: Design System (UI/UX Pro Max)
+
+Após a especificação funcional (Spec-Kit) e antes da implementação, o Tech Lead deve:
+
+### Quando Acionar
+- ✅ Novas landing pages
+- ✅ Novas telas/features de frontend
+- ✅ Redesign de interfaces existentes
+- ✅ Dashboards e painéis administrativos
+- ❌ APIs puramente backend (opcional)
+- ❌ Scripts e automações internas
+
+### Fluxo de Design
+```
+Spec-Kit gera specs/[feature]/spec.md
+    v
+Tech Lead: /design save "descrição" "feature-name"
+    v
+UI/UX Pro Max gera specs/[feature]/design-spec.md
+    v
+Conteúdo:
+  - Layout pattern (estrutura HTML)
+  - Paleta de cores (hex codes)
+  - Tipografia (Google Fonts)
+  - Efeitos CSS (animações, transições)
+  - Antipadrões (o que evitar)
+  - Checklist (acessibilidade, performance)
+    v
+Tech Lead atribui frontend-dev com design-spec.md
+    v
+frontend-dev implementa seguindo especificação
+```
+
+### Exemplo de Uso
+```bash
+# Usuário solicita landing page
+"Quero uma landing page para um spa de bem-estar chamado 'Serenidade'"
+
+# Tech Lead gera especificação funcional
+/nl-specify "Sistema de landing page para spa com seções: hero, sobre, serviços, depoimentos, contato"
+
+# Tech Lead gera design system
+/design save "Landing page para spa de bem-estar 'Serenidade', com foco em relaxamento, natureza e cores terrosas" "serenidade-landing"
+
+# Output do UI/UX Pro Max:
+✅ Design gerado e salvo
+📄 Arquivo: specs/serenidade-landing/design-spec.md
+🎨 Layout: Hero + 4 seções
+🌈 Cores: #2C3E50, #8E8E8E, #E8D5C4, #FFFFFF
+🔤 Tipografia: Playfair Display (títulos), Lato (corpo)
+✨ Efeitos: Sombra suave, transições 300ms, overlays gradiente
+✅ Checklist: WCAG 2.1 AA, Mobile-first, LCP < 2.5s
+
+# Tech Lead atribui implementação
+"frontend-dev, construa a landing page seguindo specs/serenidade-landing/design-spec.md"
+```
+
+### Integração com Spec-Kit
+```
+specs/[feature]/
+├── spec.md           # Especificação funcional (Spec-Kit)
+├── design-spec.md    # Especificação visual (UI/UX Pro Max)
+├── plan.md           # Plano de implementação
+└── tasks.md          # Lista de tarefas
+```
+
+### Comandos Disponíveis
+| Comando | Propósito |
+|---------|-----------|
+| `/design generate "descrição"` | Gera design system completo (JSON) |
+| `/design save "descrição" "feature"` | Gera e salva em `specs/[feature]/design-spec.md` |
+| `/design palette "descrição"` | Apenas paleta de cores |
+| `/design typography "descrição"` | Apenas tipografia |
+| `/design checklist "descrição"` | Apenas checklist de qualidade |
+| `/design status` | Verifica disponibilidade do módulo |
+
+---
 
 ## 🤖 Modo Automático com Tech Lead
 
@@ -185,7 +266,8 @@ Leia .ai-factory/agents/{agente}.md
 
 ## Ciclo de Vida de uma Feature
 
-0.5. **Consulta à Agência (The Agency):** Tech Lead consulta se há um especialista em `.ai-factory/the-agency/profiles/` via `/agency-search` e carrega o perfil via `/agency-load` para injetar personalidade e contexto extra na etapa apropriada.
+0. **Spec-Kit:** Gera especificação funcional (`spec.md`, `plan.md`, `tasks.md`)
+0.5. **UI/UX Pro Max:** Gera especificação visual (`design-spec.md`) ← NOVO
 1. **Analyst** levanta requisitos
 2. **Architect** desenha solução
 3. **Devs** implementam em paralelo
@@ -220,6 +302,8 @@ Todo handoff DEVE conter:
 
 | Etapa | Agente | Entrada | Saída |
 |-------|--------|---------|-------|
+| Especificação Funcional | spec-kit | demanda | spec.md, plan.md, tasks.md |
+| **Design System** | **ui-ux-pro-max** | **spec.md** | **design-spec.md** |
 | Análise | analyst | demanda | requirements.md, user-stories.md |
 | Arquitetura | architect | requirements | architecture-design.md, ADRs |
 | Frontend | frontend-dev | design + api | src/frontend/**, testes |

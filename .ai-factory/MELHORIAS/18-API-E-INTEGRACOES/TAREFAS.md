@@ -1,85 +1,61 @@
-# [ÁREA] — Tarefas de Melhoria
+# 18 — API E INTEGRAÇÕES
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Integrações externas: webhooks, APIs de terceiros, adapters e contratos
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** 01-ARQUITETURA
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### API-001 — Adapter Pattern para APIs Externas
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar adapter pattern para integrações externas (WhatsApp, OpenAI, Telegram), com interface comum, retry e fallback
+- **Critério de aceite:** Adapter WhatsApp + adapter Telegram implementam `IMessagingAdapter.send(msg)`; falha em um não afeta o outro
+- **Esforço:** 6h
+- **Prioridade:** Alta
+
+### API-002 — Webhook Receiver Padronizado
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Endpoint unificado `/webhooks/:provider` que valida assinatura (HMAC), filtra eventos duplicados (idempotency key) e roteia para handler
+- **Critério de aceite:** Webhook com HMAC válido → processa; inválido → 401; mesmo `X-Idempotency-Key` repetido → 200 sem processar
+- **Esforço:** 4h
+- **Prioridade:** Alta
+
+### API-003 — Rate Limit por Integração
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Rate limiter por provider externo com bucket token, fila de espera e alerta de接近 limite
+- **Critério de aceite:** OpenAI 60 RPM → 55ª req no minuto enfileira; 61ª → 429; log alerta quando > 80% do limite
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### API-004 — API Key Management (Interna)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Sistema de chaves de API para integradores: geração, rotação, revogação e permissões por chave
+- **Critério de aceite:** `POST /api-keys` gera key; `DELETE /api-keys/:id` revoga; request com API key inválida → 401
+- **Esforço:** 4h
+- **Prioridade:** Média
+
+### API-005 — Cache de Respostas Externas
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Cache respostas de APIs externas (OpenAI, por exemplo) por hash do request, com TTL e invalidação manual
+- **Critério de aceite:** Mesmo prompt → retorna cached (se TTL válido); invalidação manual via endpoint admin
+- **Esforço:** 3h
+- **Prioridade:** Média
+
+### API-006 — Documentação de Integrações
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Documentar cada integração: endpoint, autenticação, rate limits, exemplos de request/response, erros possíveis
+- **Critério de aceite:** Documento por integração em `docs/integrations/`; exemplos em curl e JavaScript
+- **Esforço:** 3h
+- **Prioridade:** Média
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>

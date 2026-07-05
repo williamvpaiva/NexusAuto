@@ -138,9 +138,17 @@ export class Database {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        role TEXT DEFAULT 'user' CHECK(role IN ('user', 'admin')),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
+    `);
+
+    // Seed de usuário admin (se não existir)
+    await this.run(`
+      INSERT OR IGNORE INTO users (id, name, email, password, role)
+      VALUES ('admin-001', 'Admin User', 'admin@polymarketing.com', 'admin123', 'admin')
     `);
 
     // Índices para performance

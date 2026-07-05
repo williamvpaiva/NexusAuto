@@ -14,3 +14,31 @@ export const apiLimiter = rateLimit({
     },
   },
 });
+
+export const memoryLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 100, // 100 requests per minute
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Muitas requisições para a rota de memória. Tente novamente mais tarde.',
+    },
+  },
+});
+
+export const usersLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 100, // 100 requests per minute
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Muitas requisições para a rota de usuários. Tente novamente mais tarde.',
+    },
+  },
+});

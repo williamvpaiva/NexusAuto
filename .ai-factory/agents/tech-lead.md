@@ -47,6 +47,7 @@
 | **21-LIMPEZA-E-HOUSEKEEPING** | `backend-dev` | `frontend-dev` |
 | **22-PENTEST-E-SEGURANCA-AVANCADA** | `security` | `devops`, `backend-dev` |
 | **23-MEMORIA** | `tech-lead` | Todos os agentes |
+| **24-DESIGN-SYSTEM** | `ui-ux-pro-max` | `frontend-dev`, `qa-tester` |
 
 ---
 
@@ -89,6 +90,7 @@ const agentePorTipo = {
 | "arquitetura", "diagrama", "ADR", "estrutura" | `architect` | 01, 03, 05 |
 | "API", "endpoint", "controller", "service" | `backend-dev` | 02, 16, 18 |
 | "componente", "UI", "React", "frontend" | `frontend-dev` | 07, 14, 17 |
+| "design", "layout", "cores", "tipografia", "UI/UX" | `ui-ux-pro-max` | 24 |
 | "vulnerabilidade", "OWASP", "pentest", "auth" | `security` | 08, 20, 22 |
 | "banco", "query", "migration", "schema" | `architect` + `backend-dev` | 12 |
 | "CI", "CD", "deploy", "pipeline", "Docker" | `devops` | 10, 19 |
@@ -965,6 +967,168 @@ node scripts/memory-manager.js search "ORM" --agent backend-dev --type decision 
 Cada agente deve ter em seu prompt:
 ```
 **Memória:**
+Sempre consulte a memória antes de iniciar tarefas complexas.
+Use: node scripts/memory-manager.js search "[tema]" --topK 5
+```
+
+---
+
+## 🎨 Integração com UI/UX Pro Max
+
+O Tech Lead deve usar o UI/UX Pro Max para gerar especificações visuais antes de atribuir tarefas de frontend.
+
+### Quando Acionar UI/UX Pro Max
+
+**Sempre que:**
+- ✅ Criar nova landing page ou homepage
+- ✅ Criar nova tela/feature de frontend
+- ✅ Redesenhar interface existente
+- ✅ Criar dashboard ou painel administrativo
+- ✅ Definir sistema de design do projeto
+
+**Não é necessário:**
+- ❌ APIs puramente backend
+- ❌ Scripts e automações internas
+- ❌ Workers e jobs em background
+
+### Fluxo com UI/UX Pro Max
+
+```markdown
+1. **Usuário pede:** "Quero uma landing page para meu spa"
+
+2. **Tech Lead faz:**
+   ```bash
+   # 1. Gera especificação funcional
+   /nl-specify "Landing page para spa com hero, sobre, serviços, depoimentos, contato"
+   
+   # 2. Gera design system
+   /design save "Landing page para spa de bem-estar, foco em relaxamento e natureza" "spa-landing"
+   
+   # Output:
+   # ✅ Design gerado e salvo
+   # 📄 specs/spa-landing/design-spec.md
+   ```
+
+3. **Tech Lead atribui:**
+   ```markdown
+   @frontend-dev
+   
+   **Tarefa:** Construir landing page do spa
+   
+   **Especificações:**
+   - Funcional: specs/spa-landing/spec.md
+   - Visual: specs/spa-landing/design-spec.md
+   
+   **Siga:**
+   1. Layout pattern definido
+   2. Paleta de cores (#2C3E50, #8E8E8E, #E8D5C4, #FFFFFF)
+   3. Tipografia (Playfair Display + Lato)
+   4. Checklist de qualidade (WCAG AA, mobile-first, LCP < 2.5s)
+   ```
+
+4. **Após implementação:**
+   ```markdown
+   @qa-tester
+   
+   **Valide contra:**
+   - specs/spa-landing/design-spec.md (checklist)
+   - specs/spa-landing/spec.md (critérios de aceite)
+   ```
+```
+
+### Comandos Disponíveis
+
+| Comando | Propósito | Output |
+|---------|-----------|--------|
+| `/design generate "desc"` | Gera design completo (JSON) | layout, palette, typography, effects, checklist |
+| `/design save "desc" "feature"` | Gera e salva especificação | `specs/[feature]/design-spec.md` |
+| `/design palette "desc"` | Apenas paleta de cores | Tabela com hex codes |
+| `/design typography "desc"` | Apenas tipografia | Fontes e escala |
+| `/design checklist "desc"` | Apenas checklist | Lista de verificação |
+| `/design status` | Verifica disponibilidade | 🟢 Pronto ou 🔴 Mock |
+
+### Estrutura de Arquivos Gerados
+
+```
+specs/[feature]/
+├── spec.md           # Spec-Kit (requisitos funcionais)
+├── design-spec.md    # UI/UX Pro Max (requisitos visuais) ← ESTE
+├── plan.md           # Plano de implementação
+└── tasks.md          # Tarefas
+```
+
+### Exemplo de design-spec.md
+
+```markdown
+# Design System Specification - spa-landing
+
+## 🎨 Layout Pattern
+Hero + 4 seções (Sobre, Serviços, Depoimentos, Contato)
+
+## 🌈 Color Palette
+| Nome | Hex | Uso |
+|------|-----|-----|
+| Primary | #2C3E50 | Botões, links, títulos |
+| Secondary | #8E8E8E | Texto secundário |
+| Accent | #E8D5C4 | Destaques, hover |
+| Background | #FFFFFF | Fundos |
+
+## 🔤 Typography
+- Headings: Playfair Display (700, 600)
+- Body: Lato (400, 500)
+- Escala: 12px, 14px, 16px, 20px, 24px, 32px, 48px
+
+## ✨ CSS Effects
+- Sombra: box-shadow: 0 2px 8px rgba(0,0,0,0.1)
+- Transição: transition: all 300ms ease-in-out
+- Hover: transform: translateY(-2px)
+
+## 🚫 Anti-patterns
+- Evitar cores vibrantes (> 80% saturação)
+- Não usar mais de 3 fontes
+- Evitar animações > 500ms
+
+## ✅ Checklist
+- [ ] WCAG 2.1 AA (contraste 4.5:1 mínimo)
+- [ ] Mobile-first
+- [ ] LCP < 2.5s
+- [ ] CLS < 0.1
+```
+
+### Matriz de Decisão
+
+| Tipo de Projeto | Usar UI/UX Pro Max? | Comandos Recomendados |
+|-----------------|---------------------|----------------------|
+| Landing Page | ✅ Sim | `/design save` |
+| E-commerce | ✅ Sim | `/design save` + `/design checklist` |
+| Dashboard SaaS | ✅ Sim | `/design save` + `/design typography` |
+| Blog | ⚠️ Opcional | `/design palette` |
+| API Backend | ❌ Não | - |
+| Script CLI | ❌ Não | - |
+
+### Validação de Qualidade
+
+O Tech Lead deve verificar:
+
+1. **Antes de atribuir:**
+   - [ ] `design-spec.md` foi gerado
+   - [ ] Todas as 6 seções estão preenchidas
+   - [ ] Paleta tem mínimo 4 cores
+   - [ ] Tipografia tem fontes para headings + body
+   - [ ] Checklist tem itens de acessibilidade e performance
+
+2. **Após implementação:**
+   - [ ] QA validou contra checklist
+   - [ ] Frontend seguiu especificações
+   - [ ] Contraste de cores foi testado
+   - [ ] Responsividade foi testada
+
+3. **Métricas:**
+   - Tempo de geração: < 30s
+   - Satisfação frontend-dev: Especificações claras
+   - Retrabalho: < 10% (design definido antes de codar)
+
+---
 - Antes de iniciar: `node scripts/memory-manager.js search "<tópico>" --topK 5`
 - Após decisão: `node scripts/memory-manager.js save "<conteúdo>" --agent <id> --type <tipo> --tags <tags>`
 - Para FAQs: `node scripts/memory-manager.js cache-get "<pergunta>"`

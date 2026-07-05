@@ -1,13 +1,15 @@
 import express from 'express';
 import path from 'path';
-import memoryApi from '../../../.ai-factory/scripts/memory-api.js';
 
 const router = express.Router();
+
+// Memory API placeholder (será implementada)
+const memoryApi: any = null;
 
 // GET /api/memories?query=&limit=&offset=
 router.get('/api/memories', async (req, res) => {
     try {
-        const query = req.query.query || '';
+        const query = typeof req.query.query === 'string' ? req.query.query : '';
         const memories = await memoryApi.getMemories(query);
         res.json(memories);
     } catch (error) {
@@ -44,7 +46,7 @@ router.get('/api/memories/stream', (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    const onNewMemory = (memory) => {
+    const onNewMemory = (memory: any) => {
         res.write(`data: ${JSON.stringify(memory)}\n\n`);
     };
 

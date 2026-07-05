@@ -1,85 +1,68 @@
-# [ÁREA] — Tarefas de Melhoria
+# 04 — PERFORMANCE
 
-> **Instruções:** Copie este modelo para cada uma das 22 pastas em `MELHORIAS/`, ajustando o nome da área.
-
----
-
-## Status Geral da Área
-
-**Status:** 🔴 Não Iniciado | 🟡 Em Progresso | 🟢 Concluído  
-**Progresso:** 0% concluído (0 de 0 tarefas)
+> Otimização de performance no backend e frontend: caching, lazy loading, compressão, queries
+>
+> **Status:** 🔴 Não Iniciado
+> **Prioridade:** Alta
+> **Dependências:** 03-SISTEMAS (Redis para caching)
 
 ---
 
 ## 📋 Tarefas
 
-*Nenhuma tarefa registrada ainda.*
+### PERF-001 — Cache Layer com Redis
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar camada de cache Redis para respostas de API com TTL configurável, cache invalidation por tag e fallback automático (cache miss → DB)
+- **Critério de aceite:** GET /api/* com header `Cache-Control: max-age=60` retorna do Redis em < 5ms; invalidação por tag funciona (ex: `user:*`)
+- **Esforço:** 5h
+- **Prioridade:** Alta
+
+### PERF-002 — Compressão e Otimização de Assets Frontend
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Configurar compressão brotli no Nginx, chunk splitting no Vite, tree-shaking e análise de bundle com vite-bundle-analyzer
+- **Critério de aceite:** Bundle JS < 100 KB gzip; primeiro paint < 1.5s; relatório de análise gerado
+- **Esforço:** 3h
+- **Prioridade:** Alta
+
+### PERF-003 — Lazy Loading e Code Splitting (Frontend)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Implementar React.lazy + Suspense para todas as rotas, lazy loading de componentes pesados e import() dinâmico para bibliotecas grandes
+- **Critério de aceite:** Página Health carrega chunk separado; bundle inicial não inclui código de páginas não visitadas
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
+### PERF-004 — Indexação e Otimização de Queries SQLite
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Auditar queries do backend com EXPLAIN QUERY PLAN, adicionar índices compostos onde necessário, otimizar joins e N+1 queries nos services/repositories
+- **Critério de aceite:** Nenhuma query sequencial scanning table full > 100 rows; EXPLAIN mostra índices sendo usados
+- **Esforço:** 4h
+- **Prioridade:** Média
+
+### PERF-005 — Rate Limiting Inteligente
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Rate limiting por IP, rota e usuário com Redis (sliding window), respostas 429 com Retry-After header
+- **Critério de aceite:** 100 req/min por IP, 1000 req/min por usuário autenticado; header `Retry-After` presente em 429
+- **Esforço:** 3h
+- **Prioridade:** Média
+
+### PERF-006 — Timeout e Abort Controller nas Chamadas Frontend
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Adicionar AbortController + timeout global nas chamadas fetch/api do frontend, com fallback UI de timeout
+- **Critério de aceite:** Requisição > 10s é abortada; UI mostra "Serviço temporariamente indisponível" com botão "Tentar novamente"
+- **Esforço:** 2h
+- **Prioridade:** Média
+
+### PERF-007 — Database Connection Pool (SQLite WAL Mode)
+- [ ] **Status:** 🔴 Pendente
+- **Descrição:** Configurar SQLite em WAL mode, pooling de conexões (better-sqlite3 ou wrapper) e limite de concorrência para evitar lock
+- **Critério de aceite:** WAL mode ativo; 10 leituras simultâneas sem bloqueio; escrita não bloqueia leitura
+- **Esforço:** 2h
+- **Prioridade:** Alta
 
 ---
 
-## 📝 Modelo de Tarefa (copiar e colar para cada nova tarefa)
+<div align="center">
 
-### TAREFA [N]: [Nome da Tarefa]
+[← Voltar ao Índice](../INDEX.md)
 
-| Campo              | Detalhe                                      |
-|--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente / 🟡 Em Progresso / 🟢 Concluído |
-| 🗓️ Iniciado em     | DD/MM/AAAA                                   |
-| ✅ Concluído em    | DD/MM/AAAA                                   |
-| 👤 Responsável     | [Nome ou Agente]                             |
-| ⚡ Prioridade      | 🔴 Crítica / 🟠 Alta / 🟡 Média / 🟢 Baixa  |
-
-#### 🔍 O que existe hoje:
-> Descrição clara do estado atual do código, estrutura ou processo.
-
-#### 🎯 O que deve ser feito:
-> Descrição detalhada da solução, refatoração ou implementação necessária.
-
-#### ❓ Por que corrigir:
-> Impacto técnico, de negócio, segurança, performance ou experiência do usuário.
-
-#### 📦 Entregáveis:
-- [ ] Item 1
-- [ ] Item 2
-- [ ] Item 3
-
-#### 💻 Implementação:
-```código aqui```
-
-#### 🛡️ RELATÓRIO V&V (Verificação & Validação)
-
-| # | Verificação                              | Status | Observações        |
-|---|------------------------------------------|--------|--------------------|
-| 1 | 🧪 Integridade (compila sem erros)       | ⬜     |                    |
-| 2 | 🔗 Integração (módulos dependentes OK)   | ⬜     |                    |
-| 3 | 🔄 Regressão (funcionalidades mantidas)  | ⬜     |                    |
-| 4 | 🧨 Edge Cases (cenários extremos)        | ⬜     |                    |
-| 5 | 📱 Ambientes (compatibilidade)           | ⬜     |                    |
-| 6 | ⚡ Performance (sem degradação)           | ⬜     |                    |
-| 7 | ✅ Validação Final                        | ⬜     |                    |
-
-**Resultado V&V:** ⬜ NÃO EXECUTADO / ✅ APROVADO / ❌ REPROVADO  
-**Ciclos de correção:** 0  
-**Erros encontrados e corrigidos:**
-> Nenhum / Lista de erros encontrados e suas correções
-
-⚠️ **Status da tarefa SÓ pode ser 🟢 se Resultado V&V = ✅ APROVADO**
-
----
-
-## 📊 Instruções de Uso
-
-1. **Copie este arquivo** para cada uma das 22 pastas em `MELHORIAS/`
-2. **Ajuste o título** para o nome da área (ex: `01-ARQUITETURA — Tarefas de Melhoria`)
-3. **Preencha as tarefas** conforme for identificando melhorias
-4. **Execute V&V** após cada implementação
-5. **Registre no LOG-VALIDACOES.md** global
-6. **Atualize INDEX.md** com o progresso
-
----
-
-## 🔗 Referências
-
-- [Protocolo V&V](../../.ai-factory/standards/vv-protocol.md)
-- [Log de Validações](../LOG-VALIDACOES.md)
-- [Painel Geral](../INDEX.md)
+</div>
