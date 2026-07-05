@@ -6,19 +6,32 @@
 
 Identifique a fase atual do projeto e assuma o agente apropriado.
 
-## 🧠 Nova Arquitetura: Cognição Evolutiva
+## 🧠 Nova Arquitetura: Cognição Evolutiva + Spec-Kit
 
-O NexusAuto agora possui **memória persistente**, **busca semântica** e **otimização de tokens**.
+O NexusAuto agora possui **memória persistente**, **busca semântica**, **otimização de tokens** e **especificações vivas via Spec-Kit**.
 
 ### Componentes Principais
 
-1. **Memória Persistente** ([[brain/Memories]])
+1. **Spec-Kit (Especificação Primeiro)** ([[../.specify/constitution.md]])
+   - Specs vivas e versionadas para cada feature
+   - Geração de spec.md, plan.md, tasks.md
+   - Rastreabilidade total: spec → tasks → código
+   - Economia de 75% de tokens vs. prompts soltos
+
+2. **Memória Persistente** ([[brain/Memories]])
    - SQLite + sqlite-vec para busca semântica
    - Embeddings locais (@xenova/transformers)
    - Cache de respostas e embeddings
+   - Especificações salvas como memórias
    - Nenhuma sessão começa do zero
 
 2. **Slash Commands** (via Tech Lead)
+   - `/nl-specify "descrição"` → Gera especificação completa com Spec-Kit
+   - `/nl-plan "tecnologia"` → Gera plano técnico
+   - `/nl-clarify` → Executa fase de clarificação
+   - `/nl-tasks` → Gera lista de tarefas
+   - `/nl-implement` → Dispara orquestração dos agentes
+   - `/nl-import-tasks` → Importa tasks para MELHORIAS/
    - `/nl-standup` - Resumo do status (≤200 tokens)
    - `/nl-session-start` - Carrega contexto essencial
    - `/nl-log-decision "texto"` - Registra decisão

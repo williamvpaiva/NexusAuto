@@ -36,6 +36,10 @@ class MemoryManager {
     this.db = null;
   }
 
+  getDbPath() {
+    return this.dbPath;
+  }
+
   async init() {
     await this._openDb();
     await this._initTables();

@@ -2,16 +2,16 @@
 
 > Fábrica de software autônoma — orquestradora de projetos SaaS com 10 agentes de IA especializados.
 
-NexusAuto é um **orquestrador autônomo de projetos de software**. Você descreve o que precisa construir (SaaS, API, sistema web, etc.), e 10 agentes de IA especializados — product owner, architect, devs, security, QA, devops — se coordenam via markdown para planejar, arquitetar, desenvolver, testar e entregar. Tudo orquestrado pelo **TECH-LEAD.md**.
+NexusAuto é um **orquestrador autônomo de projetos de software**. Você descreve o que precisa construir (SaaS, API, sistema web, etc.), e 10 agentes de IA especializados — product owner, architect, devs, security, QA, devops — se coordenam via markdown para planejar, arquitetar, desenvolver, testar e entregar. Tudo orquestrado pelo comando **`/lider`** (que baseia-se nas regras do TECH-LEAD.md).
 
 ---
 
 ## Fluxo de Trabalho
 
 ```
-1. Coloque os arquivos no diretório do projeto
-2. Invoque TECH-LEAD.md (via Claude, Cursor, Copilot, etc.)
-3. O TECH-LEAD orquestra tudo automaticamente
+1. Abra seu terminal com o assistente (ex: Claude Code) na raiz do projeto.
+2. Digite `/lider [sua instrução/tarefa]` 
+3. O Tech Lead orquestra tudo automaticamente baseado no TECH-LEAD.md.
 ```
 
 Não há interface — o projeto funciona 100% via arquivos e agentes de IA.
@@ -82,8 +82,8 @@ nexusauto/
 
 ```bash
 # 1. Coloque os arquivos do projeto no diretório
-# 2. Invoque o TECH-LEAD.md no seu agente de IA favorito
-#    (Claude Code, Cursor, Copilot, Gemini, etc.)
+# 2. No seu agente de IA (Claude Code, etc), simplesmente digite:
+#    /lider [sua descrição da tarefa ou pedido]
 # 3. O TECH-LEAD orquestra automaticamente todos os agentes
 ```
 

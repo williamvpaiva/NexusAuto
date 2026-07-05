@@ -1,8 +1,9 @@
 # 🤖 Tech Lead / Orchestrator — AI Factory
 
-> **Primeiro ponto de contato** para inicialização e orquestração do projeto
+> **Comando de Invocação:** Para acionar o orquestrador, basta usar **`/lider [tarefa]`**.
 > 
-> Este arquivo deve estar na **RAIZ do projeto** para facilitar acesso inicial
+> **Primeiro ponto de contato** para inicialização e orquestração do projeto
+> Este arquivo deve estar na **RAIZ do projeto** para facilitar acesso inicial.
 
 ---
 
@@ -105,6 +106,82 @@ node scripts/memory-manager.js search "qual ORM" --topK 1
 # 4. Cache de resposta comum
 node scripts/memory-manager.js cache-set "porta do banco" "5432"
 ```
+
+---
+
+## 🧠 Integração com Spec-Kit (Especificação Primeiro)
+
+> **Especificação primeiro, código depois. O agente sabe exatamente o que construir, em que ordem e por quê.**
+
+### Fase 0: Especificação (Spec-Kit)
+
+Ao receber uma nova ideia/feature:
+
+1. **Verificar se já existe especificação:**
+   - Buscar em `specs/` por uma feature com nome similar
+   - Buscar na memória vetorial via `memory-manager.js search "feature: [nome]"`
+
+2. **Se não existir, gerar especificação:**
+   - Chame `spec-kit-bridge.js generateFullSpec("[descrição da ideia]", "[tech stack]")`
+   - Salve os artefatos em `specs/[feature-name]/`
+   - Registre na memória persistente com `memory-manager.js save`
+
+3. **Se já existir, carregar especificação:**
+   - Leia `spec.md`, `plan.md` e `tasks.md` do diretório da feature
+   - Carregue como contexto para os agentes
+
+4. **Validar a especificação:**
+   - Verifique se `spec.md` contém histórias de usuário e critérios de aceitação
+   - Verifique se `plan.md` define tecnologia e arquitetura
+   - Verifique se `tasks.md` tem dependências claras
+
+## Fase 3: Execução (com CowAgent)
+
+Após gerar a especificação e o plano (Spec-Kit), o Tech Lead deve:
+
+1. **Classificar as tarefas:**
+   - Tarefas arquiteturais/complexas → agentes especializados (backend-dev, frontend-dev, etc.)
+   - Tarefas operacionais/repetitivas → CowAgent (executor-agent)
+
+2. **Para tarefas do CowAgent:**
+   - Chamar `cowagent-wrapper.js executeTask("specs/[feature]/tasks.md")`
+   - Monitorar a execução via logs
+   - Receber o resultado e registrar na memória
+
+3. **Consolidação noturna:**
+   - Agendar `/nl-consolidate-memory` para rodar automaticamente no fim do dia
+   - Isso garante que o sistema aprenda com a execução do dia
+
+4. **Feedback loop:**
+   - O CowAgent pode sugerir novas skills ou melhorias
+   - Essas sugestões são registradas em `brain/Memories.md` e podem virar novas tarefas em `MELHORIAS/`
+
+### Estrutura de Especificação
+
+```
+.specify/                           # ← Spec-Kit
+├── constitution.md                 # Regras do projeto
+├── scripts/                        # Scripts auxiliares
+└── templates/                      # Templates para specs, planos, tasks
+    ├── spec-template.md
+    ├── plan-template.md
+    ├── tasks-template.md
+    └── clarifications-template.md
+
+specs/                              # ← Especificações por feature
+└── [feature-name]/                 # Ex: specs/auth-login/
+    ├── spec.md                     # O QUE construir (requisitos)
+    ├── plan.md                     # COMO construir (tecnologia, arquitetura)
+    ├── tasks.md                    # Lista de tarefas com dependências
+    └── clarifications.md           # Perguntas feitas e respostas
+```
+
+### Scripts de Integração
+
+| Script | Propósito | Uso |
+|--------|-----------|-----|
+| `spec-kit-bridge.js` | Ponte com Spec-Kit CLI | `node scripts/spec-kit-bridge.js full "descrição" --feature nome` |
+| `memory-manager.js` | Salvar specs como memórias | `node scripts/memory-manager.js save "spec" --agent tech-lead --type specification` |
 
 ---
 
@@ -478,6 +555,49 @@ const taxaAprovacaoVV = (aprovados / totalValidacoes) * 100;
 ---
 
 ## 📋 Comandos que Tech Lead Entende
+
+### Gestão de Especificações (Spec-Kit)
+
+| Comando | Ação |
+|---------|------|
+| `/nl-specify "descrição da ideia"` | Gera especificação completa usando Spec-Kit (spec + plan + tasks) |
+| `/nl-specify-feature "nome"` | Cria uma nova feature com estrutura de diretórios e especificação vazia |
+| `/nl-constitution` | Sincroniza a Constitution do Spec-Kit com `brain/Constitution.md` |
+
+### Ciclo de Desenvolvimento (Spec-Kit)
+
+| Comando | Ação |
+|---------|------|
+| `/nl-plan "tecnologia"` | Gera o plano técnico para a feature atual |
+| `/nl-clarify` | Executa a fase de clarificação (perguntas pendentes) |
+| `/nl-tasks` | Gera/regera a lista de tarefas ordenadas por dependência |
+| `/nl-implement` | Dispara a orquestração dos agentes do NexusAuto baseada nas tasks geradas |
+
+## Slash Commands (Integração com CowAgent)
+
+### Execução Autônoma
+- `/nl-execute "tarefa"` → Delega a tarefa para o CowAgent executar de forma autônoma
+- `/nl-execute-tasks "specs/[feature]/tasks.md"` → Executa todas as tarefas de uma feature especificada
+- `/nl-execute-skill "nome" [parâmetros]` → Executa uma skill específica do CowAgent
+
+### Memória e Evolução
+- `/nl-consolidate-memory` → Dispara o Deep Dream do CowAgent para consolidar memórias do dia
+- `/nl-learn` → Faz o CowAgent revisar conversas recentes e extrair aprendizados
+
+### Skills e Ferramentas
+- `/nl-list-skills` → Lista todas as skills disponíveis no CowAgent (incluindo as do NexusAuto)
+- `/nl-add-skill "nome" "descrição"` → Cria uma nova skill no CowAgent via linguagem natural
+
+### Canais
+- `/nl-channel slack` → Conecta o NexusAuto ao Slack via CowAgent
+- `/nl-channel web` → Ativa a interface web do CowAgent para acesso externo
+
+### Sincronização com Melhorias
+
+| Comando | Ação |
+|---------|------|
+| `/nl-import-tasks` | Importa as tasks geradas pelo Spec-Kit para o diretório `MELHORIAS/` correspondente |
+| `/nl-validate-spec` | Valida se a especificação atual está completa e coerente |
 
 ### Gestão
 
