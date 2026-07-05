@@ -127,6 +127,26 @@ node scripts/memory-manager.js cache-set "porta do banco" "5432"
 
 ---
 
+## Slash Commands – Memória Automática
+
+- `/memory-watch` → Inicia o watcher automático em segundo plano.
+- `/memory-stop` → Para o watcher.
+- `/memory-summarize` → Gera um resumo inteligente das últimas 24h de atividades.
+- `/memory-dashboard` → Abre a interface web do dashboard.
+- `/memory-purge` → Remove todas as memórias marcadas como privadas.
+- `/memory-inject` → Injeta automaticamente as memórias mais relevantes da última sessão.
+
+## SessionStart Hook (atualizado)
+
+Ao iniciar uma nova sessão, o Tech Lead deve:
+
+1. Verificar se há memórias das últimas 24h via `memory-manager.js search`.
+2. Se houver, usar `memory-summarizer.js` para gerar um resumo.
+3. Injetar esse resumo como contexto inicial.
+4. Registrar que a injeção foi feita em `brain/Memories.md`.
+
+---
+
 ## 🧠 Integração com Spec-Kit (Especificação Primeiro)
 
 > **Especificação primeiro, código depois. O agente sabe exatamente o que construir, em que ordem e por quê.**
