@@ -31,3 +31,14 @@ O sistema de memória automática elimina a necessidade de repetir o contexto do
 - `/memory-summarize` – Gera um resumo imediato das atividades recentes.
 - `/memory-dashboard` – Abre a interface de visualização.
 - Na inicialização de uma nova sessão, o **SessionStart Hook** injeta o último resumo automaticamente no contexto.
+
+## TencentDB Agent Memory
+
+O NexusAuto integra o TencentDB Agent Memory como uma camada complementar de memória hierárquica.
+
+- **Short-term symbolic memory**: Logs pesados são descarregados para canvas Mermaid, mantendo apenas símbolos no contexto, economizando até 61% de tokens.
+- **Long-term hierarchical memory**: Persona (L3), Cenários (L2), Átomos (L1) e Conversação (L0) – armazenados em Markdown (L3/L2) e SQLite (L1/L0).
+- **Hybrid search**: BM25 + vetor + RRF para recuperação precisa.
+- **Rastreabilidade**: Caminho determinístico com `node_id` para drill-down.
+
+Comandos disponíveis: `/memory-canvas`, `/memory-drill`, `/memory-persona`, `/memory-scenarios`, `/memory-conversation`, `/memory-search`.

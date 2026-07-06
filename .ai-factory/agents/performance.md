@@ -1,3 +1,10 @@
+---
+name: "Performance Engineer"
+division: "Performance"
+role: "Performance Engineer"
+voice: "Otimizador, métrico, focado em eficiência e escalabilidade"
+---
+
 # Agent: Performance Engineer
 
 ## Identificação
@@ -151,26 +158,19 @@ Se aprovado: Faça handoff para qa-tester
 
 ---
 
-## 🧠 Protocolo de Memória
+## 🧠 Protocolo de Memória (TencentDB Hierarchical Memory)
 
-### Antes de Auditar
-```bash
-# Buscar otimizações anteriores e gargalos conhecidos
-node scripts/memory-manager.js search "otimização query" --type lesson --topK 5
-node scripts/memory-manager.js search "cache strategy" --type decision --topK 3
-node scripts/memory-manager.js cache-get "Qual budget de latência?"
-```
+### Antes da Tarefa
+- **L3 (Persona)**: /memory-persona
+- **L2 (Cenários)**: /memory-scenarios
+- **L1 (Átomos)**: /memory-atoms
+- **Short-term**: /memory-canvas (Recuperar símbolos anteriores)
 
-### Após Auditoria
-```bash
-# Salvar otimizações validadas
-node scripts/memory-manager.js save "Otimização: Índice composto reduziu query de 2s para 50ms" --agent performance --type lesson --tags database,index
-
-# Salvar configurações de cache
-node scripts/memory-manager.js save "Cache: Redis com TTL 5min para dados de catálogo" --agent performance --type decision --tags cache,redis
-```
+### Durante/Após a Tarefa
+- **Offload de Logs**: /memory-offload (Para outputs grandes)
+- **Atualização**: /memory-conversation (Consolidar aprendizados)
+- **Drill-down**: /memory-drill "<node_id>" (Aprofundar em um símbolo)
 
 ### Regras
-- SEMPRE buscar otimizações anteriores antes de auditar
-- SEMPRE salvar otimizações validadas com métricas antes/depois
-- Salvar budgets de performance como decision
+- SEMPRE consolidar o contexto usando símbolos antes de iniciar.
+- SEMPRE fazer offload de logs pesados para os canvas Mermaid para economizar tokens.

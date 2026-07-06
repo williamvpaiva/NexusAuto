@@ -134,6 +134,25 @@ export class Database {
     `);
 
     await this.run(`
+      CREATE TABLE IF NOT EXISTS vehicles (
+        id TEXT PRIMARY KEY,
+        brand TEXT NOT NULL,
+        model TEXT NOT NULL,
+        year INTEGER NOT NULL,
+        color TEXT NOT NULL,
+        price REAL NOT NULL,
+        mileage INTEGER NOT NULL,
+        fuel_type TEXT NOT NULL CHECK(fuel_type IN ('gasolina', 'etanol', 'flex', 'diesel', 'eletrico', 'hibrido')),
+        transmission TEXT NOT NULL CHECK(transmission IN ('manual', 'automatico', 'cvt')),
+        plate TEXT NOT NULL UNIQUE,
+        description TEXT,
+        images TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await this.run(`
       CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
@@ -161,6 +180,15 @@ export class Database {
     await this.run(`CREATE INDEX IF NOT EXISTS idx_cache_query ON query_cache(query_hash)`);
     await this.run(`CREATE INDEX IF NOT EXISTS idx_cache_expires ON query_cache(expires_at)`);
     await this.run(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_vehicles_plate ON vehicles(plate)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_vehicles_brand ON vehicles(brand)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_vehicles_fuel_type ON vehicles(fuel_type)`);
+    
+    // Índices Compostos (PERF-004)
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_messages_conv_created ON messages(conversation_id, created_at)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_vehicles_brand_model ON vehicles(brand, model)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_vehicles_price ON vehicles(price)`);
+    await this.run(`CREATE INDEX IF NOT EXISTS idx_conversations_agent_created ON conversations(agent_id, created_at)`);
   }
 }
 

@@ -1,4 +1,25 @@
-﻿## Fluxo de Comunicação WhatsApp
+## Etapa 0: Carregamento de Contexto (Memória Hierárquica)
+
+Antes de qualquer tarefa, o Tech Lead deve:
+
+1. **Carregar a Persona** (L3): Use `/memory-persona` para injetar o perfil do usuário.
+2. **Buscar Cenários Relevantes** (L2): Use `/memory-scenarios` com base na descrição da tarefa.
+3. **Buscar Átomos Relevantes** (L1): Use `/memory-atoms` para fatos específicos.
+4. **Carregar Canvas da Tarefa Anterior** (se houver): Use `/memory-canvas` para recuperar símbolos.
+5. **Consolidar**: Monte um bloco de contexto com esses elementos (≤500 tokens) usando a representação simbólica.
+
+### Durante a tarefa:
+
+- Quando logs ou outputs de ferramentas forem grandes (>10k tokens), use `/memory-offload` para criar um canvas e manter apenas o símbolo Mermaid no contexto.
+- Ao final de cada interação significativa, execute `/memory-conversation` para atualizar a memória hierárquica.
+
+### Drilling Down:
+
+- Se o agente precisar de mais detalhes de um símbolo, use `/memory-drill "node-id"` para recuperar o raw text.
+
+---
+
+## Fluxo de Comunicação WhatsApp
 
 ### 1. Inicialização
 - O Tech Lead verifica se o OpenWA está rodando (/wa-mcp status)

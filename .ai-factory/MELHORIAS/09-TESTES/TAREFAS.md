@@ -2,8 +2,8 @@
 
 ## Status Geral da Área
 
-**Status:** 🟡 Em Progresso
-**Progresso:** 50% concluído (2 de 4 tarefas)
+**Status:** 🟢 Concluído
+**Progresso:** 100% concluído (4 de 4 tarefas)
 
 ---
 
@@ -39,9 +39,9 @@ N/A — tarefa de verificação concluída.
 
 | Campo              | Detalhe                                      |
 |--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente                                  |
-| 🗓️ Iniciado em     | -                                            |
-| ✅ Concluído em    | -                                            |
+| 📌 Status          | 🟢 Concluído                                  |
+| 🗓️ Iniciado em     | 06/07/2026                                            |
+| ✅ Concluído em    | 06/07/2026                                            |
 | 👤 Responsável     | qa-tester / backend-dev                      |
 | ⚡ Prioridade      | 🔴 Crítica                                   |
 
@@ -55,8 +55,8 @@ Após registrar o memory router, criar `backend/tests/memory-routes.test.ts` com
 Verificar que os endpoints HTTP funcionam corretamente com autenticação e validação.
 
 #### 📦 Entregáveis:
-- [ ] `memory-routes.test.ts` com 8+ testes de integração HTTP
-- [ ] Setup/teardown com banco SQLite temporário
+- [x] `memory-routes.test.ts` com 8+ testes de integração HTTP
+- [x] Setup/teardown com banco SQLite temporário
 
 ---
 
@@ -64,9 +64,9 @@ Verificar que os endpoints HTTP funcionam corretamente com autenticação e vali
 
 | Campo              | Detalhe                                      |
 |--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente                                  |
-| 🗓️ Iniciado em     | -                                            |
-| ✅ Concluído em    | -                                            |
+| 📌 Status          | 🟢 Concluído                                  |
+| 🗓️ Iniciado em     | 06/07/2026                                            |
+| ✅ Concluído em    | 06/07/2026                                            |
 | 👤 Responsável     | qa-tester / frontend-dev                     |
 | ⚡ Prioridade      | 🟡 Média                                     |
 
@@ -80,10 +80,10 @@ Adicionar `vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `@tes
 Sem testes de frontend, regressões em UI passam despercebidas; quebra de componentes críticos pode ocorrer.
 
 #### 📦 Entregáveis:
-- [ ] `vitest`, `@testing-library/react`, `@testing-library/jest-dom` em devDependencies
-- [ ] `vitest.config.ts` no frontend
-- [ ] Teste de snapshot para `HealthPage.tsx`
-- [ ] Teste de renderização para `Layout.tsx`
+- [x] `vitest`, `@testing-library/react`, `@testing-library/jest-dom` em devDependencies
+- [x] `vitest.config.ts` no frontend
+- [x] Teste de renderização para `HealthPage.tsx`
+- [x] Teste de renderização para `Layout.tsx`
 
 ---
 
@@ -91,9 +91,9 @@ Sem testes de frontend, regressões em UI passam despercebidas; quebra de compon
 
 | Campo              | Detalhe                                      |
 |--------------------|----------------------------------------------|
-| 📌 Status          | 🔴 Pendente                                  |
-| 🗓️ Iniciado em     | -                                            |
-| ✅ Concluído em    | -                                            |
+| 📌 Status          | 🟢 Concluído                                  |
+| 🗓️ Iniciado em     | 06/07/2026                                            |
+| ✅ Concluído em    | 06/07/2026                                            |
 | 👤 Responsável     | qa-tester                                    |
 | ⚡ Prioridade      | 🟠 Alta                                      |
 
@@ -107,7 +107,7 @@ Criar `backend/tests/database.test.ts` que testa a inicialização do banco (cri
 Garantir que o setup do banco funciona em ambiente limpo e em CI.
 
 #### 📦 Entregáveis:
-- [ ] `database.test.ts` com 3+ testes
+- [x] `database.test.ts` com 3+ testes
 
 ---
 

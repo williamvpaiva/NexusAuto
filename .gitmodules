@@ -1,3 +1,6 @@
 [submodule "cowagent"]
 	path = cowagent
 	url = https://github.com/zhayujie/CowAgent.git
+[submodule ".ai-factory/tencent-memory"]
+	path = .ai-factory/tencent-memory
+	url = https://github.com/TencentCloud/TencentDB-Agent-Memory.git

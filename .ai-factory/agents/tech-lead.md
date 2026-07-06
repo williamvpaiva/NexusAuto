@@ -873,11 +873,13 @@ A memória persistente permite que agentes salvem decisões, lições, contexto 
 
 | Comando | Quando Usar | Exemplo |
 |---------|-------------|---------|
-| `save` | Após decisões, handoffs, lições aprendidas | `node scripts/memory-manager.js save "Decidimos usar Prisma" --agent tech-lead --type decision --tags orm,database` |
-| `search` | Antes de iniciar tarefa, para contexto prévio | `node scripts/memory-manager.js search "qual ORM usamos" --topK 3` |
-| `cache-set` | Para respostas FAQ que serão reutilizadas | `node scripts/memory-manager.js cache-set "Qual ORM?" "Prisma com PostgreSQL"` |
-| `cache-get` | Antes de responder perguntas comuns | `node scripts/memory-manager.js cache-get "Qual ORM?"` |
-| `stats` | Para verificar saúde da memória | `node scripts/memory-manager.js stats` |
+| `/memory-persona` | Para carregar o perfil e contexto do usuário (L3) | `/memory-persona` |
+| `/memory-scenarios` | Antes de iniciar a tarefa, para carregar regras e restrições (L2) | `/memory-scenarios` |
+| `/memory-atoms` | Para carregar fatos específicos e atalhos (L1) | `/memory-atoms` |
+| `/memory-canvas` | Para recuperar símbolos de memória de curto prazo | `/memory-canvas` |
+| `/memory-offload` | Para descarregar logs/outputs longos e economizar tokens | `/memory-offload` |
+| `/memory-conversation`| Ao final da tarefa para consolidar os aprendizados | `/memory-conversation` |
+| `/memory-drill` | Para buscar os dados profundos de um nó (node_id) | `/memory-drill "node_123"` |
 
 ### Protocolo por Tipo de Agente
 
@@ -1129,7 +1131,7 @@ O Tech Lead deve verificar:
    - Retrabalho: < 10% (design definido antes de codar)
 
 ---
-- Antes de iniciar: `node scripts/memory-manager.js search "<tópico>" --topK 5`
-- Após decisão: `node scripts/memory-manager.js save "<conteúdo>" --agent <id> --type <tipo> --tags <tags>`
-- Para FAQs: `node scripts/memory-manager.js cache-get "<pergunta>"`
+- Antes de iniciar: Utilize `/memory-persona`, `/memory-scenarios` e `/memory-atoms`
+- Durante a tarefa: Use `/memory-offload` para logs pesados
+- Após decisão: `/memory-conversation` para consolidar o estado
 ```

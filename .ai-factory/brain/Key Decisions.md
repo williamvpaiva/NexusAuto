@@ -100,3 +100,4 @@
 2. Preencha Contexto, Decisão, Alternativas, Consequências
 3. Adicione link em [[brain/North Star]] se relevante
 4. Execute `/nl-log-decision "resumo"` para registrar na memória vetorial
+- **ADR-2026-07-06**: Test CLI decision logging via nl.js wrapper (2026-07-06 15:43:32)

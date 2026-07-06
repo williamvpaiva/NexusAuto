@@ -11,28 +11,28 @@
 ## 📋 Tarefas
 
 ### PERF-001 — Cache Layer com Redis
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Implementar camada de cache Redis para respostas de API com TTL configurável, cache invalidation por tag e fallback automático (cache miss → DB)
 - **Critério de aceite:** GET /api/* com header `Cache-Control: max-age=60` retorna do Redis em < 5ms; invalidação por tag funciona (ex: `user:*`)
 - **Esforço:** 5h
 - **Prioridade:** Alta
 
 ### PERF-002 — Compressão e Otimização de Assets Frontend
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Configurar compressão brotli no Nginx, chunk splitting no Vite, tree-shaking e análise de bundle com vite-bundle-analyzer
 - **Critério de aceite:** Bundle JS < 100 KB gzip; primeiro paint < 1.5s; relatório de análise gerado
 - **Esforço:** 3h
 - **Prioridade:** Alta
 
 ### PERF-003 — Lazy Loading e Code Splitting (Frontend)
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Implementar React.lazy + Suspense para todas as rotas, lazy loading de componentes pesados e import() dinâmico para bibliotecas grandes
 - **Critério de aceite:** Página Health carrega chunk separado; bundle inicial não inclui código de páginas não visitadas
 - **Esforço:** 2h
 - **Prioridade:** Alta
 
 ### PERF-004 — Indexação e Otimização de Queries SQLite
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Auditar queries do backend com EXPLAIN QUERY PLAN, adicionar índices compostos onde necessário, otimizar joins e N+1 queries nos services/repositories
 - **Critério de aceite:** Nenhuma query sequencial scanning table full > 100 rows; EXPLAIN mostra índices sendo usados
 - **Esforço:** 4h
@@ -53,7 +53,7 @@
 - **Prioridade:** Média
 
 ### PERF-007 — Database Connection Pool (SQLite WAL Mode)
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Configurar SQLite em WAL mode, pooling de conexões (better-sqlite3 ou wrapper) e limite de concorrência para evitar lock
 - **Critério de aceite:** WAL mode ativo; 10 leituras simultâneas sem bloqueio; escrita não bloqueia leitura
 - **Esforço:** 2h

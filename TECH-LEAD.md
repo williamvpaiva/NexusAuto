@@ -125,6 +125,29 @@ node scripts/memory-manager.js cache-set "porta do banco" "5432"
 4. **Registro:** Após a tarefa, registre em `brain/Memories.md` qual perfil foi usado e o resultado.
 5. **Criação:** Se uma nova especialidade for necessária, use `/agency-create` e o perfil será adicionado à agência.
 
+## Slash Commands – TencentDB Memory
+
+### Memória de Curto Prazo (Simbólica)
+- `/memory-canvas "task-id"` → Exibe o canvas Mermaid atual da tarefa
+- `/memory-drill "node-id"` → Recupera o raw text completo a partir de um símbolo
+- `/memory-offload` → Descarrega os logs atuais para um canvas e limpa o contexto
+
+### Memória de Longo Prazo (Hierárquica)
+- `/memory-persona` → Exibe o perfil do usuário (L3 Persona) em Markdown
+- `/memory-persona update "texto"` → Atualiza a persona com novas preferências
+- `/memory-scenarios` → Lista cenários recorrentes (L2) mais relevantes para o contexto atual
+- `/memory-scenario create "nome" "descrição"` → Cria um novo cenário
+- `/memory-atoms` → Busca fatos (L1) relevantes para a tarefa
+- `/memory-conversation` → Processa a conversa atual e extrai memória hierárquica
+
+### Busca Híbrida
+- `/memory-search "termo"` → Busca em todas as camadas (BM25 + vetor) com RRF
+- `/memory-search --long` → Busca apenas em long-term (persona+cenários+átomos)
+
+### Utilidades
+- `/memory-status` → Verifica se o TencentDB Memory está ativo
+- `/memory-cleanup` → Remove canvases antigos (>7 dias)
+
 ---
 
 ## Slash Commands – Memória Automática

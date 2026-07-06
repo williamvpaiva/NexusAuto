@@ -1,4 +1,4 @@
-# PROGRESS
+# PROGRESS — NexusAuto AI Factory
 
 | Etapa | Agente | Status | Saída | Data |
 |-------|--------|--------|-------|------|
@@ -24,6 +24,17 @@
 
 ## Histórico de Handoffs
 
+### 06/07/2026 — Auditoria de Conformidade + Correções
+- **De:** tech-lead
+- **Para:** Todos os agentes
+- **Ação:** Auditoria da estrutura `.ai-factory/` contra identidade proposta do NexusAuto
+- **Score de conformidade:** 87/100 🟢
+- **Correções:**
+  - Frontmatter YAML adicionado a 11 agentes (padrão: name, division, role, voice)
+  - PROGRESS.md, PROJECT_CONTEXT.md, CONTEXT_SUMMARY.md criados na raiz
+  - `nl.js` — CLI wrapper com 30+ slash commands (agency, memory, spec-kit, execution, learning, session, channel, design)
+- **Observações:** Memory routes ainda não registradas no router (BUG conhecido); JWT auth middleware não implementado
+
 ### 02/07/2026 — Auditoria Completa
 - **De:** tech-lead
 - **Para:** backend-dev, security, qa-tester
@@ -38,9 +49,10 @@
 ## Métricas de Processo
 - **Ciclos de devolução:** 0
 - **Tempo médio por etapa:** -
-- **Bugs críticos conhecidos:** 0 (corrigidos)
-- **Gaps de segurança:** 0 (rate limiting e auth configurados)
+- **Bugs críticos conhecidos:** Memory routes não registradas no router; JWT auth middleware não implementado
+- **Gaps de segurança:** 2 (rate limiting configurado; auth e memory routes pendentes)
+- **CLI wrappers:** `nl.js` na raiz — executar `node nl.js help` para ver comandos
 - **Cobertura de testes:** Frontend e Backend possuem testes unitários e de integração configurados (Vitest + React Testing Library + Supertest).
 
 ---
-*Última atualização: 02/07/2026 — Auditoria completa executada*
+*Última atualização: 06/07/2026 — Auditoria de conformidade executada, gaps corrigidos*

@@ -114,3 +114,5 @@ await memoryManager.saveMemory(content, {
 - [[brain/North Star]] - Visão e missão
 - [[brain/Memories]] - Log completo de sessões
 - [[brain/Key Decisions]] - Decisões arquiteturais
+### 2026-07-06 15:43:33
+- nl.js CLI wrapper created with 30+ slash commands

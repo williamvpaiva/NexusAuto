@@ -1,11 +1,13 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { HomePage } from './pages/HomePage';
-import { HealthPage } from './pages/HealthPage';
-import { LoginPage } from './pages/LoginPage';
-import { VehicleList } from './components/VehicleList';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+
+const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })));
+const HealthPage = lazy(() => import('./pages/HealthPage').then(module => ({ default: module.HealthPage })));
+const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })));
+const VehicleList = lazy(() => import('./components/VehicleList').then(module => ({ default: module.VehicleList })));
 
 // Placeholder para Dashboard
 function Dashboard() {
@@ -13,71 +15,81 @@ function Dashboard() {
     <div style={{ padding: '2rem' }}>
       <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '1rem' }}>Dashboard</h1>
       <p style={{ color: '#64748b' }}>Área protegida - apenas usuários autenticados</p>
-      <VehicleList />
+      <Suspense fallback={<div>Carregando lista de veículos...</div>}>
+        <VehicleList />
+      </Suspense>
     </div>
   );
 }
 
+const LoadingFallback = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}>
+    <p>Carregando...</p>
+  </div>
+);
+
 export default function App() {
   return (
-    <Routes>
-      {/* Rotas Públicas */}
-      <Route
-        path="/login"
-        element={
-          <RouteErrorBoundary routeName="login">
-            <LoginPage />
-          </RouteErrorBoundary>
-        }
-      />
-      
-      {/* Rotas Protegidas */}
-      <Route
-        path="/"
-        element={
-          <RouteErrorBoundary routeName="home">
-            <ProtectedRoute>
-              <Layout>
-                <HomePage />
-              </Layout>
-            </ProtectedRoute>
-          </RouteErrorBoundary>
-        }
-      />
-      <Route
-        path="/health"
-        element={
-          <RouteErrorBoundary routeName="health">
-            <ProtectedRoute>
-              <Layout>
-                <HealthPage />
-              </Layout>
-            </ProtectedRoute>
-          </RouteErrorBoundary>
-        }
-      />
-      <Route
-        path="/dashboard"
-        element={
-          <RouteErrorBoundary routeName="dashboard">
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          </RouteErrorBoundary>
-        }
-      />
-      <Route
-        path="/veiculos"
-        element={
-          <RouteErrorBoundary routeName="veiculos">
-            <ProtectedRoute>
-              <Layout>
-                <VehicleList />
-              </Layout>
-            </ProtectedRoute>
-          </RouteErrorBoundary>
-        }
-      />
-    </Routes>
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>
+        {/* Rotas Públicas */}
+        <Route
+          path="/login"
+          element={
+            <RouteErrorBoundary routeName="login">
+              <LoginPage />
+            </RouteErrorBoundary>
+          }
+        />
+        
+        {/* Rotas Protegidas */}
+        <Route
+          path="/"
+          element={
+            <RouteErrorBoundary routeName="home">
+              <ProtectedRoute>
+                <Layout>
+                  <HomePage />
+                </Layout>
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
+          path="/health"
+          element={
+            <RouteErrorBoundary routeName="health">
+              <ProtectedRoute>
+                <Layout>
+                  <HealthPage />
+                </Layout>
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <RouteErrorBoundary routeName="dashboard">
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
+          path="/veiculos"
+          element={
+            <RouteErrorBoundary routeName="veiculos">
+              <ProtectedRoute>
+                <Layout>
+                  <VehicleList />
+                </Layout>
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }
