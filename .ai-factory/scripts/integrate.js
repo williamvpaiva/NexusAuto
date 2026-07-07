@@ -64,6 +64,19 @@ async function runIntegration(mode = 'full') {
       }
     }
 
+    // Modo 5: Relatório de economia
+    if (mode === 'economy' || mode === 'full') {
+      console.log('📊 Gerando relatório de economia de tokens...\n');
+      try {
+        execSync(`node ${path.join(__dirname, 'token-economy-report.js')}`, {
+          stdio: 'inherit'
+        });
+        console.log('✅ Relatório de economia gerado\n');
+      } catch (error) {
+        console.log('⚠️  Relatório de economia falhou - verifique issues\n');
+      }
+    }
+
     const elapsed = Date.now() - startTime;
     const elapsedMinutes = Math.floor(elapsed / 60000);
     const elapsedSeconds = Math.floor((elapsed % 60000) / 1000);
@@ -98,6 +111,7 @@ Modos:
   gnhf   - Apenas GNHF
   sync   - Apenas sincronização de memória
   vv     - Apenas validação V&V
+  economy - Apenas relatório de economia
 
 Uso:
   node integrate.js [mode]

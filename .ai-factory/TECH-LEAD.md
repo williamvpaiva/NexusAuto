@@ -928,3 +928,33 @@ const skills = await loadRelevantSkills(task);
 - [[ORCHESTRATOR]] - Orquestração de agentes
 - [[workflows/design-workflow]] - Fluxo de geração de design
 - [[ui-ux-pro-max]] - Design System Generator
+
+---
+
+### \`/token-report\`
+
+**Propósito:** Exibir relatório de economia de tokens do NexusAuto
+
+**Execução:**
+1. Coletar stats do memory-manager (cache hits, tokens saved)
+2. Coletar stats do GNHF (runs, tokens consumidos)
+3. Coletar stats do token-budget (otimizações)
+4. Gerar relatório consolidado com projeções
+
+**Exemplo:**
+\`\`\`bash
+/token-report
+\`\`\`
+
+**Output:**
+\`\`\`markdown
+## Token Economy Report
+
+| Métrica | Valor |
+|---------|-------|
+| 💰 Tokens economizados | 0 |
+| 💵 Custo evitado | $0.0000 |
+| 📈 Taxa de economia | 0% |
+| 🎯 Cache hits | 0 |
+🔄 Otimizações | 0 |
+\`\`\`
