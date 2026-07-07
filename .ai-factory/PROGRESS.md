@@ -32,7 +32,10 @@
   - `MELHORIAS/01-ARQUITETURA/TAREFAS.md` — 3 tarefas (registrar memory router, unificar error handling, persistir users)
   - `MELHORIAS/08-SEGURANCA/TAREFAS.md` — 3 tarefas (JWT auth, rate limiting, validação Zod)
   - `MELHORIAS/09-TESTES/TAREFAS.md` — 4 tarefas (1 concluída: documentação dos testes existentes)
-  - `MELHORIAS/INDEX.md` — atualizado com 10 tarefas, 1 concluída, 10%
+  - `MELHORIAS/INDEX.md` — atualizado com 130 tarefas, 15 concluídas, 11%
+- **Novas Integrações (07/07/2026):**
+  - Implementado scaffold do **OpenWiki** em `scripts/openwiki` (1 tarefa extra em 11-DOCUMENTACAO)
+  - Implementado scaffold do **GNHF** em `scripts/gnhf` (1 tarefa extra em 06-MULTIAGENTE)
 - **Observações:** Memory routes definidas mas não registradas no router (BUG crítico); JWT_SECRET no env mas sem middleware de auth; testes de backend existem e são de boa qualidade (376 linhas, 18 testes no total)
 
 ## Métricas de Processo

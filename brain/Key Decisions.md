@@ -28,3 +28,21 @@
   - QA-tester valida contra checklist objetivo
   - Economia de tempo: design gerado em < 30 segundos vs. horas de discussão
   - Consistência visual em todo o projeto
+
+## Testes: Auth Middleware Executa Antes do Validation Pipe
+- **Data:** 2026-07-06
+- **Contexto:** Teste de validação 422 em `error-handler.test.ts` estava recebendo 401 (Unauthorized) em vez de 422 (Validation Error).
+- **Decisão:** Testes de validação (erro 422) devem fornecer JWT real + CSRF token registrado. Não usar `'test-token'` fake.
+- **Justificativa:** O middleware de autenticação roda ANTES do validation pipe no Express. Se o token é inválido, o request nunca chega ao validation pipe. Tokens fake causam 401 prematuro.
+
+## Testes: SuperTest em TypeScript Não Suporta Bracket Notation
+- **Data:** 2026-07-06
+- **Contexto:** `request(app)[method as 'get'](url)` retornava `undefined` em `memory.test.ts`.
+- **Decisão:** Usar chamadas diretas: `request(app).get(url)`, `request(app).post(url)`, etc.
+- **Justificativa:** O tipo `SuperTest<Test>` não expõe index signature. Bracket notation retorna `undefined` em runtime. Chamadas diretas são tipadas e funcionais.
+
+## Testes: Códigos HttpStatus Devem Bater com o Service Layer
+- **Data:** 2026-07-06
+- **Contexto:** `users.test.ts` esperava `NOT_FOUND` mas o service lançava `USER_NOT_FOUND`.
+- **Decisão:** O teste deve usar o código exato que o service lança.
+- **Justificativa:** `HttpStatus.NOT_FOUND` (genérico) e `ServiceErrorCode.USER_NOT_FOUND` (específico) são valores diferentes. O teste precisa refletir o comportamento real, não o esperado idealizado.

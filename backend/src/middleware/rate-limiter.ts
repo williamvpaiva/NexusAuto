@@ -4,7 +4,7 @@ import redisClient from '../config/redis';
 import { env } from '../config/env';
 
 function createStore() {
-  if (redisClient.status !== 'ready' && redisClient.status !== 'connecting') {
+  if (redisClient.status !== 'ready') {
     return undefined;
   }
   return new RedisStore({

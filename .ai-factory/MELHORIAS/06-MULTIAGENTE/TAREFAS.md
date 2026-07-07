@@ -59,6 +59,13 @@
 - **Esforço:** 3h
 - **Prioridade:** Baixa
 
+### MTA-008 — Integração GNHF (Workflow Autônomo)
+- [x] **Status:** 🟢 Concluído
+- **Descrição:** Implementar projeto GNHF (`scripts/gnhf/`) para automação de tarefas noturnas em loop, incluindo GitManager e ExecutionLoop.
+- **Critério de aceite:** Diretório configurado, máquina de estados iniciada e relatórios markdown estruturados.
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
 ---
 
 <div align="center">

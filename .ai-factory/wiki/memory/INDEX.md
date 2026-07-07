@@ -1,0 +1,541 @@
+# Memory
+
+## Visão Geral
+
+Esta seção contém documentação sobre **memory** do NexusAuto.
+
+## Arquivos
+
+- [`.ai-factory\scripts\memory-api.d.ts`](../.ai-factory\scripts\memory-api.d.ts) - 442 B
+- [`.ai-factory\scripts\memory-api.js`](../.ai-factory\scripts\memory-api.js) - 1.76 KB
+- [`.ai-factory\scripts\memory-integration.js`](../.ai-factory\scripts\memory-integration.js) - 8.37 KB
+- [`.ai-factory\scripts\memory-manager.js`](../.ai-factory\scripts\memory-manager.js) - 10.87 KB
+- [`.ai-factory\scripts\memory-summarizer.js`](../.ai-factory\scripts\memory-summarizer.js) - 2.08 KB
+- [`.ai-factory\scripts\memory-watcher.js`](../.ai-factory\scripts\memory-watcher.js) - 2.94 KB
+- [`.ai-factory\scripts\tencent-memory-bridge.js`](../.ai-factory\scripts\tencent-memory-bridge.js) - 3.15 KB
+- [`.ai-factory\skills\memory-management\SKILL.md`](../.ai-factory\skills\memory-management\SKILL.md) - 5.13 KB
+- [`.ai-factory\tencent-memory\.npmignore`](../.ai-factory\tencent-memory\.npmignore) - 253 B
+- [`.ai-factory\tencent-memory\assets\images\flowchart1.cn.png`](../.ai-factory\tencent-memory\assets\images\flowchart1.cn.png) - 27.24 KB
+- [`.ai-factory\tencent-memory\assets\images\flowchart1.png`](../.ai-factory\tencent-memory\assets\images\flowchart1.png) - 22.27 KB
+- [`.ai-factory\tencent-memory\assets\images\flowchart2.cn.png`](../.ai-factory\tencent-memory\assets\images\flowchart2.cn.png) - 26.72 KB
+- [`.ai-factory\tencent-memory\assets\images\flowchart2.png`](../.ai-factory\tencent-memory\assets\images\flowchart2.png) - 16.84 KB
+- [`.ai-factory\tencent-memory\assets\images\logo.png`](../.ai-factory\tencent-memory\assets\images\logo.png) - 129.44 KB
+- [`.ai-factory\tencent-memory\assets\images\logo2.png`](../.ai-factory\tencent-memory\assets\images\logo2.png) - 212.29 KB
+- [`.ai-factory\tencent-memory\assets\images\memory-pyramid-en.jpg`](../.ai-factory\tencent-memory\assets\images\memory-pyramid-en.jpg) - 664.45 KB
+- [`.ai-factory\tencent-memory\assets\images\memory-pyramid.png`](../.ai-factory\tencent-memory\assets\images\memory-pyramid.png) - 611.19 KB
+- [`.ai-factory\tencent-memory\assets\images\star-helper.png`](../.ai-factory\tencent-memory\assets\images\star-helper.png) - 201.31 KB
+- [`.ai-factory\tencent-memory\bin\export-tencent-vdb.mjs`](../.ai-factory\tencent-memory\bin\export-tencent-vdb.mjs) - 710 B
+- [`.ai-factory\tencent-memory\bin\migrate-sqlite-to-tcvdb.mjs`](../.ai-factory\tencent-memory\bin\migrate-sqlite-to-tcvdb.mjs) - 472 B
+- [`.ai-factory\tencent-memory\bin\read-local-memory.mjs`](../.ai-factory\tencent-memory\bin\read-local-memory.mjs) - 737 B
+- [`.ai-factory\tencent-memory\CHANGELOG.md`](../.ai-factory\tencent-memory\CHANGELOG.md) - 29.54 KB
+- [`.ai-factory\tencent-memory\CONTRIBUTING.md`](../.ai-factory\tencent-memory\CONTRIBUTING.md) - 4.91 KB
+- [`.ai-factory\tencent-memory\CONTRIBUTING_CN.md`](../.ai-factory\tencent-memory\CONTRIBUTING_CN.md) - 4.43 KB
+- [`.ai-factory\tencent-memory\docker\opensource\Dockerfile.hermes`](../.ai-factory\tencent-memory\docker\opensource\Dockerfile.hermes) - 4.76 KB
+- [`.ai-factory\tencent-memory\docker\opensource\README-hermes.md`](../.ai-factory\tencent-memory\docker\opensource\README-hermes.md) - 5.87 KB
+- [`.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\client.py`](../.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\client.py) - 7.80 KB
+- [`.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\plugin.yaml`](../.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\plugin.yaml) - 470 B
+- [`.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\README.md`](../.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\README.md) - 14.79 KB
+- [`.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\supervisor.py`](../.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\supervisor.py) - 13.69 KB
+- [`.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\__init__.py`](../.ai-factory\tencent-memory\hermes-plugin\memory\memory_tencentdb\__init__.py) - 50.38 KB
+- [`.ai-factory\tencent-memory\index.ts`](../.ai-factory\tencent-memory\index.ts) - 36.09 KB
+- [`.ai-factory\tencent-memory\LICENSE`](../.ai-factory\tencent-memory\LICENSE) - 1.31 KB
+- [`.ai-factory\tencent-memory\openclaw.plugin.json`](../.ai-factory\tencent-memory\openclaw.plugin.json) - 14.12 KB
+- [`.ai-factory\tencent-memory\package.json`](../.ai-factory\tencent-memory\package.json) - 3.70 KB
+- [`.ai-factory\tencent-memory\README.md`](../.ai-factory\tencent-memory\README.md) - 26.41 KB
+- [`.ai-factory\tencent-memory\README_CN.md`](../.ai-factory\tencent-memory\README_CN.md) - 25.85 KB
+- [`.ai-factory\tencent-memory\scripts\bugfix-20260423\bugfix-20260423-full.sh`](../.ai-factory\tencent-memory\scripts\bugfix-20260423\bugfix-20260423-full.sh) - 12.96 KB
+- [`.ai-factory\tencent-memory\scripts\bugfix-20260423\BUGFIX-20260423-SOP.md`](../.ai-factory\tencent-memory\scripts\bugfix-20260423\BUGFIX-20260423-SOP.md) - 2.09 KB
+- [`.ai-factory\tencent-memory\scripts\bugfix-20260423\bugfix-20260423.sh`](../.ai-factory\tencent-memory\scripts\bugfix-20260423\bugfix-20260423.sh) - 9.59 KB
+- [`.ai-factory\tencent-memory\scripts\export-diagnostic.sh`](../.ai-factory\tencent-memory\scripts\export-diagnostic.sh) - 9.01 KB
+- [`.ai-factory\tencent-memory\scripts\export-tencent-vdb\export-tencent-vdb.ts`](../.ai-factory\tencent-memory\scripts\export-tencent-vdb\export-tencent-vdb.ts) - 20.05 KB
+- [`.ai-factory\tencent-memory\scripts\export-tencent-vdb\tsconfig.json`](../.ai-factory\tencent-memory\scripts\export-tencent-vdb\tsconfig.json) - 487 B
+- [`.ai-factory\tencent-memory\scripts\install_hermes_memory_tencentdb.sh`](../.ai-factory\tencent-memory\scripts\install_hermes_memory_tencentdb.sh) - 14.52 KB
+- [`.ai-factory\tencent-memory\scripts\memory-tencentdb-ctl.sh`](../.ai-factory\tencent-memory\scripts\memory-tencentdb-ctl.sh) - 38.84 KB
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\cli-entry.ts`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\cli-entry.ts) - 404 B
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\config-write.ts`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\config-write.ts) - 3.33 KB
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\manifest-write.ts`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\manifest-write.ts) - 1.67 KB
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\node-llama-cpp.d.ts`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\node-llama-cpp.d.ts) - 381 B
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\README.md`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\README.md) - 8.33 KB
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\sqlite-to-tcvdb.ts`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\sqlite-to-tcvdb.ts) - 29.71 KB
+- [`.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\tsconfig.json`](../.ai-factory\tencent-memory\scripts\migrate-sqlite-to-tcvdb\tsconfig.json) - 571 B
+- [`.ai-factory\tencent-memory\scripts\openclaw-after-tool-call-messages.patch.sh`](../.ai-factory\tencent-memory\scripts\openclaw-after-tool-call-messages.patch.sh) - 15.41 KB
+- [`.ai-factory\tencent-memory\scripts\read-local-memory\read-local-memory.ts`](../.ai-factory\tencent-memory\scripts\read-local-memory\read-local-memory.ts) - 34.87 KB
+- [`.ai-factory\tencent-memory\scripts\read-local-memory\tsconfig.json`](../.ai-factory\tencent-memory\scripts\read-local-memory\tsconfig.json) - 478 B
+- [`.ai-factory\tencent-memory\scripts\README.memory-tencentdb-ctl.md`](../.ai-factory\tencent-memory\scripts\README.memory-tencentdb-ctl.md) - 17.27 KB
+- [`.ai-factory\tencent-memory\scripts\setup-offload.sh`](../.ai-factory\tencent-memory\scripts\setup-offload.sh) - 14.01 KB
+- [`.ai-factory\tencent-memory\SKILL-DIAGNOSTIC-EXPORT.md`](../.ai-factory\tencent-memory\SKILL-DIAGNOSTIC-EXPORT.md) - 6.71 KB
+- [`.ai-factory\tencent-memory\SKILL-MIGRATION.md`](../.ai-factory\tencent-memory\SKILL-MIGRATION.md) - 8.08 KB
+- [`.ai-factory\tencent-memory\SKILL.md`](../.ai-factory\tencent-memory\SKILL.md) - 5.73 KB
+- [`.ai-factory\tencent-memory\src\adapters\index.ts`](../.ai-factory\tencent-memory\src\adapters\index.ts) - 950 B
+- [`.ai-factory\tencent-memory\src\adapters\openclaw\host-adapter.ts`](../.ai-factory\tencent-memory\src\adapters\openclaw\host-adapter.ts) - 3.48 KB
+- [`.ai-factory\tencent-memory\src\adapters\openclaw\index.ts`](../.ai-factory\tencent-memory\src\adapters\openclaw\index.ts) - 332 B
+- [`.ai-factory\tencent-memory\src\adapters\openclaw\llm-runner.ts`](../.ai-factory\tencent-memory\src\adapters\openclaw\llm-runner.ts) - 3.23 KB
+- [`.ai-factory\tencent-memory\src\adapters\standalone\host-adapter.ts`](../.ai-factory\tencent-memory\src\adapters\standalone\host-adapter.ts) - 2.63 KB
+- [`.ai-factory\tencent-memory\src\adapters\standalone\index.ts`](../.ai-factory\tencent-memory\src\adapters\standalone\index.ts) - 365 B
+- [`.ai-factory\tencent-memory\src\adapters\standalone\llm-runner.ts`](../.ai-factory\tencent-memory\src\adapters\standalone\llm-runner.ts) - 11.50 KB
+- [`.ai-factory\tencent-memory\src\cli\commands\seed.ts`](../.ai-factory\tencent-memory\src\cli\commands\seed.ts) - 10.51 KB
+- [`.ai-factory\tencent-memory\src\cli\index.ts`](../.ai-factory\tencent-memory\src\cli\index.ts) - 1.90 KB
+- [`.ai-factory\tencent-memory\src\cli\README.md`](../.ai-factory\tencent-memory\src\cli\README.md) - 4.73 KB
+- [`.ai-factory\tencent-memory\src\config.ts`](../.ai-factory\tencent-memory\src\config.ts) - 29.00 KB
+- [`.ai-factory\tencent-memory\src\core\conversation\l0-recorder.ts`](../.ai-factory\tencent-memory\src\core\conversation\l0-recorder.ts) - 21.88 KB
+- [`.ai-factory\tencent-memory\src\core\hooks\auto-capture.ts`](../.ai-factory\tencent-memory\src\core\hooks\auto-capture.ts) - 14.70 KB
+- [`.ai-factory\tencent-memory\src\core\hooks\auto-recall.ts`](../.ai-factory\tencent-memory\src\core\hooks\auto-recall.ts) - 35.36 KB
+- [`.ai-factory\tencent-memory\src\core\index.ts`](../.ai-factory\tencent-memory\src\core\index.ts) - 639 B
+- [`.ai-factory\tencent-memory\src\core\persona\persona-generator.ts`](../.ai-factory\tencent-memory\src\core\persona\persona-generator.ts) - 9.00 KB
+- [`.ai-factory\tencent-memory\src\core\persona\persona-trigger.ts`](../.ai-factory\tencent-memory\src\core\persona\persona-trigger.ts) - 4.29 KB
+- [`.ai-factory\tencent-memory\src\core\profile\profile-sync.ts`](../.ai-factory\tencent-memory\src\core\profile\profile-sync.ts) - 8.14 KB
+- [`.ai-factory\tencent-memory\src\core\prompts\l1-dedup.ts`](../.ai-factory\tencent-memory\src\core\prompts\l1-dedup.ts) - 7.36 KB
+- [`.ai-factory\tencent-memory\src\core\prompts\l1-extraction.ts`](../.ai-factory\tencent-memory\src\core\prompts\l1-extraction.ts) - 6.94 KB
+- [`.ai-factory\tencent-memory\src\core\prompts\persona-generation.ts`](../.ai-factory\tencent-memory\src\core\prompts\persona-generation.ts) - 8.67 KB
+- [`.ai-factory\tencent-memory\src\core\prompts\scene-extraction.ts`](../.ai-factory\tencent-memory\src\core\prompts\scene-extraction.ts) - 17.20 KB
+- [`.ai-factory\tencent-memory\src\core\record\l1-dedup.ts`](../.ai-factory\tencent-memory\src\core\record\l1-dedup.ts) - 14.79 KB
+- [`.ai-factory\tencent-memory\src\core\record\l1-extractor.ts`](../.ai-factory\tencent-memory\src\core\record\l1-extractor.ts) - 18.20 KB
+- [`.ai-factory\tencent-memory\src\core\record\l1-reader.ts`](../.ai-factory\tencent-memory\src\core\record\l1-reader.ts) - 6.45 KB
+- [`.ai-factory\tencent-memory\src\core\record\l1-writer.ts`](../.ai-factory\tencent-memory\src\core\record\l1-writer.ts) - 9.81 KB
+- [`.ai-factory\tencent-memory\src\core\report\reporter.ts`](../.ai-factory\tencent-memory\src\core\report\reporter.ts) - 2.85 KB
+- [`.ai-factory\tencent-memory\src\core\scene\filename-normalizer.ts`](../.ai-factory\tencent-memory\src\core\scene\filename-normalizer.ts) - 7.09 KB
+- [`.ai-factory\tencent-memory\src\core\scene\scene-extractor.ts`](../.ai-factory\tencent-memory\src\core\scene\scene-extractor.ts) - 20.54 KB
+- [`.ai-factory\tencent-memory\src\core\scene\scene-format.ts`](../.ai-factory\tencent-memory\src\core\scene\scene-format.ts) - 1.95 KB
+- [`.ai-factory\tencent-memory\src\core\scene\scene-index.ts`](../.ai-factory\tencent-memory\src\core\scene\scene-index.ts) - 2.91 KB
+- [`.ai-factory\tencent-memory\src\core\scene\scene-navigation.ts`](../.ai-factory\tencent-memory\src\core\scene\scene-navigation.ts) - 2.42 KB
+- [`.ai-factory\tencent-memory\src\core\seed\input.ts`](../.ai-factory\tencent-memory\src\core\seed\input.ts) - 15.19 KB
+- [`.ai-factory\tencent-memory\src\core\seed\seed-runtime.ts`](../.ai-factory\tencent-memory\src\core\seed\seed-runtime.ts) - 14.75 KB
+- [`.ai-factory\tencent-memory\src\core\seed\types.ts`](../.ai-factory\tencent-memory\src\core\seed\types.ts) - 3.74 KB
+- [`.ai-factory\tencent-memory\src\core\store\bm25-client.ts`](../.ai-factory\tencent-memory\src\core\store\bm25-client.ts) - 4.91 KB
+- [`.ai-factory\tencent-memory\src\core\store\bm25-local.ts`](../.ai-factory\tencent-memory\src\core\store\bm25-local.ts) - 2.73 KB
+- [`.ai-factory\tencent-memory\src\core\store\embedding.ts`](../.ai-factory\tencent-memory\src\core\store\embedding.ts) - 31.47 KB
+- [`.ai-factory\tencent-memory\src\core\store\factory.ts`](../.ai-factory\tencent-memory\src\core\store\factory.ts) - 4.49 KB
+- [`.ai-factory\tencent-memory\src\core\store\search-utils.ts`](../.ai-factory\tencent-memory\src\core\store\search-utils.ts) - 1.85 KB
+- [`.ai-factory\tencent-memory\src\core\store\sqlite.ts`](../.ai-factory\tencent-memory\src\core\store\sqlite.ts) - 85.04 KB
+- [`.ai-factory\tencent-memory\src\core\store\tcvdb-client.ts`](../.ai-factory\tencent-memory\src\core\store\tcvdb-client.ts) - 10.67 KB
+- [`.ai-factory\tencent-memory\src\core\store\tcvdb.ts`](../.ai-factory\tencent-memory\src\core\store\tcvdb.ts) - 43.85 KB
+- [`.ai-factory\tencent-memory\src\core\store\types.ts`](../.ai-factory\tencent-memory\src\core\store\types.ts) - 11.49 KB
+- [`.ai-factory\tencent-memory\src\core\tdai-core.ts`](../.ai-factory\tencent-memory\src\core\tdai-core.ts) - 19.55 KB
+- [`.ai-factory\tencent-memory\src\core\tools\conversation-search.ts`](../.ai-factory\tencent-memory\src\core\tools\conversation-search.ts) - 9.12 KB
+- [`.ai-factory\tencent-memory\src\core\tools\memory-search.ts`](../.ai-factory\tencent-memory\src\core\tools\memory-search.ts) - 9.35 KB
+- [`.ai-factory\tencent-memory\src\core\types.ts`](../.ai-factory\tencent-memory\src\core\types.ts) - 8.27 KB
+- [`.ai-factory\tencent-memory\src\gateway\config.ts`](../.ai-factory\tencent-memory\src\gateway\config.ts) - 12.84 KB
+- [`.ai-factory\tencent-memory\src\gateway\server.ts`](../.ai-factory\tencent-memory\src\gateway\server.ts) - 21.26 KB
+- [`.ai-factory\tencent-memory\src\gateway\types.ts`](../.ai-factory\tencent-memory\src\gateway\types.ts) - 3.15 KB
+- [`.ai-factory\tencent-memory\src\index.js`](../.ai-factory\tencent-memory\src\index.js) - 461 B
+- [`.ai-factory\tencent-memory\src\offload\auth-profile-key.ts`](../.ai-factory\tencent-memory\src\offload\auth-profile-key.ts) - 5.00 KB
+- [`.ai-factory\tencent-memory\src\offload\backend-client.ts`](../.ai-factory\tencent-memory\src\offload\backend-client.ts) - 13.25 KB
+- [`.ai-factory\tencent-memory\src\offload\benchmark-token-estimate.ts`](../.ai-factory\tencent-memory\src\offload\benchmark-token-estimate.ts) - 3.95 KB
+- [`.ai-factory\tencent-memory\src\offload\context-token-tracker.ts`](../.ai-factory\tencent-memory\src\offload\context-token-tracker.ts) - 5.52 KB
+- [`.ai-factory\tencent-memory\src\offload\fast-token-estimate.ts`](../.ai-factory\tencent-memory\src\offload\fast-token-estimate.ts) - 10.01 KB
+- [`.ai-factory\tencent-memory\src\offload\hooks\after-tool-call.ts`](../.ai-factory\tencent-memory\src\offload\hooks\after-tool-call.ts) - 29.33 KB
+- [`.ai-factory\tencent-memory\src\offload\hooks\before-agent-start.ts`](../.ai-factory\tencent-memory\src\offload\hooks\before-agent-start.ts) - 5.39 KB
+- [`.ai-factory\tencent-memory\src\offload\hooks\llm-input-l3.ts`](../.ai-factory\tencent-memory\src\offload\hooks\llm-input-l3.ts) - 65.65 KB
+- [`.ai-factory\tencent-memory\src\offload\hooks\llm-output.ts`](../.ai-factory\tencent-memory\src\offload\hooks\llm-output.ts) - 759 B
+- [`.ai-factory\tencent-memory\src\offload\index.ts`](../.ai-factory\tencent-memory\src\offload\index.ts) - 117.30 KB
+- [`.ai-factory\tencent-memory\src\offload\l3-helpers.ts`](../.ai-factory\tencent-memory\src\offload\l3-helpers.ts) - 10.44 KB
+- [`.ai-factory\tencent-memory\src\offload\l3-token-counter.ts`](../.ai-factory\tencent-memory\src\offload\l3-token-counter.ts) - 1.31 KB
+- [`.ai-factory\tencent-memory\src\offload\l3-token-helpers.ts`](../.ai-factory\tencent-memory\src\offload\l3-token-helpers.ts) - 606 B
+- [`.ai-factory\tencent-memory\src\offload\local-llm\index.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\index.ts) - 6.62 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\llm-caller.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\llm-caller.ts) - 2.79 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\parsers\json-utils.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\parsers\json-utils.ts) - 2.91 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\parsers\l1-parser.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\parsers\l1-parser.ts) - 1.12 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\parsers\l15-parser.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\parsers\l15-parser.ts) - 1.27 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\parsers\l2-parser.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\parsers\l2-parser.ts) - 2.82 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\prompts\l1-prompt.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\prompts\l1-prompt.ts) - 5.45 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\prompts\l15-prompt.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\prompts\l15-prompt.ts) - 5.10 KB
+- [`.ai-factory\tencent-memory\src\offload\local-llm\prompts\l2-prompt.ts`](../.ai-factory\tencent-memory\src\offload\local-llm\prompts\l2-prompt.ts) - 7.79 KB
+- [`.ai-factory\tencent-memory\src\offload\mmd-injector.ts`](../.ai-factory\tencent-memory\src\offload\mmd-injector.ts) - 14.49 KB
+- [`.ai-factory\tencent-memory\src\offload\mmd-meta.ts`](../.ai-factory\tencent-memory\src\offload\mmd-meta.ts) - 1.93 KB
+- [`.ai-factory\tencent-memory\src\offload\opik-tracer.ts`](../.ai-factory\tencent-memory\src\offload\opik-tracer.ts) - 12.68 KB
+- [`.ai-factory\tencent-memory\src\offload\pipelines\l2-mermaid.ts`](../.ai-factory\tencent-memory\src\offload\pipelines\l2-mermaid.ts) - 9.61 KB
+- [`.ai-factory\tencent-memory\src\offload\reclaimer.ts`](../.ai-factory\tencent-memory\src\offload\reclaimer.ts) - 15.59 KB
+- [`.ai-factory\tencent-memory\src\offload\session-registry.ts`](../.ai-factory\tencent-memory\src\offload\session-registry.ts) - 4.83 KB
+- [`.ai-factory\tencent-memory\src\offload\state-manager.ts`](../.ai-factory\tencent-memory\src\offload\state-manager.ts) - 18.00 KB
+- [`.ai-factory\tencent-memory\src\offload\state-reporter.ts`](../.ai-factory\tencent-memory\src\offload\state-reporter.ts) - 12.99 KB
+- [`.ai-factory\tencent-memory\src\offload\storage.ts`](../.ai-factory\tencent-memory\src\offload\storage.ts) - 23.05 KB
+- [`.ai-factory\tencent-memory\src\offload\time-utils.ts`](../.ai-factory\tencent-memory\src\offload\time-utils.ts) - 1.17 KB
+- [`.ai-factory\tencent-memory\src\offload\types.ts`](../.ai-factory\tencent-memory\src\offload\types.ts) - 8.96 KB
+- [`.ai-factory\tencent-memory\src\offload\user-id.ts`](../.ai-factory\tencent-memory\src\offload\user-id.ts) - 2.58 KB
+- [`.ai-factory\tencent-memory\src\utils\backup.ts`](../.ai-factory\tencent-memory\src\utils\backup.ts) - 7.22 KB
+- [`.ai-factory\tencent-memory\src\utils\checkpoint.ts`](../.ai-factory\tencent-memory\src\utils\checkpoint.ts) - 18.00 KB
+- [`.ai-factory\tencent-memory\src\utils\clean-context-runner.ts`](../.ai-factory\tencent-memory\src\utils\clean-context-runner.ts) - 23.87 KB
+- [`.ai-factory\tencent-memory\src\utils\ensure-hook-policy.ts`](../.ai-factory\tencent-memory\src\utils\ensure-hook-policy.ts) - 9.17 KB
+- [`.ai-factory\tencent-memory\src\utils\env.ts`](../.ai-factory\tencent-memory\src\utils\env.ts) - 571 B
+- [`.ai-factory\tencent-memory\src\utils\managed-timer.ts`](../.ai-factory\tencent-memory\src\utils\managed-timer.ts) - 4.68 KB
+- [`.ai-factory\tencent-memory\src\utils\manifest.ts`](../.ai-factory\tencent-memory\src\utils\manifest.ts) - 4.57 KB
+- [`.ai-factory\tencent-memory\src\utils\memory-cleaner.ts`](../.ai-factory\tencent-memory\src\utils\memory-cleaner.ts) - 12.59 KB
+- [`.ai-factory\tencent-memory\src\utils\no-think-fetch.ts`](../.ai-factory\tencent-memory\src\utils\no-think-fetch.ts) - 5.08 KB
+- [`.ai-factory\tencent-memory\src\utils\openclaw-state-dir.ts`](../.ai-factory\tencent-memory\src\utils\openclaw-state-dir.ts) - 1.35 KB
+- [`.ai-factory\tencent-memory\src\utils\pipeline-factory.ts`](../.ai-factory\tencent-memory\src\utils\pipeline-factory.ts) - 26.53 KB
+- [`.ai-factory\tencent-memory\src\utils\pipeline-manager.ts`](../.ai-factory\tencent-memory\src\utils\pipeline-manager.ts) - 44.34 KB
+- [`.ai-factory\tencent-memory\src\utils\sanitize.ts`](../.ai-factory\tencent-memory\src\utils\sanitize.ts) - 16.14 KB
+- [`.ai-factory\tencent-memory\src\utils\serial-queue.ts`](../.ai-factory\tencent-memory\src\utils\serial-queue.ts) - 3.61 KB
+- [`.ai-factory\tencent-memory\src\utils\session-filter.ts`](../.ai-factory\tencent-memory\src\utils\session-filter.ts) - 3.47 KB
+- [`.ai-factory\tencent-memory\src\utils\text-utils.ts`](../.ai-factory\tencent-memory\src\utils\text-utils.ts) - 944 B
+- [`.ai-factory\tencent-memory\src\utils\time.ts`](../.ai-factory\tencent-memory\src\utils\time.ts) - 9.83 KB
+- [`.ai-factory\tencent-memory\tsdown.config.ts`](../.ai-factory\tencent-memory\tsdown.config.ts) - 1.03 KB
+- [`.ai-factory\web\memory-dashboard\index.html`](../.ai-factory\web\memory-dashboard\index.html) - 818 B
+- [`.ai-factory\web\memory-dashboard\script.js`](../.ai-factory\web\memory-dashboard\script.js) - 2.45 KB
+- [`.ai-factory\web\memory-dashboard\style.css`](../.ai-factory\web\memory-dashboard\style.css) - 1.33 KB
+- [`.ai-factory\wiki\memory\INDEX.md`](../.ai-factory\wiki\memory\INDEX.md) - 33.18 KB
+- [`backend\data\memory.db`](../backend\data\memory.db) - 524.00 KB
+- [`backend\src\controllers\memory.controller.ts`](../backend\src\controllers\memory.controller.ts) - 5.29 KB
+- [`backend\src\repositories\memory.repository.ts`](../backend\src\repositories\memory.repository.ts) - 14.89 KB
+- [`backend\src\routes\memory-tencent-routes.ts`](../backend\src\routes\memory-tencent-routes.ts) - 1.29 KB
+- [`backend\src\services\memory.service.ts`](../backend\src\services\memory.service.ts) - 8.53 KB
+- [`backend\src\types\memory.ts`](../backend\src\types\memory.ts) - 2.46 KB
+- [`backend\src\validators\memory.validator.ts`](../backend\src\validators\memory.validator.ts) - 1.91 KB
+- [`cowagent\agent\memory\chunker.py`](../cowagent\agent\memory\chunker.py) - 4.53 KB
+- [`cowagent\agent\memory\config.py`](../cowagent\agent\memory\config.py) - 3.49 KB
+- [`cowagent\agent\memory\conversation_store.py`](../cowagent\agent\memory\conversation_store.py) - 49.87 KB
+- [`cowagent\agent\memory\embedding\factory.py`](../cowagent\agent\memory\embedding\factory.py) - 7.72 KB
+- [`cowagent\agent\memory\embedding\provider.py`](../cowagent\agent\memory\embedding\provider.py) - 20.98 KB
+- [`cowagent\agent\memory\embedding\state.py`](../cowagent\agent\memory\embedding\state.py) - 1.70 KB
+- [`cowagent\agent\memory\embedding\__init__.py`](../cowagent\agent\memory\embedding\__init__.py) - 1.11 KB
+- [`cowagent\agent\memory\manager.py`](../cowagent\agent\memory\manager.py) - 21.34 KB
+- [`cowagent\agent\memory\service.py`](../cowagent\agent\memory\service.py) - 9.50 KB
+- [`cowagent\agent\memory\storage.py`](../cowagent\agent\memory\storage.py) - 43.02 KB
+- [`cowagent\agent\memory\summarizer.py`](../cowagent\agent\memory\summarizer.py) - 32.90 KB
+- [`cowagent\agent\memory\__init__.py`](../cowagent\agent\memory\__init__.py) - 845 B
+- [`cowagent\agent\tools\memory\memory_get.py`](../cowagent\agent\tools\memory\memory_get.py) - 4.87 KB
+- [`cowagent\agent\tools\memory\memory_search.py`](../cowagent\agent\tools\memory\memory_search.py) - 3.81 KB
+- [`cowagent\agent\tools\memory\__init__.py`](../cowagent\agent\tools\memory\__init__.py) - 254 B
+- [`cowagent\common\memory.py`](../cowagent\common\memory.py) - 85 B
+- [`cowagent\docs\cli\memory-knowledge.mdx`](../cowagent\docs\cli\memory-knowledge.mdx) - 1.65 KB
+- [`cowagent\docs\ja\cli\memory-knowledge.mdx`](../cowagent\docs\ja\cli\memory-knowledge.mdx) - 1.95 KB
+- [`cowagent\docs\ja\memory\context.mdx`](../cowagent\docs\ja\memory\context.mdx) - 4.87 KB
+- [`cowagent\docs\ja\memory\deep-dream.mdx`](../cowagent\docs\ja\memory\deep-dream.mdx) - 4.24 KB
+- [`cowagent\docs\ja\memory\index.mdx`](../cowagent\docs\ja\memory\index.mdx) - 4.11 KB
+- [`cowagent\docs\ja\memory\self-evolution.mdx`](../cowagent\docs\ja\memory\self-evolution.mdx) - 6.75 KB
+- [`cowagent\docs\ja\tools\memory.mdx`](../cowagent\docs\ja\tools\memory.mdx) - 1.97 KB
+- [`cowagent\docs\memory\context.mdx`](../cowagent\docs\memory\context.mdx) - 3.68 KB
+- [`cowagent\docs\memory\deep-dream.mdx`](../cowagent\docs\memory\deep-dream.mdx) - 3.84 KB
+- [`cowagent\docs\memory\index.mdx`](../cowagent\docs\memory\index.mdx) - 4.07 KB
+- [`cowagent\docs\memory\self-evolution.mdx`](../cowagent\docs\memory\self-evolution.mdx) - 5.95 KB
+- [`cowagent\docs\tools\memory.mdx`](../cowagent\docs\tools\memory.mdx) - 1.61 KB
+- [`cowagent\docs\zh\cli\memory-knowledge.mdx`](../cowagent\docs\zh\cli\memory-knowledge.mdx) - 1.68 KB
+- [`cowagent\docs\zh\memory\context.mdx`](../cowagent\docs\zh\memory\context.mdx) - 3.43 KB
+- [`cowagent\docs\zh\memory\deep-dream.mdx`](../cowagent\docs\zh\memory\deep-dream.mdx) - 3.44 KB
+- [`cowagent\docs\zh\memory\index.mdx`](../cowagent\docs\zh\memory\index.mdx) - 3.54 KB
+- [`cowagent\docs\zh\memory\self-evolution.mdx`](../cowagent\docs\zh\memory\self-evolution.mdx) - 5.61 KB
+- [`cowagent\docs\zh\tools\memory.mdx`](../cowagent\docs\zh\tools\memory.mdx) - 1.43 KB
+- [`cowagent\venv\Lib\site-packages\anyio\streams\memory.py`](../cowagent\venv\Lib\site-packages\anyio\streams\memory.py) - 10.49 KB
+- [`cowagent\venv\Lib\site-packages\lark_oapi\api\search\v2\model\memory_message.py`](../cowagent\venv\Lib\site-packages\lark_oapi\api\search\v2\model\memory_message.py) - 948 B
+- [`cowagent\venv\Lib\site-packages\wechatpy\session\memorystorage.py`](../cowagent\venv\Lib\site-packages\wechatpy\session\memorystorage.py) - 477 B
+- [`nexusauto_memory.db`](../nexusauto_memory.db) - 112.00 KB
+- [`scripts\memory-manager.js`](../scripts\memory-manager.js) - 15.47 KB
+- [`scripts\start-memory-watcher.js`](../scripts\start-memory-watcher.js) - 309 B
+
+## Estatísticas
+
+- **Total de arquivos:** 215
+- **Tamanho total:** 4.57 MB
+
+## Estrutura
+
+```
+- .ai-factory
+  - scripts
+    - memory-api.d.ts
+    - memory-api.js
+    - memory-integration.js
+    - memory-manager.js
+    - memory-summarizer.js
+    - memory-watcher.js
+    - tencent-memory-bridge.js
+  - skills
+    - memory-management
+      - SKILL.md
+  - tencent-memory
+    - .npmignore
+    - assets
+      - images
+        - flowchart1.cn.png
+        - flowchart1.png
+        - flowchart2.cn.png
+        - flowchart2.png
+        - logo.png
+        - logo2.png
+        - memory-pyramid-en.jpg
+        - memory-pyramid.png
+        - star-helper.png
+    - bin
+      - export-tencent-vdb.mjs
+      - migrate-sqlite-to-tcvdb.mjs
+      - read-local-memory.mjs
+    - CHANGELOG.md
+    - CONTRIBUTING.md
+    - CONTRIBUTING_CN.md
+    - docker
+      - opensource
+        - Dockerfile.hermes
+        - README-hermes.md
+    - hermes-plugin
+      - memory
+        - memory_tencentdb
+          - client.py
+          - plugin.yaml
+          - README.md
+          - supervisor.py
+          - __init__.py
+    - index.ts
+    - LICENSE
+    - openclaw.plugin.json
+    - package.json
+    - README.md
+    - README_CN.md
+    - scripts
+      - bugfix-20260423
+        - bugfix-20260423-full.sh
+        - BUGFIX-20260423-SOP.md
+        - bugfix-20260423.sh
+      - export-diagnostic.sh
+      - export-tencent-vdb
+        - export-tencent-vdb.ts
+        - tsconfig.json
+      - install_hermes_memory_tencentdb.sh
+      - memory-tencentdb-ctl.sh
+      - migrate-sqlite-to-tcvdb
+        - cli-entry.ts
+        - config-write.ts
+        - manifest-write.ts
+        - node-llama-cpp.d.ts
+        - README.md
+        - sqlite-to-tcvdb.ts
+        - tsconfig.json
+      - openclaw-after-tool-call-messages.patch.sh
+      - read-local-memory
+        - read-local-memory.ts
+        - tsconfig.json
+      - README.memory-tencentdb-ctl.md
+      - setup-offload.sh
+    - SKILL-DIAGNOSTIC-EXPORT.md
+    - SKILL-MIGRATION.md
+    - SKILL.md
+    - src
+      - adapters
+        - index.ts
+        - openclaw
+          - host-adapter.ts
+          - index.ts
+          - llm-runner.ts
+        - standalone
+          - host-adapter.ts
+          - index.ts
+          - llm-runner.ts
+      - cli
+        - commands
+          - seed.ts
+        - index.ts
+        - README.md
+      - config.ts
+      - core
+        - conversation
+          - l0-recorder.ts
+        - hooks
+          - auto-capture.ts
+          - auto-recall.ts
+        - index.ts
+        - persona
+          - persona-generator.ts
+          - persona-trigger.ts
+        - profile
+          - profile-sync.ts
+        - prompts
+          - l1-dedup.ts
+          - l1-extraction.ts
+          - persona-generation.ts
+          - scene-extraction.ts
+        - record
+          - l1-dedup.ts
+          - l1-extractor.ts
+          - l1-reader.ts
+          - l1-writer.ts
+        - report
+          - reporter.ts
+        - scene
+          - filename-normalizer.ts
+          - scene-extractor.ts
+          - scene-format.ts
+          - scene-index.ts
+          - scene-navigation.ts
+        - seed
+          - input.ts
+          - seed-runtime.ts
+          - types.ts
+        - store
+          - bm25-client.ts
+          - bm25-local.ts
+          - embedding.ts
+          - factory.ts
+          - search-utils.ts
+          - sqlite.ts
+          - tcvdb-client.ts
+          - tcvdb.ts
+          - types.ts
+        - tdai-core.ts
+        - tools
+          - conversation-search.ts
+          - memory-search.ts
+        - types.ts
+      - gateway
+        - config.ts
+        - server.ts
+        - types.ts
+      - index.js
+      - offload
+        - auth-profile-key.ts
+        - backend-client.ts
+        - benchmark-token-estimate.ts
+        - context-token-tracker.ts
+        - fast-token-estimate.ts
+        - hooks
+          - after-tool-call.ts
+          - before-agent-start.ts
+          - llm-input-l3.ts
+          - llm-output.ts
+        - index.ts
+        - l3-helpers.ts
+        - l3-token-counter.ts
+        - l3-token-helpers.ts
+        - local-llm
+          - index.ts
+          - llm-caller.ts
+          - parsers
+            - json-utils.ts
+            - l1-parser.ts
+            - l15-parser.ts
+            - l2-parser.ts
+          - prompts
+            - l1-prompt.ts
+            - l15-prompt.ts
+            - l2-prompt.ts
+        - mmd-injector.ts
+        - mmd-meta.ts
+        - opik-tracer.ts
+        - pipelines
+          - l2-mermaid.ts
+        - reclaimer.ts
+        - session-registry.ts
+        - state-manager.ts
+        - state-reporter.ts
+        - storage.ts
+        - time-utils.ts
+        - types.ts
+        - user-id.ts
+      - utils
+        - backup.ts
+        - checkpoint.ts
+        - clean-context-runner.ts
+        - ensure-hook-policy.ts
+        - env.ts
+        - managed-timer.ts
+        - manifest.ts
+        - memory-cleaner.ts
+        - no-think-fetch.ts
+        - openclaw-state-dir.ts
+        - pipeline-factory.ts
+        - pipeline-manager.ts
+        - sanitize.ts
+        - serial-queue.ts
+        - session-filter.ts
+        - text-utils.ts
+        - time.ts
+    - tsdown.config.ts
+  - web
+    - memory-dashboard
+      - index.html
+      - script.js
+      - style.css
+  - wiki
+    - memory
+      - INDEX.md
+- backend
+  - data
+    - memory.db
+  - src
+    - controllers
+      - memory.controller.ts
+    - repositories
+      - memory.repository.ts
+    - routes
+      - memory-tencent-routes.ts
+    - services
+      - memory.service.ts
+    - types
+      - memory.ts
+    - validators
+      - memory.validator.ts
+- cowagent
+  - agent
+    - memory
+      - chunker.py
+      - config.py
+      - conversation_store.py
+      - embedding
+        - factory.py
+        - provider.py
+        - state.py
+        - __init__.py
+      - manager.py
+      - service.py
+      - storage.py
+      - summarizer.py
+      - __init__.py
+    - tools
+      - memory
+        - memory_get.py
+        - memory_search.py
+        - __init__.py
+  - common
+    - memory.py
+  - docs
+    - cli
+      - memory-knowledge.mdx
+    - ja
+      - cli
+        - memory-knowledge.mdx
+      - memory
+        - context.mdx
+        - deep-dream.mdx
+        - index.mdx
+        - self-evolution.mdx
+      - tools
+        - memory.mdx
+    - memory
+      - context.mdx
+      - deep-dream.mdx
+      - index.mdx
+      - self-evolution.mdx
+    - tools
+      - memory.mdx
+    - zh
+      - cli
+        - memory-knowledge.mdx
+      - memory
+        - context.mdx
+        - deep-dream.mdx
+        - index.mdx
+        - self-evolution.mdx
+      - tools
+        - memory.mdx
+  - venv
+    - Lib
+      - site-packages
+        - anyio
+          - streams
+            - memory.py
+        - lark_oapi
+          - api
+            - search
+              - v2
+                - model
+                  - memory_message.py
+        - wechatpy
+          - session
+            - memorystorage.py
+- nexusauto_memory.db
+- scripts
+  - memory-manager.js
+  - start-memory-watcher.js
+```
+
+---
+
+*Gerado automaticamente em 2026-07-07T10:12:12.185Z*

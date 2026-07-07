@@ -494,6 +494,218 @@ O Tech Lead reconhece os seguintes comandos:
 
 ---
 
+### `/wiki init`
+**Propósito:** Inicializar documentação automática com OpenWiki
+
+**Execução:**
+1. Executar OpenWiki init
+2. Gerar estrutura em `.ai-factory/wiki/`
+3. Injetar resumo da memória
+
+**Exemplo:**
+```bash
+/wiki init
+```
+
+**Output:**
+```
+✅ Wiki inicializada
+📁 Diretório: .ai-factory/wiki/
+📄 Seções: architecture, agents, workflows, api, memory, skills, handoffs
+🔗 Índice: .ai-factory/wiki/INDEX.md
+```
+
+---
+
+### `/wiki update`
+**Propósito:** Atualizar documentação automática
+
+**Execução:**
+1. Escanear mudanças no repo
+2. Atualizar docs relevantes
+3. Sincronizar com memória
+
+**Exemplo:**
+```bash
+/wiki update
+```
+
+**Output:**
+```
+✅ Wiki atualizada
+📊 Arquivos modificados: 12
+📝 Novas seções: 2
+🔗 PR criado: auto-wiki-update-<id>
+```
+
+---
+
+### `/gnhf run "objetivo"`
+**Propósito:** Executar agente autônomo com validação V&V
+
+**Execução:**
+1. Criar branch/worktree
+2. Executar loop de iterações
+3. Validar com V&V (7 passos)
+4. Commitar mudanças
+
+**Exemplo:**
+```bash
+/gnhf run "Refatorar API para melhorar performance" --max-iterations 5
+```
+
+**Output:**
+```
+🌙 GNHF Run iniciado
+📋 Branch: gnhf/refatorar-api
+🔄 Iteração 1/5...
+✅ V&V aprovado (7/7)
+📝 Commit: gnhf 1: Refatorar endpoints
+...
+✅ Run completado
+⏱️  Tempo: 15m 32s
+📊 Tokens: ~125k
+```
+
+---
+
+### `/gnhf status`
+**Propósito:** Verificar status de runs do GNHF
+
+**Execução:**
+1. Listar runs recentes
+2. Mostrar status de cada um
+3. Exibir estatísticas
+
+**Exemplo:**
+```bash
+/gnhf status
+```
+
+**Output:**
+```markdown
+## GNHF Runs
+
+| Run ID | Status | Iterações | Tokens | V&V |
+|--------|--------|-----------|--------|-----|
+| gnhf-2026-07-07-001 | ✅ Success | 5 | 125k | 100% |
+| gnhf-2026-07-06-003 | ⚠️ Partial | 3 | 87k | 67% |
+| gnhf-2026-07-06-002 | ❌ Failed | 1 | 12k | 0% |
+
+## Estatísticas
+- Runs hoje: 3
+- Taxa de sucesso: 67%
+- Média de iterações: 3
+```
+
+---
+
+### `/vv run`
+**Propósito:** Executar validação V&V manualmente
+
+**Execução:**
+1. Rodar 7 passos de validação
+2. Retornar resultado detalhado
+
+**Exemplo:**
+```bash
+/vv run
+```
+
+**Output:**
+```
+🔍 Iniciando Validação V&V (7 passos)...
+
+[1/7] Sintaxe e Type Checking...
+✅ Sintaxe OK
+
+[2/7] Testes Unitários...
+✅ Testes unitários OK
+
+[3/7] Testes de Integração...
+✅ Testes de integração OK
+
+[4/7] Security Scan...
+✅ Security scan OK
+
+[5/7] Performance Check...
+✅ Performance OK
+
+[6/7] Code Style & Linting...
+✅ Lint OK
+
+[7/7] Documentation Check...
+✅ Documentação OK
+
+==================================================
+✅ V&V APROVADO - 7/7 passos completados
+==================================================
+```
+
+---
+
+### `/memory sync`
+**Propósito:** Sincronizar memória com Wiki
+
+**Execução:**
+1. Buscar resumos da memória
+2. Injetar em `.ai-factory/wiki/memory/`
+3. Atualizar índices
+
+**Exemplo:**
+```bash
+/memory sync
+```
+
+**Output:**
+```
+🔄 Sincronizando memória...
+✅ Resumo injetado: .ai-factory/wiki/memory/RECENT_SUMMARY.md
+✅ Atualizações: .ai-factory/wiki/memory/RECENT_UPDATES.md
+📊 Memórias processadas: 15
+```
+
+---
+
+### `/integrate [mode]`
+**Propósito:** Executar integração completa OpenWiki + GNHF
+
+**Modos:**
+- `full` - Tudo (OpenWiki + GNHF + Sync + V&V)
+- `wiki` - Apenas OpenWiki
+- `gnhf` - Apenas GNHF
+- `sync` - Apenas memória
+- `vv` - Apenas V&V
+
+**Exemplo:**
+```bash
+/integrate full
+```
+
+**Output:**
+```
+🚀 NexusAuto Integration - OpenWiki + GNHF
+
+📚 Executando OpenWiki...
+✅ OpenWiki completado
+
+🌙 Executando GNHF...
+✅ GNHF completado
+
+🔄 Sincronizando memória...
+✅ Memória sincronizada
+
+🔍 Executando V&V...
+✅ V&V aprovado
+
+==================================================
+✅ INTEGRAÇÃO COMPLETA
+==================================================
+Tempo total: 8m 42s
+```
+
+---
+
 ## SessionStart Hook (Automático)
 
 No início de CADA sessão, executar automaticamente:

@@ -16,3 +16,6 @@ pnpm-debug.log*
 .ai-factory/PROGRESS.local.md
 backend/data/*.db
 *.tsbuildinfo
+bundle-analysis.html
+test-stderr.txt
+test-stdout.txt

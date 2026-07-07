@@ -42,3 +42,66 @@ O NexusAuto integra o TencentDB Agent Memory como uma camada complementar de mem
 - **Rastreabilidade**: Caminho determinístico com `node_id` para drill-down.
 
 Comandos disponíveis: `/memory-canvas`, `/memory-drill`, `/memory-persona`, `/memory-scenarios`, `/memory-conversation`, `/memory-search`.
+
+## OpenWiki + GNHF Integration
+
+O NexusAuto agora integra ferramentas de documentação automática e execução autônoma de agentes.
+
+### OpenWiki (`.ai-factory/tools/openwiki/`)
+
+**Propósito:** Gerar e manter documentação automática para agentes de IA.
+
+**Comandos:**
+- `/wiki init` – Inicializa wiki em `.ai-factory/wiki/`
+- `/wiki update` – Atualiza docs baseado em mudanças recentes
+- `node .ai-factory/tools/openwiki/openwiki.js --update`
+
+**GitHub Actions:** PR automático diário às 03:00 UTC
+
+### GNHF (`.ai-factory/tools/gnhf/`)
+
+**Propósito:** Executar agentes autônomos overnight com validação V&V.
+
+**Comandos:**
+- `/gnhf run "objetivo"` – Executa loop autônomo
+- `/gnhf status` – Verifica status de runs
+- `node .ai-factory/tools/gnhf/gnhf.js "objetivo" --max-iterations 10`
+
+**Features:**
+- Validação V&V de 7 passos como gate pré-commit
+- Handoffs automáticos em `.ai-factory/handoffs/`
+- Worktrees para múltiplos agentes simultâneos
+- Rollback em falha
+
+**GitHub Actions:** Run automático diário às 02:00 UTC
+
+### Validação V&V (`.ai-factory/scripts/run-vv.js`)
+
+**Propósito:** Gate de qualidade de 7 passos antes de commit.
+
+**Passos:**
+1. Sintaxe e Type Checking
+2. Testes Unitários
+3. Testes de Integração
+4. Security Scan
+5. Performance Check
+6. Code Style & Linting
+7. Documentation Check
+
+**Comando:** `/vv run` ou `node .ai-factory/scripts/run-vv.js`
+
+### Memory Integration (`.ai-factory/scripts/memory-integration.js`)
+
+**Propósito:** Conectar memória hierárquica com OpenWiki e GNHF.
+
+**Comandos:**
+- `/memory sync` – Sincroniza memória com Wiki
+- `node .ai-factory/scripts/memory-integration.js sync`
+
+### Integração Completa
+
+**Comando:** `/integrate full` ou `node .ai-factory/scripts/integrate.js`
+
+Executa: OpenWiki → GNHF → Memory Sync → V&V
+
+**Testes:** `node .ai-factory/scripts/test-integration.js`

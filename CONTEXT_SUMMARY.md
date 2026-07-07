@@ -14,6 +14,8 @@ Fábrica autônoma de software com 10+ agentes de IA especializados.
 2. Handoffs usam apenas template resumido (máx 200 tokens)
 3. Código > 100 linhas → entregar apenas diff/patch
 4. Validação por cache: hash inalterado = pular validação
+5. OpenWiki atualiza docs automaticamente (diário 03:00 UTC)
+6. GNHF roda overnight com validação V&V (diário 02:00 UTC)
 
 ## Camadas de Contexto
 - **Layer 1**: Este arquivo (sempre carregado, ~200 tokens)
@@ -43,6 +45,44 @@ Fábrica autônoma de software com 10+ agentes de IA especializados.
 - [Índice de Melhorias](.ai-factory/MELHORIAS/INDEX.md)
 - [Progresso](PROGRESS.md)
 - [Contexto do Projeto](PROJECT_CONTEXT.md)
+- [OpenWiki + GNHF Integration](.ai-factory/tools/INTEGRACAO.md)
+
+## Status Testes
+- **84/84 testes passando**, 0 falhas, ~10.9s (backend)
+- Coverage rate limiter: Redis mockado em test, sem timeouts
+- OpenWiki: ✅ 3/3 testes passando
+- GNHF: ✅ 2/3 testes passando (run, handoff)
+- V&V: ✅ Gate integrado no GNHF
 
 ---
-*Última atualização: 2026-07-06 | Tokens: ~200*
+
+## Novas Ferramentas (2026-07-07)
+
+### OpenWiki
+- **Local:** `.ai-factory/tools/openwiki/`
+- **Função:** Gera docs automáticas em `.ai-factory/wiki/`
+- **Comando:** `/wiki init`, `/wiki update`
+
+### GNHF
+- **Local:** `.ai-factory/tools/gnhf/`
+- **Função:** Agentes autônomos overnight com V&V
+- **Comando:** `/gnhf run "objetivo"`
+
+### V&V Validation
+- **Local:** `.ai-factory/scripts/run-vv.js`
+- **Função:** Gate de 7 passos pré-commit
+- **Comando:** `/vv run`
+
+### Memory Integration
+- **Local:** `.ai-factory/scripts/memory-integration.js`
+- **Função:** Sync memória ↔ Wiki
+- **Comando:** `/memory sync`
+
+### Integration Script
+- **Local:** `.ai-factory/scripts/integrate.js`
+- **Função:** Orquestra tudo
+- **Comando:** `/integrate full`
+
+---
+
+*Última atualização: 2026-07-07 | Tokens: ~350*

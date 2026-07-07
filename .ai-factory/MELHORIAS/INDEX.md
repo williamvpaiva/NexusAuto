@@ -21,12 +21,12 @@
 | 03 - Sistemas               | 7       | 0          | 0/0    | 0%     | 🔴     |
 | 04 - Performance            | 7       | 0          | 0/0    | 0%     | 🔴     |
 | 05 - Clean Architecture     | 6       | 0          | 0/0    | 0%     | 🔴     |
-| 06 - Multiagente            | 7       | 0          | 0/0    | 0%     | 🔴     |
+| 06 - Multiagente            | 8       | 1          | 0/0    | 12%    | 🟡     |
 | 07 - UI Components          | 7       | 0          | 0/0    | 0%     | 🔴     |
 | 08 - Segurança              | 3       | 3          | 0/0    | 100%   | 🟢     |
 | 09 - Testes                 | 4       | 3          | 0/0    | 75%    | 🟡     |
 | 10 - CI/CD                  | 7       | 7          | 0/0    | 100%   | 🟢     |
-| 11 - Documentação           | 6       | 0          | 0/0    | 0%     | 🔴     |
+| 11 - Documentação           | 7       | 1          | 0/0    | 14%    | 🟡     |
 | 12 - Banco de Dados         | 6       | 0          | 0/0    | 0%     | 🔴     |
 | 13 - Monitoramento          | 6       | 0          | 0/0    | 0%     | 🔴     |
 | 14 - Acessibilidade         | 6       | 0          | 0/0    | 0%     | 🔴     |
@@ -39,7 +39,7 @@
 | 21 - Limpeza e Housekeeping | 6       | 0          | 0/0    | 0%     | 🔴     |
 | 22 - Pentest e Segurança Avançada | 7 | 0          | 0/0    | 0%     | 🔴     |
 | 23 - Token Economy          | 0       | 0          | 0/0    | —      | 📄     |
-| **TOTAL**                   | **128** | **13**     | **0/0**| **10%** | -     |
+| **TOTAL**                   | **130** | **15**     | **0/0**| **11%** | -     |
 
 ---
 

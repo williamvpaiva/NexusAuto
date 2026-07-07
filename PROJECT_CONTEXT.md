@@ -18,7 +18,7 @@ Construir um **sistema de memória persistente para agentes de IA** com backend 
 ## Restrições
 - **Prazo:** Contínuo — projeto em desenvolvimento ativo
 - **Orçamento:** Zero — stack 100% open-source (Express, SQLite, React, Vite)
-- **Compliance:** JWT_SECRET para autenticação futura (não implementada); LGPD aplicável a dados de usuário
+- **Compliance:** JWT middleware implementado (`middleware/auth.ts` com `jsonwebtoken`) ativo em rotas protegidas; LGPD aplicável a dados de usuário
 - **Integrações obrigatórias:** SQLite via `sqlite3` (atual), PostgreSQL como melhoria futura
 
 ## Requisitos Não-Funcionais (NFR)
@@ -89,12 +89,13 @@ frontend/src/
 - Memory API: http://localhost:3000/api/v1/memory (⚠️ não registrada no router — precisa ativar)
 
 ## Gaps Conhecidos (Prioritários)
-1. **Memory routes não conectadas**: `memory.controller.ts` define `/conversations`, `/messages`, `/errors`, `/stats`, `/optimize` mas `routes/index.ts` não importa `memoryRouter` — **BUG**
-2. **Error handling inconsistente**: `memory.controller.ts` usa `res.status(400).json(...)` direto em vez de `throw new AppError`
-3. **Auth não implementada**: `JWT_SECRET` no .env mas nenhum middleware de autenticação; `UnauthorizedError` existe mas não é usado
-4. **Users sem persistência**: mock em array — dados são perdidos ao reiniciar o servidor
-5. **Path hardcoded do SQLite**: `'./data/memory.db'` em `database.ts` — diretório `data/` pode não existir
-6. **Frontend sem testes**: `package.json` referencia `vitest` em scripts mas não tem devDependencies de teste
+1. ~~**Memory routes não conectadas**~~ ✅ RESOLVIDO — `routes/index.ts` importa `memoryRouter` do controller e registra em `/memory`
+2. ~~**Error handling inconsistente**~~ ✅ RESOLVIDO — `memory.controller.ts` usa `asyncHandler` + `AppError` via services
+3. ~~**Auth não implementada**~~ ✅ RESOLVIDO — `middleware/auth.ts` com `jsonwebtoken` ativo em rotas protegidas (`/users`, `/memory`)
+4. ~~**Users sem persistência**~~ ✅ RESOLVIDO — `users.repository.ts` usa SQLite via `db`; tabela `users` criada com seed admin
+5. ~~**Path hardcoded do SQLite**~~ ✅ RESOLVIDO — `database.ts` cria diretório `data/` automaticamente se não existir
+6. ~~**Frontend sem testes**~~ ✅ RESOLVIDO — `vitest` + `@testing-library` instalados; 3 testes existentes (`App.test.tsx`, `Layout.test.tsx`, `HealthPage.test.tsx`)
+7. ~~**Arquivo morto memory-routes.ts**~~ ✅ RESOLVIDO — removido (nunca era importado, `memoryApi: null`)
 
 ## Histórico de Decisões
 Ver `.ai-factory/brain/Key Decisions.md` para Architecture Decision Records.

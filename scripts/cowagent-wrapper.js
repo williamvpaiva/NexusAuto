@@ -97,6 +97,38 @@ class CowAgentWrapper {
       params: JSON.stringify(params)
     });
   }
+
+  // Método para atualizar a documentação via OpenWiki
+  async runOpenWiki() {
+    console.log('📚 Iniciando OpenWiki para atualizar documentação...');
+    return new Promise((resolve, reject) => {
+      exec('openwiki update', { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Erro no OpenWiki: ${error.message}`);
+          reject({ error: error.message, stdout, stderr });
+        } else {
+          console.log(stdout);
+          resolve({ output: stdout, stderr });
+        }
+      });
+    });
+  }
+
+  // Método para iniciar um loop autônomo de tarefas via GNHF
+  async runGNHF(taskDescription) {
+    console.log(`🌙 Iniciando GNHF para a tarefa: ${taskDescription}`);
+    return new Promise((resolve, reject) => {
+      exec(`gnhf start "${taskDescription}"`, { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Erro no GNHF: ${error.message}`);
+          reject({ error: error.message, stdout, stderr });
+        } else {
+          console.log(stdout);
+          resolve({ output: stdout, stderr });
+        }
+      });
+    });
+  }
 }
 
 module.exports = CowAgentWrapper;

@@ -52,6 +52,13 @@
 - **Esforço:** 2h
 - **Prioridade:** Baixa
 
+### DOC-007 — Integração OpenWiki (Automação de Docs)
+- [x] **Status:** 🟢 Concluído
+- **Descrição:** Implementar estrutura do OpenWiki (`scripts/openwiki/`) para geração automatizada de AGENTS.md e CLAUDE.md via LLM.
+- **Critério de aceite:** Diretório, package.json configurados, scripts de LLM e config inicializados.
+- **Esforço:** 2h
+- **Prioridade:** Alta
+
 ---
 
 <div align="center">
