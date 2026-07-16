@@ -21,4 +21,13 @@ redis.on('error', (err) => {
   console.error('❌ Redis connection error:', err);
 });
 
+export async function getRedisClient(): Promise<Redis | null> {
+  try {
+    if (redis.status === 'ready') return redis;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export default redis;

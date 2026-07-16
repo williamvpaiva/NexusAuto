@@ -1,11 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { env } from '../config/env';
+import { tokenService } from '../services/token.service';
+import type { TokenPayload } from '../services/token.service';
 
-export interface AuthPayload {
-  userId: string;
-  email: string;
-}
+export type AuthPayload = TokenPayload;
 
 declare global {
   namespace Express {
@@ -15,11 +12,11 @@ declare global {
   }
 }
 
-export function authenticate(req: Request, _res: Response, next: NextFunction) {
+export function authenticate(req: Request, res: Response, next: NextFunction) {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith('Bearer ')) {
-    return _res.status(401).json({
+    return res.status(401).json({
       success: false,
       error: { code: 'UNAUTHORIZED', message: 'Token não fornecido', requestId: req.requestId },
     });
@@ -27,14 +24,19 @@ export function authenticate(req: Request, _res: Response, next: NextFunction) {
 
   const token = header.split(' ')[1];
 
-  try {
-    const payload = jwt.verify(token, env.jwtSecret) as AuthPayload;
+  tokenService.verifyAccessToken(token).then(payload => {
+    if (!payload) {
+      return res.status(401).json({
+        success: false,
+        error: { code: 'UNAUTHORIZED', message: 'Token inválido ou expirado', requestId: req.requestId },
+      });
+    }
     req.user = payload;
     next();
-  } catch {
-    return _res.status(401).json({
+  }).catch(() => {
+    return res.status(401).json({
       success: false,
       error: { code: 'UNAUTHORIZED', message: 'Token inválido ou expirado', requestId: req.requestId },
     });
-  }
+  });
 }

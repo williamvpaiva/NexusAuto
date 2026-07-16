@@ -32,7 +32,7 @@ import { registerCsrfToken } from '../src/middleware/csrf';
 const JWT_SECRET = 'change-me-in-production';
 
 function getAuthToken(userId = 'test-1', email = 'test@test.com') {
-  return jwt.sign({ userId, email }, JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ userId, email, type: 'access' }, JWT_SECRET, { expiresIn: '1h' });
 }
 
 function getCsrfToken(userId = 'test-1') {

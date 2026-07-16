@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusAuto — Kanban</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <span class="brand">NexusAuto</span>
+    <a href="/dashboard/">Dashboard</a>
+    <a href="/dashboard/memories.html">Memorias</a>
+    <a href="/dashboard/status.html">Status</a>
+    <a href="/dashboard/kanban.html" class="active">Kanban</a>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">Kanban</h1>
+    <p class="page-subtitle">Quadro de tarefas sincronizado com brain/kanban.md</p>
+
+    <div id="kanbanBoard" class="kanban-board">
+      <div class="kanban-col">
+        <h3>A Fazer</h3>
+        <div id="col-todo"></div>
+      </div>
+      <div class="kanban-col">
+        <h3>Em Andamento</h3>
+        <div id="col-doing"></div>
+      </div>
+      <div class="kanban-col">
+        <h3>Concluido</h3>
+        <div id="col-done"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function load() {
+      try {
+        const res = await fetch('/api/v1/kanban');
+        const json = await res.json();
+        if (!json.success) { fail(); return; }
+        const board = json.data;
+        const cols = { todo: [], doing: [], done: [] };
+
+        (board.todo || []).forEach(c => cols.todo.push(c));
+        (board.doing || []).forEach(c => cols.doing.push(c));
+        (board.done || []).forEach(c => cols.done.push(c));
+
+        Object.keys(cols).forEach(col => {
+          const el = document.getElementById('col-' + col);
+          const cards = cols[col];
+          el.innerHTML = cards.length
+            ? cards.map(c => `<div class="kanban-card"><div${col === 'done' ? ' class="done"' : ''}>${c.title || c}</div></div>`).join('')
+            : '<div style="color:var(--text2);font-size:.85rem;padding:8px 0">Vazio</div>';
+        });
+      } catch {
+        fail();
+      }
+    }
+
+    function fail() {
+      document.querySelectorAll('.kanban-col > div').forEach(el => el.innerHTML = '<div style="color:var(--red);font-size:.85rem">Erro ao carregar</div>');
+    }
+
+    load();
+  </script>
+</body>
+</html>

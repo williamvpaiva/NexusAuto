@@ -8,8 +8,10 @@ import tencentMemoryRouter from './memory-tencent-routes';
 import designRouter from './design-routes';
 import { apiLimiter, memoryLimiter, usersLimiter } from '../middleware/rate-limiter';
 import { authenticate } from '../middleware/auth';
+import { adminOnly } from '../middleware/admin-only';
 import { validateCsrf } from '../middleware/csrf';
 import { cacheMiddleware } from '../middleware/cache';
+import { adminRouter } from './admin.routes';
 
 export const apiRouter = Router();
 
@@ -43,4 +45,6 @@ apiRouter.use('/auth', authRoutes);
 // Rotas protegidas
 apiRouter.use('/users', authenticate, validateCsrf, usersLimiter, usersRouter);
 apiRouter.use('/memory', authenticate, validateCsrf, memoryLimiter, memoryRouter);
-apiRouter.use('/memory/tencent', authenticate, validateCsrf, memoryLimiter, tencentMemoryRouter);
+apiRouter.use('/memory/tencent', authenticate, validateCsrf, memoryLimiter, tencentMemoryRouter);
+apiRouter.use('/veiculos', authenticate, validateCsrf, vehiclesRouter);
+apiRouter.use('/admin', authenticate, adminOnly, validateCsrf, adminRouter);

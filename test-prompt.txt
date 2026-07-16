@@ -1,0 +1,7 @@
+Preciso que você integre o OpenWiki e o GNHF no projeto NexusAuto. 
+Para isso, você vai precisar verificar o index.ts de cada um deles e corrigir os problemas de compilação do ts-node no Windows que causam o erro TS5109. 
+A solução deve ser criar um script em JS que faz o require de ts-node register e em seguida require do index.ts. 
+Altere os arquivos package.json para apontar o bin para esses novos scripts js.
+Além disso, modifique o cowagent-wrapper.js para incluir duas novas funções assíncronas: runOpenWiki e runGNHF. 
+Eles devem usar child_process.exec para iniciar openwiki update e gnhf start.
+Em seguida crie um script de testes para validar se está funcionando.

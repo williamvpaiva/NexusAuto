@@ -22,7 +22,7 @@ const mockUser = {
   id: 'test-1',
   name: 'Test User',
   email: 'test@example.com',
-  password: 'correct-password',
+  password: '$2b$12$PSCchyABMbJ4Q/CslQaXDOVDJk/bOu0mBS4V3DaCdS/ulEgivlKmy',
   role: 'user' as const,
   createdAt: '2025-01-01T00:00:00.000Z',
   updatedAt: '2025-01-01T00:00:00.000Z',
@@ -42,7 +42,7 @@ describe('POST /api/v1/auth/login', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.token).toBeDefined();
+    expect(res.body.data.accessToken).toBeDefined();
     expect(res.body.data.user.id).toBe('test-1');
     expect(res.body.data.user.email).toBe('test@example.com');
   });
@@ -97,7 +97,7 @@ describe('GET /api/v1/auth/csrf-token', () => {
   });
 
   it('should return 200 with CSRF token for authenticated user', async () => {
-    const token = jwt.sign({ userId: 'test-1', email: 'test@example.com' }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: 'test-1', email: 'test@example.com', type: 'access' }, JWT_SECRET, { expiresIn: '1h' });
 
     const res = await request(app)
       .get('/api/v1/auth/csrf-token')

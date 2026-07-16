@@ -348,6 +348,9 @@ O Tech Lead DEVE detectar automaticamente qual cenário aplicar:
 | **21-LIMPEZA-E-HOUSEKEEPING** | `backend-dev` | `frontend-dev` | 20k tokens |
 | **22-PENTEST-E-SEGURANCA-AVANCADA** | `security` | `devops`, `backend-dev` | 40k tokens |
 | **23-MEMORIA** | `tech-lead` | Todos os agentes | 5k tokens |
+| **24-PRODUTOS-DIGITAIS** | `digital-product-creator` | `monetization-strategist`, `product-launch-manager` | 30k tokens |
+| **25-MONETIZACAO** | `monetization-strategist` | `digital-product-creator`, `product-launch-manager` | 30k tokens |
+| **26-LANCAMENTOS** | `product-launch-manager` | `digital-product-creator`, `monetization-strategist` | 35k tokens |
 
 **Regra:** Se tarefa estimada > budget da área → dividir em subtarefas com `token-budget.js`
 
@@ -437,6 +440,9 @@ const agentePorTipo = {
 | "documento", "README", "onboarding" | `tech-lead` | 11, 19 |
 | "limpeza", "dead code", "refatoração" | `backend-dev` ou `frontend-dev` | 21 |
 | "memória", "aprender", "contexto", "handoff" | `tech-lead` | 23 |
+| "produto digital", "ebook", "curso", "infoproduto" | `digital-product-creator` | 24 |
+| "precificação", "monetização", "receita", "upsell" | `monetization-strategist` | 25 |
+| "lançamento", "marketing", "tráfego", "venda" | `product-launch-manager` | 26 |
 
 ---
 

@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const url = require('url');
+const MemoryManager = require(path.join(__dirname, '..', '..', 'scripts', 'memory-manager.js'));
+
+const PORT = process.env.DASHBOARD_PORT || 3456;
+const WWW = path.join(__dirname, 'memory-dashboard');
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css',
+  '.js': 'application/javascript',
+};
+
+let memoryManager;
+const sseClients = [];
+
+async function init() {
+  memoryManager = new MemoryManager();
+  await memoryManager.init();
+}
+
+function serveFile(res, filePath) {
+  const ext = path.extname(filePath);
+  res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
+  res.end(fs.readFileSync(filePath));
+}
+
+async function handleAPI(req, res) {
+  const parsed = url.parse(req.url, true);
+  const pathname = parsed.pathname;
+
+  if (pathname === '/api/memories' && req.method === 'GET') {
+    const query = parsed.query.query || '';
+    const results = query
+      ? await memoryManager.searchMemories(query, 50)
+      : await memoryManager.searchMemories('', 50);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(results.map(m => ({
+      id: m.id,
+      content: m.content?.slice(0, 200),
+      type: m.metadata?.type || 'unknown',
+      isPrivate: false,
+    }))));
+    return;
+  }
+
+  if (pathname === '/api/memories/stream' && req.method === 'GET') {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    });
+    sseClients.push(res);
+    req.on('close', () => {
+      const idx = sseClients.indexOf(res);
+      if (idx >= 0) sseClients.splice(idx, 1);
+    });
+    return;
+  }
+
+  if (pathname.startsWith('/api/memories/') && pathname.endsWith('/private') && req.method === 'POST') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  res.writeHead(404);
+  res.end('Not found');
+}
+
+function broadcast(event) {
+  const data = `data: ${JSON.stringify(event)}\n\n`;
+  for (const client of sseClients) {
+    client.write(data);
+  }
+}
+
+const server = http.createServer((req, res) => {
+  const parsed = url.parse(req.url);
+  if (parsed.pathname.startsWith('/api/')) return handleAPI(req, res);
+  const filePath = parsed.pathname === '/' ? path.join(WWW, 'index.html') : path.join(WWW, parsed.pathname);
+  if (fs.existsSync(filePath)) return serveFile(res, filePath);
+  res.writeHead(404);
+  res.end('Not found');
+});
+
+init().then(() => {
+  server.listen(PORT, () => {
+    console.log(`Dashboard: http://localhost:${PORT}`);
+  });
+});

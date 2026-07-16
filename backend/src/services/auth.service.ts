@@ -1,23 +1,40 @@
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { env } from '../config/env';
 import { AppError } from '../utils/app-error';
-import type { AuthPayload } from '../middleware/auth';
+import { usersService } from './users.service';
+import { tokenService } from './token.service';
 
-const ADMIN_EMAIL = 'admin@polymarketing.com';
-const ADMIN_PASSWORD = 'admin123';
+export interface AuthResponse {
+  user: { id: string; name: string; email: string; role: string };
+  tokens: { accessToken: string; refreshToken: string; expiresIn: number };
+}
 
 export const authService = {
-  login(email: string, password: string): { token: string; user: { id: string; email: string; name: string } } {
-    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-      throw new AppError('Credenciais inválidas', 401, 'INVALID_CREDENTIALS');
+  async register(name: string, email: string, password: string): Promise<AuthResponse> {
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = await usersService.create({ name, email, password: hashedPassword });
+    const tokens = await tokenService.generateTokenPair(user);
+    return {
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      tokens,
+    };
+  },
+
+  async login(email: string, password: string): Promise<AuthResponse> {
+    const user = await usersService.findByEmail(email);
+    if (!user) {
+      throw new AppError('Email ou senha inválidos', 401, 'INVALID_CREDENTIALS');
     }
 
-    const payload: AuthPayload = { userId: 'admin-001', email: ADMIN_EMAIL };
-    const token = jwt.sign(payload, env.jwtSecret, { expiresIn: env.jwtExpiresIn } as jwt.SignOptions);
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new AppError('Email ou senha inválidos', 401, 'INVALID_CREDENTIALS');
+    }
 
+    const tokens = await tokenService.generateTokenPair(user);
     return {
-      token,
-      user: { id: 'admin-001', email: ADMIN_EMAIL, name: 'Administrador' },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      tokens,
     };
   },
 };

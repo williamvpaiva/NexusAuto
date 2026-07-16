@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusAuto — Memorias</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <span class="brand">NexusAuto</span>
+    <a href="/dashboard/">Dashboard</a>
+    <a href="/dashboard/memories.html" class="active">Memorias</a>
+    <a href="/dashboard/status.html">Status</a>
+    <a href="/dashboard/kanban.html">Kanban</a>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">Memorias</h1>
+    <p class="page-subtitle">Memoria automatica de longo prazo com busca semantica</p>
+
+    <div class="control-bar">
+      <input type="text" id="searchInput" placeholder="Buscar memorias..." autofocus>
+      <label><input type="checkbox" id="togglePrivate"> Mostrar privadas</label>
+    </div>
+
+    <div id="memoryContainer" class="memory-list">
+      <div class="empty-state"><div class="icon">\ud83d\udd0d</div><p>Buscando memorias...</p></div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api/v1/memory/local';
+    const memoryContainer = document.getElementById('memoryContainer');
+    const searchInput = document.getElementById('searchInput');
+    const togglePrivate = document.getElementById('togglePrivate');
+
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+    async function fetchMemories() {
+      try {
+        const query = searchInput.value;
+        const res = await fetch(API_BASE + '?query=' + encodeURIComponent(query));
+        const data = await res.json();
+        render(data);
+      } catch (e) {
+        memoryContainer.innerHTML = '<div class="empty-state"><div class="icon">\u26a0\ufe0f</div><p>Erro ao buscar memorias</p></div>';
+      }
+    }
+
+    function render(memories) {
+      const show = togglePrivate.checked;
+      if (!memories || memories.length === 0) {
+        memoryContainer.innerHTML = '<div class="empty-state"><div class="icon">\ud83d\udcdc</div><p>Nenhuma memoria encontrada</p></div>';
+        return;
+      }
+      memoryContainer.innerHTML = memories.map(m => {
+        if (m.isPrivate && !show) return '';
+        return `<div class="memory-card">
+          <div class="content">
+            <div class="type">${m.type || 'memory'}${m.isPrivate ? ' \u{1f512} Privada' : ''}</div>
+            <div class="text">${m.content}</div>
+            <div class="meta">${m.id ? m.id.substring(0, 12) + '...' : ''} ${m.created_at ? '| ' + new Date(m.created_at).toLocaleString() : ''}</div>
+          </div>
+          <div class="actions">
+            <button onclick="markPrivate('${m.id}')">${m.isPrivate ? '\ud83d\udd13 Revelar' : '\ud83d\udd12 Ocultar'}</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    async function markPrivate(id) {
+      try {
+        await fetch(API_BASE + '/' + id + '/private', { method: 'POST' });
+        fetchMemories();
+      } catch {}
+    }
+
+    searchInput.addEventListener('input', debounce(fetchMemories, 400));
+    togglePrivate.addEventListener('change', fetchMemories);
+    fetchMemories();
+
+    new EventSource(API_BASE + '/stream').onmessage = () => fetchMemories();
+    window.markPrivate = markPrivate;
+  </script>
+</body>
+</html>

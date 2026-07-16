@@ -1,0 +1,52 @@
+Test dummy task (dry-run)
+
+[CONTEXTO DE MEMÓRIA HISTÓRICA]
+{
+  "status": "ok",
+  "query": "Test dummy task (dry-run)",
+  "count": 3,
+  "results": [
+    {
+      "id": "db0ef9a8-3360-407f-b6e1-91c387a06770",
+      "content": "[kanban:📋 Todo] Test integration task from kanban-bridge",
+      "metadata": {
+        "agent": "kanban-bridge",
+        "type": "task",
+        "source": "kanban#📋 Todo"
+      },
+      "created_at": "2026-07-11 18:00:26",
+      "distance": 0.6485501197605388,
+      "score": 0.3514498802394612
+    },
+    {
+      "id": "7cb3a032-27d2-486f-b580-0e5484b2e702",
+      "content": "Spec-Kit gerado para crud-tarefas-test (Área: 01-BACKEND)",
+      "metadata": {
+        "agent": "tech-lead",
+        "type": "specification",
+        "tags": [
+          "spec-kit",
+          "crud-tarefas-test"
+        ]
+      },
+      "created_at": "2026-07-04 20:36:44",
+      "distance": 0.7697643443619746,
+      "score": 0.23023565563802534
+    },
+    {
+      "id": "e9c290fe-88cb-4f79-845f-d58a4d735526",
+      "content": "Test 1783050785920: API routes devem seguir REST pattern",
+      "metadata": {
+        "agent": "backend-dev",
+        "type": "decision",
+        "tags": [
+          "api",
+          "rest"
+        ]
+      },
+      "created_at": "2026-07-03 03:53:06",
+      "distance": 0.8713183019702415,
+      "score": 0.12868169802975843
+    }
+  ]
+}

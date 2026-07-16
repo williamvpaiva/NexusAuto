@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusAuto — Status</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <span class="brand">NexusAuto</span>
+    <a href="/dashboard/">Dashboard</a>
+    <a href="/dashboard/memories.html">Memorias</a>
+    <a href="/dashboard/status.html" class="active">Status</a>
+    <a href="/dashboard/kanban.html">Kanban</a>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">Status Board</h1>
+    <p class="page-subtitle">Metricas do sistema, fila de tarefas e monitoramento</p>
+
+    <div id="statsRow" class="stats-row">
+      <div class="stat-card"><div class="value">-</div><div class="label">Tasks Pendentes</div></div>
+      <div class="stat-card"><div class="value">-</div><div class="label">Em Execucao</div></div>
+      <div class="stat-card"><div class="value">-</div><div class="label">Concluidas</div></div>
+      <div class="stat-card"><div class="value">-</div><div class="label">Falhas</div></div>
+    </div>
+
+    <div class="status-section">
+      <h2>Status Board</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Mensagem</th><th>Categoria</th><th>Status</th><th>Data</th></tr></thead>
+        <tbody id="statusTableBody"><tr><td colspan="5" style="color:var(--text2);text-align:center">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="status-section">
+      <h2>Task Queue</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Tarefa</th><th>Status</th><th>Resultado</th><th>Criada em</th></tr></thead>
+        <tbody id="taskTableBody"><tr><td colspan="5" style="color:var(--text2);text-align:center">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function load() {
+      try {
+        const res = await fetch('/api/v1/status');
+        const json = await res.json();
+        if (!json.success) { fail(); return; }
+        const d = json.data;
+
+        // Stats
+        const vals = document.querySelectorAll('#statsRow .value');
+        const tq = d.task_queue || {};
+        vals[0].textContent = tq.pending ?? 0;
+        vals[1].textContent = tq.running ?? 0;
+        vals[2].textContent = tq.completed ?? 0;
+        vals[3].textContent = tq.failed ?? 0;
+
+        // Status board
+        const sb = d.status_board || [];
+        document.getElementById('statusTableBody').innerHTML = sb.length
+          ? sb.map(s => `<tr>
+              <td style="font-family:monospace;font-size:.8rem">${(s.id||'').substring(0,16)}</td>
+              <td>${s.message || ''}</td>
+              <td>${s.category || '-'}</td>
+              <td><span class="status-badge status-${s.status}">${s.status}</span></td>
+              <td style="font-size:.8rem;color:var(--text2)">${s.created_at ? new Date(s.created_at).toLocaleString() : '-'}</td>
+            </tr>`).join('')
+          : '<tr><td colspan="5" style="color:var(--text2);text-align:center">Nenhum registro</td></tr>';
+
+        // Task queue
+        const tql = d.task_queue_list || [];
+        document.getElementById('taskTableBody').innerHTML = tql.length
+          ? tql.map(t => `<tr>
+              <td style="font-family:monospace;font-size:.8rem">${(t.id||'').substring(0,16)}</td>
+              <td>${t.task || t.name || ''}</td>
+              <td><span class="status-badge status-${t.status}">${t.status}</span></td>
+              <td style="font-size:.8rem;color:var(--text2)">${(t.result||t.error||'-').substring(0,60)}</td>
+              <td style="font-size:.8rem;color:var(--text2)">${t.created_at ? new Date(t.created_at).toLocaleString() : '-'}</td>
+            </tr>`).join('')
+          : '<tr><td colspan="5" style="color:var(--text2);text-align:center">Nenhuma task</td></tr>';
+      } catch {
+        fail();
+      }
+    }
+
+    function fail() {
+      document.querySelectorAll('.status-section tbody').forEach(t => t.innerHTML = '<tr><td colspan="5" style="color:var(--red);text-align:center">Erro ao carregar dados</td></tr>');
+    }
+
+    load();
+    setInterval(load, 10000);
+  </script>
+</body>
+</html>
