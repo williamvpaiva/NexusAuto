@@ -4,3 +4,6 @@
 [submodule ".ai-factory/tencent-memory"]
 	path = .ai-factory/tencent-memory
 	url = https://github.com/TencentCloud/TencentDB-Agent-Memory.git
+[submodule ".ai-factory/blueprints/awesome-llm-apps"]
+	path = .ai-factory/blueprints/awesome-llm-apps
+	url = https://github.com/Shubhamsaboo/awesome-llm-apps.git
