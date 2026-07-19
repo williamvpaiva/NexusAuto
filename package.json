@@ -1,8 +1,8 @@
 {
-  "name": "polymarketing",
+  "name": "nexusauto",
   "private": true,
   "version": "1.0.0",
-  "description": "AI Factory Full Stack - Polymarketing",
+  "description": "AI Factory Full Stack - NexusAuto",
   "workspaces": [
     "frontend",
     "backend"
@@ -28,18 +28,22 @@
     "memory:test": "node scripts/memory-test.js"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "typescript-eslint": "^8.64.0"
   },
   "engines": {
     "node": ">=22.9.0",
     "npm": ">=10.0.0"
   },
   "dependencies": {
+    "@tobilu/qmd": "^1.0.2",
     "@xenova/transformers": "^2.17.2",
-    "natural": "^8.1.1",
     "better-sqlite3": "^9.4.3",
+    "natural": "^8.1.1",
     "sqlite-vec": "^0.1.1",
-    "tiktoken": "^1.0.13",
-    "@tobilu/qmd": "^1.0.2"
+    "tiktoken": "^1.0.13"
   }
 }
