@@ -13,7 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/core": "^1.2.3",
+    "@langchain/openai": "^1.5.5",
     "commander": "^14.0.3",
+    "dotenv": "^17.4.2",
     "simple-git": "^3.36.0"
   },
   "devDependencies": {

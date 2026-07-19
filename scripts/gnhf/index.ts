@@ -1,4 +1,7 @@
 #!/usr/bin/env ts-node
+import { resolve } from 'path';
+import { config } from 'dotenv';
+config({ path: resolve(__dirname, '../../.env') });
 import { Command } from 'commander';
 import { ExecutionLoop } from './executionLoop';
 import { GitManager } from './gitManager';

@@ -1,6 +1,6 @@
 import { GitManager } from './gitManager';
 import { Reporter } from './reporter';
-import { AgentAdapter, DummyAgentAdapter } from './agentAdapter';
+import { AgentAdapter, RealLLMAgentAdapter, DummyAgentAdapter } from './agentAdapter';
 
 export class ExecutionLoop {
   private git: GitManager;
@@ -10,7 +10,7 @@ export class ExecutionLoop {
   constructor(git: GitManager, reporter: Reporter) {
     this.git = git;
     this.reporter = reporter;
-    this.agent = new DummyAgentAdapter(); // default to dummy for now
+    this.agent = new RealLLMAgentAdapter(); // Usando agente real via LangChain/OpenAI
   }
 
   async run(task: string, maxRetries = 3) {
