@@ -34,3 +34,8 @@ Atalho: `skills/monetization-strategist/SKILL.md`
 Planejamento e execução de lançamentos de produtos digitais. Cronograma, sequência de emails, tráfego pago e orgânico, automações de marketing, métricas de lançamento e pós-venda. Usar quando o usuário disser "lançar produto", "planejar lançamento" ou "marketing digital".
 
 Atalho: `skills/product-launch-manager/SKILL.md`
+
+### `hyperframes`
+Criação de vídeos MP4 a partir de HTML com Hyperframes (HeyGen). Geração de vídeos de lançamento, demos de produto, PR-to-video, explainers, motion graphics e captions. Usar quando o usuário disser "criar vídeo", "gerar demo", "fazer vídeo de lançamento", "produzir vídeo explicativo" ou "animação para marketing".
+
+Atalho: `skills/hyperframes/SKILL.md`

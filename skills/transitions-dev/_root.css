@@ -1,0 +1,42 @@
+/* Transitions.dev Motion Tokens */
+/* Universal install block - include this once per project */
+
+:root {
+  /* Durations */
+  --p-duration-instant: 50ms;
+  --p-duration-fast: 150ms;
+  --p-duration-normal: 300ms;
+  --p-duration-slow: 500ms;
+  --p-duration-slower: 700ms;
+
+  /* Easings */
+  --p-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --p-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --p-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --p-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --p-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Colors (optional - for demo purposes) */
+  --p-color-primary: #3b82f6;
+  --p-color-success: #10b981;
+  --p-color-error: #ef4444;
+  --p-color-warning: #f59e0b;
+}
+
+/* Base transition classes */
+.t {
+  transition-duration: var(--p-duration-normal);
+  transition-timing-function: var(--p-easing-standard);
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

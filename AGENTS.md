@@ -39,3 +39,48 @@ Ver `hooks/hooks.json` para lifecycle hooks configurados.
 | WIKI Schema | `WIKI.md` |
 | Wiki Index | `.ai-factory/wiki/index.md` |
 | Hot Cache | `.ai-factory/wiki/session/hot.md` |
+
+## Skills Catalog (34 skills)
+
+### Documentação & Docs
+| Skill | Use |
+|-------|-----|
+| `context7-cli` | Buscar docs atualizadas de bibliotecas |
+| `context7-mcp` | MCP server para documentação |
+| `find-docs` | CLI wrapper para busca de docs |
+| `pdf` | Criar/editar PDFs |
+| `docx` | Documentos Word (.docx) |
+| `pptx` | Apresentações PowerPoint |
+| `xlsx` | Planilhas Excel |
+
+### Design & UI/UX
+| Skill | Use |
+|-------|-----|
+| `ui-ux-pro-max` | 84 estilos, 192 paletas, 161 regras de design |
+| `design-system` | Master + overrides pattern |
+| `ui-styling` | CSS + Tailwind implementation |
+| `transitions-dev` | 18 transições CSS prontas |
+| `transitions-polish` | Combinar/polir animações |
+| `taste-skill` | 3-dials (taste/speed/quality) |
+
+### Development Workflows
+| Skill | Use |
+|-------|-----|
+| `systematic-debugging` | Método científico para debug |
+| `subagent-driven-development` | Multi-agent orchestration |
+| `dispatching-parallel-agents` | Distribuir tarefas paralelas |
+| `verification-before-completion` | Quality enforcement antes de completar |
+| `skill-creator` | Criar novos skills |
+
+### Marketing & Analytics
+| Skill | Use |
+|-------|-----|
+| `seo-audit` | Auditoria SEO completa |
+| `analytics` | GA4 + event tracking |
+| `social-media-marketing` | Conteúdo para redes sociais |
+
+### Skills Originais (14)
+Ver `.ai-factory/wiki/index.md` para lista completa.
+
+**Para detalhes sobre triggers e dependências, ver:**
+`.ai-factory/wiki/audit/external-skills/CROSS-REFERENCE-MATRIX.md` |
