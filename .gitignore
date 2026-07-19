@@ -18,5 +18,9 @@ backend/data/*.db
 *.tsbuildinfo
 bundle-analysis.html
 test-stderr.txt
-test-stdout.txtnul
+test-stdout.txt
+nul
 backend/nul
+# wiki persistence — hot.md is per-session cache
+.ai-factory/wiki/session/hot.md
+.ai-factory/wiki/meta/

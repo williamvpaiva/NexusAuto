@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "description": "NexusAuto lifecycle hooks — implementação do claude-obsidian pattern",
+  "hooks": {
+    "SessionStart": {
+      "description": "Carrega session/hot.md silenciosamente no início de cada sessão para continuidade de contexto",
+      "command": "cat .ai-factory/wiki/session/hot.md",
+      "silent": true,
+      "maxTokens": 500,
+      "fallback": "echo '[wiki] .ai-factory/wiki/session/hot.md nao encontrado — iniciando nova sessao sem cache'"
+    },
+    "PostToolUse": {
+      "description": "Auto-commit de alterações no .ai-factory/wiki/ e hooks/ após uso de ferramenta de edição",
+      "trigger": "after_write",
+      "patterns": [".ai-factory/wiki/*", "hooks/*", ".claude-plugin/*", "AGENTS.md", "GEMINI.md", "WIKI.md"],
+      "command": "node scripts/auto-sync-hooks.js --commit",
+      "quiet": true
+    },
+    "Stop": {
+      "description": "Solicita atualização do .ai-factory/wiki/session/hot.md com resumo da sessão antes de encerrar",
+      "command": "node -e \"console.log('[hooks] Sessao encerrada. Atualize .ai-factory/wiki/session/hot.md com o resumo.')\"",
+      "prompt": true
+    }
+  }
+}

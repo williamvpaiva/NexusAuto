@@ -1,49 +1,45 @@
-# Índice Geral - NexusAuto Wiki
+# NexusAuto Wiki — Catálogo Mestre
 
-## Estatísticas Gerais
+> Catálogo central de todo conhecimento persistente do projeto.
 
-- **Total de arquivos documentados:** 11437
-- **Tamanho total:** 24.18 MB
-- **Última atualização:** 2026-07-07T10:12:12.268Z
+## Seções do Wiki
 
-## Seções
+| Seção | Descrição | Link |
+|-------|-----------|------|
+| **Session** | Cache de continuidade + log de operações | [session/](session/) |
+| **Overview** | Visão executiva do projeto | [overview.md](overview.md) |
+| **Entities** | Pessoas, organizações, produtos, sistemas | [entities/](entities/_index.md) |
+| **Concepts** | Ideias, padrões, frameworks, decisões | [concepts/](concepts/_index.md) |
+| **Sources** | Documentos fonte ingeridos | [sources/](sources/_index.md) |
+| **Decisions** | ADRs e decisões arquiteturais | [decisions/](decisions/) |
+| **Architecture** | Arquitetura do sistema (auto-gerado) | [architecture/](architecture/INDEX.md) |
+| **Memory** | Sistema de memória (auto-gerado) | [memory/](memory/INDEX.md) |
+| **API** | Referência de API (auto-gerado) | [api/](api/INDEX.md) |
+| **Economy** | Token economy reports | [economy/](economy/LATEST-REPORT.md) |
 
-| Seção | Arquivos | Tamanho |
-|-------|----------|---------|
-| agents | 0 | 0 B |
-| skills | 0 | 0 B |
-| workflows | 0 | 0 B |
-| memory | 215 | 4.57 MB |
-| architecture | 9 | 70.79 KB |
-| api | 11213 | 19.54 MB |
-| handoffs | 0 | 0 B |
+## Geração Automática
 
-## Links Rápidos
+As seções **Architecture**, **Memory**, **API** e subdiretórios vazios (`agents/`, `skills/`, `workflows/`, `handoffs/`) são auto-gerados pelo OpenWiki.
 
-- [Agents](agents/INDEX.md)
-- [Skills](skills/INDEX.md)
-- [Workflows](workflows/INDEX.md)
-- [Memory](memory/INDEX.md)
-- [Architecture](architecture/INDEX.md)
-- [Api](api/INDEX.md)
-- [Handoffs](handoffs/INDEX.md)
+**Não editar manualmente** os arquivos dentro de diretórios auto-gerados.
 
-## Integração com Agentes
+## Links Externos (Projeto)
 
-Os agentes do NexusAuto devem consultar esta wiki para:
+| Documento | Localização |
+|-----------|-------------|
+| Contexto Base | [CONTEXT_SUMMARY.md](../../CONTEXT_SUMMARY.md) |
+| Progresso | [PROGRESS.md](../../PROGRESS.md) |
+| Instructions | [AGENTS.md](../../AGENTS.md) |
+| OpenWiki | `tools/openwiki/` |
+| GNHF | `tools/gnhf/` |
+| V&V Protocol | `standards/VV_PROTOCOL_ADAPTATIVE.md` |
+| Brain/Decisions | `brain/Key Decisions.md` |
 
-1. **Entender contexto** - Ler a seção relevante antes de iniciar tarefas
-2. **Seguir padrões** - Verificar standards e best practices
-3. **Reutilizar código** - Encontrar exemplos e padrões existentes
-4. **Documentar mudanças** - Atualizar esta wiki após mudanças significativas
+## Regras do Wiki
 
-## Atualização Automática
-
-Esta wiki é atualizada automaticamente via:
-- GitHub Actions (diário)
-- Commit hooks (mudanças significativas)
-- Comando manual (`--update`)
-
----
-
-*Gerado automaticamente por NexusOpenWiki*
+1. **session/hot.md**: Sempre ≤500 tokens. Atualizado no hook `Stop`.
+2. **session/log.md**: Append-only. Nunca editar entradas existentes.
+3. **entities/**: Um arquivo por entidade. Nome no padrão `kebab-case.md`.
+4. **concepts/**: Um arquivo por conceito. Nome no padrão `kebab-case.md`.
+5. **sources/**: Fontes ingeridas, com metadados de origem e data.
+6. **Seções auto-geradas**: Não editar manualmente.

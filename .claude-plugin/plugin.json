@@ -1,0 +1,30 @@
+{
+  "name": "nexusauto-wiki",
+  "version": "1.0.0",
+  "description": "Wiki persistente para NexusAuto — continuidade entre sessões, memória de entidades/conceitos, log append-only",
+  "author": "NexusAuto",
+  "license": "MIT",
+  "type": "claude-code-plugin",
+  "capabilities": [
+    "wiki-persistence",
+    "session-continuity",
+    "entity-tracking",
+    "concept-documentation",
+    "source-ingestion"
+  ],
+  "hooks": {
+    "source": "../hooks/hooks.json",
+    "autoInstall": true
+  },
+  "wiki": {
+    "path": "../wiki",
+    "schemaRef": "../WIKI.md",
+    "hotCache": "hot.md",
+    "index": "index.md",
+    "log": "log.md"
+  },
+  "requirements": {
+    "claudeCode": ">=1.0.0"
+  },
+  "tags": ["wiki", "memory", "session", "continuity", "nexusauto"]
+}

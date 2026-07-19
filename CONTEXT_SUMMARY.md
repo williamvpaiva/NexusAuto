@@ -1,7 +1,7 @@
 # NexusAuto - Contexto Base (Layer 1)
 
 ## Propósito
-Fábrica autônoma de software com 10+ agentes de IA especializados.
+Fábrica autônoma de software com 21 agentes de IA especializados.
 
 ## Stack Principal
 - **Frontend**: React 18 + TypeScript + Vite + TailwindCSS
@@ -20,22 +20,32 @@ Fábrica autônoma de software com 10+ agentes de IA especializados.
 ## Camadas de Contexto
 - **Layer 1**: Este arquivo (sempre carregado, ~200 tokens)
 - **Layer 2**: `./PROJECT_CONTEXT.md` (visão macro, sob demanda)
-- **Layer 3**: `.ai-factory/scripts/retrieve-context.js` (código específico, sob demanda)
+- **Layer 3**: `.ai-factory/wiki/session/hot.md` (cache de continuidade, ler sempre primeiro numa sessão)
+- **Layer 4**: `.ai-factory/scripts/retrieve-context.js` (código específico, sob demanda)
 
-## Agentes Disponíveis
-| Agente | Responsabilidade | Localização |
-|--------|-----------------|-------------|
+## Agentes Disponíveis (21 agentes)
+
+| Agente | Divisão | Localização |
+|--------|---------|-------------|
 | TECH-LEAD | Orquestração | `.ai-factory/agents/tech-lead.md` |
+| CHIEF-OF-STAFF | Operações | `.ai-factory/agents/chief-of-staff.md` |
 | PRODUCT-OWNER | Produto | `.ai-factory/agents/product-owner.md` |
 | ANALYST | Requisitos | `.ai-factory/agents/analyst.md` |
 | ARCHITECT | Arquitetura | `.ai-factory/agents/architect.md` |
-| FRONTEND-DEV | UI/Componentes | `.ai-factory/agents/frontend-dev.md` |
-| BACKEND-DEV | API/Database | `.ai-factory/agents/backend-dev.md` |
+| FRONTEND-DEV | Frontend | `.ai-factory/agents/frontend-dev.md` |
+| BACKEND-DEV | Backend | `.ai-factory/agents/backend-dev.md` |
+| UI/UX-PRO-MAX | Design | `.ai-factory/agents/ui-ux-pro-max-agent.md` |
 | SECURITY | Segurança | `.ai-factory/agents/security.md` |
 | PERFORMANCE | Performance | `.ai-factory/agents/performance.md` |
-| QA-TESTER | Validação/Testes | `.ai-factory/agents/qa-tester.md` |
+| QA-TESTER | Testes | `.ai-factory/agents/qa-tester.md` |
 | DEVOPS | Infra/Deploy | `.ai-factory/agents/devops.md` |
-| UI/UX-PRO-MAX | Design | `.ai-factory/agents/ui-ux-pro-max-agent.md` |
+| DATA-ANALYST | Dados | `.ai-factory/agents/data-analyst.md` |
+| FINANCIAL-ANALYST | Finanças | `.ai-factory/agents/financial-analyst.md` |
+| CUSTOMER-SUPPORT | Suporte | `.ai-factory/agents/customer-support-lead.md` |
+| PRODUCT-MARKETER | Marketing | `.ai-factory/agents/product-marketer.md` |
+| LEGAL-COUNSEL | Jurídico | `.ai-factory/agents/legal-counsel.md` |
+| RECRUITER | RH/Talentos | `.ai-factory/agents/recruiter.md` |
+| VENTURE-CAPITALIST | Investimentos | `.ai-factory/agents/venture-capitalist.md` |
 | EXECUTOR | Automação | `.ai-factory/agents/executor-agent.md` |
 | WHATSAPP | Comunicação | `.ai-factory/agents/whatsapp-agent.md` |
 
@@ -46,6 +56,10 @@ Fábrica autônoma de software com 10+ agentes de IA especializados.
 - [Progresso](PROGRESS.md)
 - [Contexto do Projeto](PROJECT_CONTEXT.md)
 - [OpenWiki + GNHF Integration](.ai-factory/tools/INTEGRACAO.md)
+- [Wiki Persistente](.ai-factory/wiki/index.md) — memória entre sessões
+- [WIKI Schema](WIKI.md) — wiki reference para agentes
+- [AGENTS.md](AGENTS.md) — instruções para Claude Code / OpenCode
+- [GEMINI.md](GEMINI.md) — instruções para Gemini CLI
 
 ## Status Testes
 - **84/84 testes passando**, 0 falhas, ~10.9s (backend)
@@ -85,4 +99,25 @@ Fábrica autônoma de software com 10+ agentes de IA especializados.
 
 ---
 
-*Última atualização: 2026-07-07 | Tokens: ~350*
+*Última atualização: 2026-07-18 | Tokens: ~450*
+
+---
+
+## Wiki Persistente (Novo)
+
+Implementação do pattern claude-obsidian para memória persistente entre sessões.
+
+### Componentes
+
+| Componente | Arquivo | Função |
+|------------|---------|--------|
+| Wiki Pattern | `.ai-factory/wiki/` | Estrutura de diretórios para conhecimento persistente |
+| Hot Cache | `.ai-factory/wiki/session/hot.md` | ~500 tokens, cache de continuidade entre sessões |
+| Hooks | `hooks/hooks.json` | Lifecycle hooks: SessionStart, PostToolUse, Stop |
+| Plugin | `.claude-plugin/` | Registro no ecossistema Claude Code |
+| Discovery | `AGENTS.md`, `GEMINI.md` | Descoberta cross-platform |
+
+### Comandos Rápidos
+
+- `/wiki index` — abre o catálogo master
+- Leia `AGENTS.md` para instruções completas

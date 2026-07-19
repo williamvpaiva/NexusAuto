@@ -1,0 +1,20 @@
+{
+  "marketplace": "claude-code",
+  "listing": {
+    "name": "NexusAuto Wiki",
+    "shortDescription": "Wiki persistente com hot cache, entidades, conceitos e log append-only para continuidade entre sessões do Claude Code",
+    "description": "Implementação do claude-obsidian pattern para o projeto NexusAuto. Mantém memória persistente entre sessões através de wiki estruturado com hot cache (~500 tokens), catálogo master, log append-only, entidades, conceitos e fontes ingeridas.",
+    "categories": ["productivity", "memory", "documentation"],
+    "features": [
+      "Hot cache de continuidade entre sessões",
+      "Log append-only de operações",
+      "Catálogo de entidades e conceitos",
+      "Ingestão de fontes externas",
+      "Auto-commit via hooks",
+      "Descoberta cross-platform (AGENTS.md + GEMINI.md)"
+    ],
+    "screenshot": null,
+    "website": null,
+    "repository": "https://github.com/nexusauto/nexusauto"
+  }
+}
