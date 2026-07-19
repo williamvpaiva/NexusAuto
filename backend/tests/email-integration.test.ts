@@ -48,7 +48,7 @@ describe('Email Integration — Ethereal SMTP (envio real)', () => {
     if (!etherealAvailable || !transport) return;
 
     const info = await transport.sendMail({
-      from: `"Polymarketing Test" <${etherealUser}>`,
+      from: `"NexusAuto Test" <${etherealUser}>`,
       to: 'destinatario-teste@example.com',
       subject: 'Teste de Integração — Reset de Senha',
       html: `
@@ -97,9 +97,9 @@ describe('Email Integration — Ethereal SMTP (envio real)', () => {
     const resetLink = `http://localhost:5173/reset-password?token=${testToken}`;
 
     const info = await transport.sendMail({
-      from: `"Polymarketing" <${etherealUser}>`,
+      from: `"NexusAuto" <${etherealUser}>`,
       to: testEmail,
-      subject: 'Redefina sua senha - Polymarketing',
+      subject: 'Redefina sua senha - NexusAuto',
       html: `
         <!DOCTYPE html>
         <html lang="pt-BR">

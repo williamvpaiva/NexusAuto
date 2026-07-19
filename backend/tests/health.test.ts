@@ -8,7 +8,7 @@ describe('GET /api/v1/health', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(res.body.data.status).toBe('ok');
-    expect(res.body.data.service).toBe('polymarketing');
+    expect(res.body.data.service).toBe('nexusauto');
     expect(res.body.data).toHaveProperty('uptime');
     expect(res.body.data).toHaveProperty('timestamp');
     expect(res.body.data).toHaveProperty('environment');
@@ -21,7 +21,7 @@ describe('GET / (root)', () => {
     const res = await request(app).get('/');
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.name).toBe('polymarketing');
+    expect(res.body.data.name).toBe('nexusauto');
     expect(res.body.data.status).toBe('running');
   });
 });

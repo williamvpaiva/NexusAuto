@@ -50,7 +50,7 @@ if (showHelp) {
     2. Remove data/memory.db (e WAL/SHM se existirem)
     3. Recria todas as tabelas com schema atual
     4. Insere seed data:
-       - Admin: admin@polymarketing.com / admin123
+       - Admin: admin@nexusauto.app / admin123
        - Template de email de reset de senha
   `);
   process.exit(0);
@@ -187,7 +187,7 @@ async function main() {
     // Verifica se o admin foi criado
     const admin = await db.get<{ email: string; role: string }>(
       `SELECT email, role FROM users WHERE email = ?`,
-      ['admin@polymarketing.com'],
+      ['admin@nexusauto.app'],
     );
 
     if (admin) {

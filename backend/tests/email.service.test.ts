@@ -35,7 +35,7 @@ vi.mock('resend', () => ({
 // ---------------------------------------------------------------------------
 
 const mockRender = vi.hoisted(() => vi.fn().mockImplementation(async (_name: string, vars: Record<string, string>) => ({
-  subject: 'Redefina sua senha - Polymarketing',
+  subject: 'Redefina sua senha - NexusAuto',
   html: `<html><body><a href="${vars.RESET_LINK}">Resetar</a></body></html>`,
 })));
 
@@ -161,7 +161,7 @@ describe('emailService.sendResetPasswordEmail', () => {
   it('should use the frontend origin from env', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const originalOrigin = mockEnv.frontendOrigin;
-    mockEnv.frontendOrigin = 'https://app.polymarketing.com.br';
+    mockEnv.frontendOrigin = 'https://nexusauto.app';
 
     await emailService.sendResetPasswordEmail({
       to: 'user@test.com',
@@ -169,7 +169,7 @@ describe('emailService.sendResetPasswordEmail', () => {
     });
 
     expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining('https://app.polymarketing.com.br/reset-password?token=token-xyz')
+      expect.stringContaining('https://nexusauto.app/reset-password?token=token-xyz')
     );
 
     mockEnv.frontendOrigin = originalOrigin;

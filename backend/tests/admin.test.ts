@@ -119,7 +119,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
   it('deve retornar 200 e limpar usuários de teste (admin)', async () => {
     const { db } = await import('../src/config/database');
     const testUsers = [
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
       { id: 'u2', name: 'Mutation Test', email: 'mutation-abc-456@test.com', created_at: '2026-07-12T09:00:00.000Z' },
     ];
 
@@ -149,7 +149,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     expect(res.body.data.total).toBe(2);
     expect(res.body.data.limit).toBe(100);
     expect(res.body.data.users).toHaveLength(2);
-    expect(res.body.data.users[0].email).toBe('e2e-test-123@polymarketing.com');
+    expect(res.body.data.users[0].email).toBe('e2e-test-123@nexusauto.app');
     expect(res.body.data.users[1].email).toBe('mutation-abc-456@test.com');
 
     // 2 DELETEs + 1 INSERT no cleanup_log = 3
@@ -158,14 +158,14 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     expect(db.run).toHaveBeenCalledWith('DELETE FROM users WHERE id = ?', ['u2']);
   });
 
-  // ── Admin — protege admin@polymarketing.com ─────────────────────────
+  // ── Admin — protege admin@nexusauto.app ─────────────────────────
 
-  it('deve pular admin@polymarketing.com mesmo se corresponder a padrão', async () => {
+  it('deve pular admin@nexusauto.app mesmo se corresponder a padrão', async () => {
     const { db } = await import('../src/config/database');
 
     const testUsers = [
-      { id: 'admin-id', name: 'Admin', email: 'admin@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
-      { id: 'u2', name: 'Test User', email: 'e2e-test-999@polymarketing.com', created_at: '2026-07-12T09:00:00.000Z' },
+      { id: 'admin-id', name: 'Admin', email: 'admin@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u2', name: 'Test User', email: 'e2e-test-999@nexusauto.app', created_at: '2026-07-12T09:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -218,7 +218,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     const { db } = await import('../src/config/database');
 
     const testUsers = [
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -241,7 +241,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     expect(res.body.data.users).toHaveLength(1);
     expect(res.body.data.total).toBe(1);
     expect(res.body.data.limit).toBe(100);
-    expect(res.body.data.users[0].email).toBe('e2e-test-123@polymarketing.com');
+    expect(res.body.data.users[0].email).toBe('e2e-test-123@nexusauto.app');
 
     // Nenhum DELETE foi executado
     expect(db.run).not.toHaveBeenCalled();
@@ -272,7 +272,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     const { db } = await import('../src/config/database');
 
     const testUsers = [
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-999@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-999@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -300,7 +300,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     const { db } = await import('../src/config/database');
 
     const testUsers = [
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-555@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-555@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -327,9 +327,9 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     const { db } = await import('../src/config/database');
 
     const allUsers = [
-      { id: 'u1', name: 'User 1', email: 'e2e-test-1@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
-      { id: 'u2', name: 'User 2', email: 'e2e-test-2@polymarketing.com', created_at: '2026-07-12T09:00:00.000Z' },
-      { id: 'u3', name: 'User 3', email: 'e2e-test-3@polymarketing.com', created_at: '2026-07-12T08:00:00.000Z' },
+      { id: 'u1', name: 'User 1', email: 'e2e-test-1@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u2', name: 'User 2', email: 'e2e-test-2@nexusauto.app', created_at: '2026-07-12T09:00:00.000Z' },
+      { id: 'u3', name: 'User 3', email: 'e2e-test-3@nexusauto.app', created_at: '2026-07-12T08:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -346,7 +346,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     expect(res.body.data.total).toBe(3);          // total real de matching
     expect(res.body.data.limit).toBe(1);          // limite aplicado
     expect(res.body.data.users).toHaveLength(1);  // apenas 1 retornado
-    expect(res.body.data.users[0].email).toBe('e2e-test-1@polymarketing.com');
+    expect(res.body.data.users[0].email).toBe('e2e-test-1@nexusauto.app');
     expect(res.body.data.deleted).toBe(3);        // todos os 3 foram deletados mesmo com limit=1
     // 3 DELETEs + 1 INSERT no log = 4
     expect(db.run).toHaveBeenCalledTimes(4);
@@ -360,7 +360,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 5 });
     vi.mocked(db.all).mockResolvedValueOnce([
-      { id: 'u1', name: 'Test', email: 'e2e-test-1@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'Test', email: 'e2e-test-1@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 15 });
     vi.mocked(db.get).mockResolvedValueOnce({ total: 14 });
@@ -384,7 +384,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 3 });
     vi.mocked(db.all).mockResolvedValueOnce([
-      { id: 'u1', name: 'Test', email: 'e2e-test-1@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'Test', email: 'e2e-test-1@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 10 });
     vi.mocked(db.get).mockResolvedValueOnce({ total: 9 });
@@ -408,7 +408,7 @@ describe('GET /api/v1/admin/cleanup-test-users', () => {
     const allUsers = Array.from({ length: 10 }, (_, i) => ({
       id: `u${i + 1}`,
       name: `User ${i + 1}`,
-      email: `e2e-test-${i + 1}@polymarketing.com`,
+      email: `e2e-test-${i + 1}@nexusauto.app`,
       created_at: `2026-07-${12 - i}T10:00:00.000Z`,
     }));
 
@@ -685,7 +685,7 @@ describe('GET /api/v1/admin/cleanup-history', () => {
     const { db } = await import('../src/config/database');
 
     const testUsers = [
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ];
 
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
@@ -721,7 +721,7 @@ describe('GET /api/v1/admin/cleanup-history', () => {
     vi.mocked(db.all).mockResolvedValueOnce([{ name: 'users' }]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 1 });
     vi.mocked(db.all).mockResolvedValueOnce([
-      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@polymarketing.com', created_at: '2026-07-12T10:00:00.000Z' },
+      { id: 'u1', name: 'E2E Test', email: 'e2e-test-123@nexusauto.app', created_at: '2026-07-12T10:00:00.000Z' },
     ]);
     vi.mocked(db.get).mockResolvedValueOnce({ total: 10 });
 

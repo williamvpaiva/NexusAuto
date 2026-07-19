@@ -11,7 +11,7 @@ beforeAll(async () => {
   await db.initialize();
   const loginRes = await request(app)
     .post('/api/v1/auth/login')
-    .send({ email: 'admin@polymarketing.com', password: 'admin123' });
+    .send({ email: 'admin@nexusauto.app', password: 'admin123' });
   token = loginRes.body.data.accessToken;
   csrfToken = require('crypto').randomBytes(32).toString('hex');
   registerCsrfToken(csrfToken, loginRes.body.data.user.id, Date.now() + 3600000);

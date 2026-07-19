@@ -211,7 +211,7 @@ export class Database {
     // Seeds
     await this.exec(`
       INSERT OR IGNORE INTO users (id, name, email, password, role)
-      VALUES ('admin-001', 'Admin User', 'admin@polymarketing.com', '$2b$12$eQrbppwCcLQMTxAsTW/OweWeqo6/z8vJT/ZZL.jM2d63JJZ6/LHXW', 'admin')
+      VALUES ('admin-001', 'Admin User', 'admin@nexusauto.app', '$2b$12$eQrbppwCcLQMTxAsTW/OweWeqo6/z8vJT/ZZL.jM2d63JJZ6/LHXW', 'admin')
     `);
 
     await this.exec(`

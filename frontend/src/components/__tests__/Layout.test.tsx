@@ -14,7 +14,7 @@ describe('Layout', () => {
     );
 
     // Header
-    expect(screen.getByText('Polymarketing')).toBeInTheDocument();
+    expect(screen.getByText('NexusAuto')).toBeInTheDocument();
     
     // Navigation links
     expect(screen.getByRole('link', { name: /usuários/i })).toBeInTheDocument();

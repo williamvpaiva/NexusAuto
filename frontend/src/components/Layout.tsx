@@ -8,7 +8,7 @@ export function Layout({ children }: PropsWithChildren) {
     <div className="app-shell">
       <header className="topbar">
         <div>
-          <h1>Polymarketing</h1>
+          <h1>NexusAuto</h1>
           <p>AI Factory Full Stack</p>
         </div>
 

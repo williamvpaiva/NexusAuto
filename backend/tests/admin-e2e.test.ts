@@ -30,7 +30,7 @@ vi.mock('../src/middleware/brute-force', () => ({
 async function getAdminToken(): Promise<string> {
   const res = await request(app)
     .post('/api/v1/auth/login')
-    .send({ email: 'admin@polymarketing.com', password: 'admin123' });
+    .send({ email: 'admin@nexusauto.app', password: 'admin123' });
 
   if (res.status !== 200) {
     throw new Error(`Falha ao fazer login como admin: ${res.status} ${JSON.stringify(res.body)}`);
@@ -109,7 +109,7 @@ describe('GET /api/v1/admin/stats — E2E Integration (no mocks)', () => {
   // ── Teste 4: Criar usuário de teste e verificar contagem ───────────
 
   it('deve refletir novo usuário de teste nas métricas', async () => {
-    const email = `e2e-stats-${suffix}@polymarketing.com`;
+    const email = `e2e-stats-${suffix}@nexusauto.app`;
 
     const registerRes = await request(app)
       .post('/api/v1/auth/register')

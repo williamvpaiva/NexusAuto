@@ -29,7 +29,7 @@ let adminToken: string;
 async function getAdminToken(): Promise<string> {
   const res = await request(app)
     .post('/api/v1/auth/login')
-    .send({ email: 'admin@polymarketing.com', password: 'admin123' });
+    .send({ email: 'admin@nexusauto.app', password: 'admin123' });
 
   if (res.status !== 200) {
     throw new Error(`Falha ao fazer login como admin: ${res.status} ${JSON.stringify(res.body)}`);
@@ -48,7 +48,7 @@ const runId = Date.now();
 async function createTestUsers(count: number, offset = 0): Promise<string[]> {
   const emails: string[] = [];
   for (let i = 0; i < count; i++) {
-    const email = `e2e-test-${runId}-${offset + i}@polymarketing.com`;
+    const email = `e2e-test-${runId}-${offset + i}@nexusauto.app`;
     const res = await request(app)
       .post('/api/v1/auth/register')
       .send({ name: `E2E Cleanup User ${offset + i}`, email, password: 'Test@123456' });

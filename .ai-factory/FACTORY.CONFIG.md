@@ -7,10 +7,10 @@
 ## 📋 Identidade do Projeto
 
 ```yaml
-nome: POLYMARKETING
+nome: NEXUSAUTO
 tipo: SaaS # SaaS | E-commerce | API | App | Legacy
 status: MVP # Planejamento | MVP | Crescimento | Escala | Legado
-descricao: Plataforma de marketing polimorfo
+descricao: Fabrica autonoma de software com agentes de IA
 ```
 
 ---
@@ -182,7 +182,7 @@ Gere relatório diário de melhorias
 
 | Data | Versão | Mudança |
 |------|--------|---------|
-| 02/07/2026 | 1.0.0 | Configuração inicial do POLYMARKETING |
+| 02/07/2026 | 1.0.0 | Configuração inicial do NEXUSAUTO |
 
 ---
 

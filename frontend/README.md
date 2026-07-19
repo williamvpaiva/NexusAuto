@@ -1,4 +1,4 @@
-# Frontend - Polymarketing
+# Frontend - NexusAuto
 
 Aplicação React desenvolvida com Vite + TypeScript.
 

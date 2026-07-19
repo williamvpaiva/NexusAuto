@@ -37,7 +37,7 @@ describe('Forgot/Reset Password — E2E Integration Flow', () => {
   const emailSuffix = Date.now();
   const testUser = {
     name: 'E2E Test User',
-    email: `e2e-test-${emailSuffix}@polymarketing.com`,
+    email: `e2e-test-${emailSuffix}@nexusauto.app`,
     password: 'Initial@123',
     newPassword: 'NewStr0ng@456',
   };

@@ -9,7 +9,7 @@ import type { CreateEmailTemplateInput, UpdateEmailTemplateInput, EmailTemplate 
 const DEFAULT_RESET_TEMPLATE: EmailTemplate = {
   id: 'builtin-default',
   name: 'reset-password',
-  subject: 'Redefina sua senha - Polymarketing',
+  subject: 'Redefina sua senha - NexusAuto',
   htmlBody: `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,7 +34,7 @@ const DEFAULT_RESET_TEMPLATE: EmailTemplate = {
   <div class="container">
     <div class="card">
       <div class="logo">
-        <span class="logo-text">Polymarketing</span>
+        <span class="logo-text">NexusAuto</span>
       </div>
       <h1>Redefinição de senha</h1>
       <p>Recebemos uma solicitação para redefinir a senha da sua conta. Clique no botão abaixo para criar uma nova senha:</p>
@@ -47,7 +47,7 @@ const DEFAULT_RESET_TEMPLATE: EmailTemplate = {
       <p style="font-size: 0.85rem; word-break: break-all; color: #64748b; text-align: center; background: #f8fafc; padding: 12px; border-radius: 8px;\">{{RESET_LINK}}</p>
     </div>
     <div class="footer">
-      <p>Polymarketing &mdash; Todos os direitos reservados.</p>
+      <p>NexusAuto &mdash; Todos os direitos reservados.</p>
     </div>
   </div>
 </body>

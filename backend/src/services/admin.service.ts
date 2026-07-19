@@ -11,7 +11,7 @@ const TEST_PATTERNS = [
   { pattern: 'test-%@test.com', label: 'Generic test users' },
 ];
 
-const PROTECTED_EMAILS = ['admin@polymarketing.com'];
+const PROTECTED_EMAILS = ['admin@nexusauto.app'];
 
 // ---------------------------------------------------------------------------
 // Types
@@ -98,7 +98,7 @@ export interface CleanupResult {
  * @param limit   Máximo de usuários retornados na lista. Útil para
  *                controlar o tamanho do payload. Padrão: `100`.
  *
- * Usuários protegidos (ex: admin@polymarketing.com) nunca são removidos.
+ * Usuários protegidos (ex: admin@nexusauto.app) nunca são removidos.
  */
 export async function cleanupTestUsers(dryRun = false, limit = 100): Promise<CleanupResult> {
   // ── 1. Verificar se a tabela existe ────────────────────────────────

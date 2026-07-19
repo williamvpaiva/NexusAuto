@@ -1,4 +1,4 @@
-# Backend - Polymarketing API
+# Backend - NexusAuto API
 
 API RESTful desenvolvida com Express + TypeScript.
 

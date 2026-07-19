@@ -12,7 +12,7 @@
  *   node scripts/cleanup-test-users.js --help        → ajuda
  *
  * Padrões de email reconhecidos como usuários de teste:
- *   - e2e-test-*@polymarketing.com  (auth-e2e.test.ts)
+ *   - e2e-test-*@nexusauto.app  (auth-e2e.test.ts)
  *   - mutation-*@test.com           (mutation-password.test.ts)
  *   - test-*@test.com               (outros testes)
  */
@@ -35,7 +35,7 @@ const TEST_PATTERNS = [
 
 // Usuários que NUNCA devem ser removidos
 const PROTECTED_EMAILS = [
-  'admin@polymarketing.com',
+  'admin@nexusauto.app',
 ];
 
 // ---------------------------------------------------------------------------

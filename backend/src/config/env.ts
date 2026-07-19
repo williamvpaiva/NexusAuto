@@ -5,7 +5,7 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
 
 export const env = {
-  appName: process.env.APP_NAME || 'polymarketing',
+  appName: process.env.APP_NAME || 'nexusauto',
   appEnv: process.env.APP_ENV || 'development',
   port: Number(process.env.APP_PORT || 3000),
   frontendOrigin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
@@ -13,9 +13,9 @@ export const env = {
   // Database
   dbHost: process.env.DB_HOST || 'localhost',
   dbPort: Number(process.env.DB_PORT || 5432),
-  dbName: process.env.DB_NAME || 'polymarketing_db',
-  dbUser: process.env.DB_USER || 'polymarketing_user',
-  dbPassword: process.env.DB_PASSWORD || 'polymarketing_password',
+  dbName: process.env.DB_NAME || 'nexusauto_db',
+  dbUser: process.env.DB_USER || 'nexusauto_user',
+  dbPassword: process.env.DB_PASSWORD || 'nexusauto_password',
   
   // Redis
   redisHost: process.env.REDIS_HOST || 'localhost',

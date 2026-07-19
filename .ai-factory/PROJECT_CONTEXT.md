@@ -1,13 +1,13 @@
 # PROJECT_CONTEXT
 
 ## Nome do Projeto
-POLYMARKETING
+NexusAuto
 
 ## Problema
 Agentes de IA perdem contexto entre execuções — não há memória persistente de conversas, erros ou otimizações de tokens. Cada nova execução começa do zero, ignorando lições aprendidas, decisões anteriores e padrões de erro. Projetos multiagentes sofrem com fragmentação de conhecimento e retrabalho.
 
 ## Objetivo
-Construir um **sistema de memória persistente para agentes de IA** com backend Express + SQLite que armazene conversas, mensagens, logs de erro, otimização de tokens e cache de queries, exposto via API REST e frontend React para visualização. Serve como camada de memória para fábrica SaaS orquestrada por 10 agentes de IA.
+Construir um **sistema de memória persistente para agentes de IA** com backend Express + SQLite que armazene conversas, mensagens, logs de erro, otimização de tokens e cache de queries, exposto via API REST e frontend React para visualização. Serve como camada de memória para fábrica SaaS orquestrada por 21 agentes de IA.
 
 ## Usuários / Personas
 - **Agente de IA**: Consome API REST para persistir/recuperar contexto de execuções anteriores

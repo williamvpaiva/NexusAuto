@@ -39,7 +39,7 @@
 - **De:** tech-lead
 - **Para:** backend-dev, security, qa-tester
 - **Artefatos:**
-  - `PROJECT_CONTEXT.md` preenchido com dados reais do Polymarketing
+  - `PROJECT_CONTEXT.md` preenchido com dados reais do NexusAuto
   - `MELHORIAS/01-ARQUITETURA/TAREFAS.md` — 3 tarefas (registrar memory router, unificar error handling, persistir users)
   - `MELHORIAS/08-SEGURANCA/TAREFAS.md` — 3 tarefas (JWT auth, rate limiting, validação Zod)
   - `MELHORIAS/09-TESTES/TAREFAS.md` — 4 tarefas (1 concluída: documentação dos testes existentes)

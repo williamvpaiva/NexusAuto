@@ -60,10 +60,10 @@ cp ai-factory-template/AI-FACTORY.md ./
 Edite `.ai-factory/PROJECT_CONTEXT.md`:
 
 ```markdown
-# Contexto do Projeto — POLYMARKETING
+# Contexto do Projeto — NEXUSAUTO
 
 ## IDENTIDADE
-- **Produto:** POLYMARKETING
+- **Produto:** NEXUSAUTO
 - **Tipo:** [SaaS / E-commerce / API / App]
 - **Descrição:** [O que faz em 1 linha]
 - **Status:** [MVP / Crescimento / Escala / Legado]
@@ -93,11 +93,11 @@ Edite `.ai-factory/PROJECT_CONTEXT.md`:
 Edite `.ai-factory/agents/tech-lead.md` e adicione:
 
 ```markdown
-## Contexto Específico do Projeto POLYMARKETING
+## Contexto Específico do Projeto NEXUSAUTO
 
 ### Estrutura de Pastas Atual
 ```
-POLYMARKETING/
+NEXUSAUTO/
 ├── frontend/     → Código React/Next.js
 ├── backend/      → Código Node.js/Express
 ├── docs/         → Documentação

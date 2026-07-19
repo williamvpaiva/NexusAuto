@@ -44,7 +44,7 @@ jobs:
     needs: validate
     environment:
       name: production
-      url: https://app.polymarketing.com
+      url: https://nexusauto.app
 
     concurrency:
       group: production-deploy

@@ -7,7 +7,7 @@ app.listen(PORT, () => {
   console.log(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
-║   Polymarketing Backend                                   ║
+║   NexusAuto Backend                                      ║
 ║                                                           ║
 ║   Environment: ${env.appEnv.padEnd(41)}║
 ║   Port: ${String(PORT).padEnd(50)}║
