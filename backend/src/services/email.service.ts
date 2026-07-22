@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 import { env } from '../config/env';
-import { emailTemplatesService } from './email-templates.service';
+import { emailTemplatesService, type EmailTemplatesService } from './email-templates.service';
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -74,21 +74,12 @@ export async function createEtherealTransport(): Promise<{
 }
 
 // ---------------------------------------------------------------------------
-// Templates HTML
-// ---------------------------------------------------------------------------
-
-/** Renderiza template de reset do DB (ou fallback built-in) */
-async function renderResetEmailHtml(resetLink: string): Promise<{ subject: string; html: string }> {
-  return emailTemplatesService.render('reset-password', {
-    RESET_LINK: resetLink,
-  });
-}
-
-// ---------------------------------------------------------------------------
 // Email Service
 // ---------------------------------------------------------------------------
 
-export const emailService = {
+export class EmailService {
+  constructor(private emailTemplatesSvc: EmailTemplatesService) {}
+
   /**
    * Envia email de redefinição de senha.
    *
@@ -101,7 +92,7 @@ export const emailService = {
    */
   async sendResetPasswordEmail(params: SendResetEmailParams): Promise<void> {
     const resetLink = `${env.frontendOrigin}/reset-password?token=${params.token}`;
-    const rendered = await renderResetEmailHtml(resetLink);
+    const rendered = await this.renderResetEmailHtml(resetLink);
 
     // 1. Tenta Resend primeiro
     const resend = getResendClient();
@@ -119,7 +110,7 @@ export const emailService = {
 
     // 3. Dev fallback: loga o link
     console.log(`[EMAIL] Modo dev - link de reset para ${params.to}: ${resetLink}`);
-  },
+  }
 
   /**
    * Envia via Resend API.
@@ -143,7 +134,7 @@ export const emailService = {
       console.error(`[EMAIL] Falha ao enviar email para ${to}:`, err?.message);
       console.log(`[EMAIL] Fallback - link de reset para ${to}: ${resetLink}`);
     }
-  },
+  }
 
   /**
    * Envia via SMTP (Nodemailer).
@@ -170,8 +161,14 @@ export const emailService = {
       console.error(`[EMAIL] Falha ao enviar email via SMTP para ${to}:`, err?.message);
       console.log(`[EMAIL] Fallback - link de reset para ${to}: ${resetLink}`);
     }
-  },
-};
+  }
+
+  private async renderResetEmailHtml(resetLink: string): Promise<{ subject: string; html: string }> {
+    return this.emailTemplatesSvc.render('reset-password', { RESET_LINK: resetLink });
+  }
+}
+
+export const emailService = new EmailService(emailTemplatesService);
 
 /**
  * Utilitário para obter URL de preview do Ethereal.

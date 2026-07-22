@@ -165,6 +165,6 @@ milestone: v2.0.0
   - `GITHUB_REPO` (org/repo)
 
 # Links Relacionados
-- [[brain/Patterns]] - Padrões de documentação
-- [[skills/automation/slack-notify]] - Notificar equipe
-- [[standards/workflows]] - Fluxo de issues
+- [Patterns](../../brain/Patterns.md) - Padrões de documentação
+- [slack-notify](../slack-notify/SKILL.md) - Notificar equipe
+- [workflows](../../standards/workflows.md) - Fluxo de issues

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { asyncHandler } from '../utils/async-handler';
 import { cleanupTestUsers, adminStats, getCleanupHistory } from '../services/admin.service';
+import { validate } from '../middleware/validate.middleware';
+import { CleanupHistorySchema, CleanupTestUsersSchema } from '../dtos/admin.dto';
 
 export const adminRouter = Router();
 
@@ -45,7 +47,7 @@ export const adminRouter = Router();
  * }
  * ```
  */
-adminRouter.get('/cleanup-test-users', asyncHandler(async (req, res) => {
+adminRouter.get('/cleanup-test-users', validate(CleanupTestUsersSchema), asyncHandler(async (req, res) => {
   const dryRun = ['true', '1', 'yes'].includes(String(req.query.dry_run).toLowerCase());
 
   // Limita o número de usuários retornados (padrão 100, máximo 500)
@@ -123,7 +125,7 @@ adminRouter.get('/stats', asyncHandler(async (_req, res) => {
  * }
  * ```
  */
-adminRouter.get('/cleanup-history', asyncHandler(async (req, res) => {
+adminRouter.get('/cleanup-history', validate(CleanupHistorySchema), asyncHandler(async (req, res) => {
   const limit = Math.min(Math.max(parseInt(String(req.query.limit), 10) || 50, 1), 200);
   const history = await getCleanupHistory(limit);
   res.json({ success: true, data: history });

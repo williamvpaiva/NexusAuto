@@ -7,7 +7,10 @@ import { RouteErrorBoundary } from './components/RouteErrorBoundary';
 const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })));
 const HealthPage = lazy(() => import('./pages/HealthPage').then(module => ({ default: module.HealthPage })));
 const LoginPage = lazy(() => import('./pages/LoginPage').then(module => ({ default: module.LoginPage })));
+const RegisterPage = lazy(() => import('./pages/RegisterPage').then(module => ({ default: module.RegisterPage })));
+const SalesDashboardPage = lazy(() => import('./pages/SalesDashboardPage').then(module => ({ default: module.SalesDashboardPage })));
 const VehicleList = lazy(() => import('./components/VehicleList').then(module => ({ default: module.VehicleList })));
+const TarefasPage = lazy(() => import('./pages/TarefasPage').then(module => ({ default: module.TarefasPage })));
 
 // Placeholder para Dashboard
 function Dashboard() {
@@ -38,6 +41,14 @@ export default function App() {
           element={
             <RouteErrorBoundary routeName="login">
               <LoginPage />
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RouteErrorBoundary routeName="register">
+              <RegisterPage />
             </RouteErrorBoundary>
           }
         />
@@ -78,12 +89,36 @@ export default function App() {
           }
         />
         <Route
+          path="/sales-dashboard"
+          element={
+            <RouteErrorBoundary routeName="sales-dashboard">
+              <ProtectedRoute>
+                <Layout>
+                  <SalesDashboardPage />
+                </Layout>
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
           path="/veiculos"
           element={
             <RouteErrorBoundary routeName="veiculos">
               <ProtectedRoute>
                 <Layout>
                   <VehicleList />
+                </Layout>
+              </ProtectedRoute>
+            </RouteErrorBoundary>
+          }
+        />
+        <Route
+          path="/tarefas"
+          element={
+            <RouteErrorBoundary routeName="tarefas">
+              <ProtectedRoute>
+                <Layout>
+                  <TarefasPage />
                 </Layout>
               </ProtectedRoute>
             </RouteErrorBoundary>

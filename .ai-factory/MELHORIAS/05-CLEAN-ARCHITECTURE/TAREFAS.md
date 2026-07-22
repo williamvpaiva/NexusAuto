@@ -11,21 +11,21 @@
 ## 📋 Tarefas
 
 ### CLN-001 — Interfaces de Repositório (Contracts)
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** ✅ Concluído
 - **Descrição:** Extrair interfaces TypeScript para todos os repositórios (IUserRepository, IMessageRepository, IAgentRepository) e injetar via construtor
 - **Critério de aceite:** Repositórios implementam interface; services dependem da interface, não da implementação concreta
 - **Esforço:** 3h
 - **Prioridade:** Alta
 
 ### CLN-002 — DTOs de Entrada e Saída
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟡 Em Andamento (Users feito)
 - **Descrição:** Criar DTOs (Data Transfer Objects) para todas as rotas: request validation (Zod) + response serialization (exclui campos internos)
 - **Critério de aceite:** Controller recebe DTO validado; retorna DTO sem expor props internas (ex: `password_hash`, `deleted_at`)
 - **Esforço:** 3h
 - **Prioridade:** Alta
 
 ### CLN-003 — Error Hierarchy (Domain Errors)
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** ✅ Concluído
 - **Descrição:** Criar hierarquia de erros de domínio (NotFoundError, ValidationError, UnauthorizedError, ConflictError) com código HTTP mapeado
 - **Critério de aceite:** Service lança `new NotFoundError('User')` → middleware captura e retorna 404 com `{ error: 'not_found', message }`
 - **Esforço:** 2h
@@ -39,7 +39,7 @@
 - **Prioridade:** Média
 
 ### CLN-005 — Validação Centralizada com Zod
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟡 Em Andamento (Middleware atualizado)
 - **Descrição:** Schema de validação Zod centralizado para todas as entradas (body, query, params), com mensagens de erro padronizadas e i18n-ready
 - **Critério de aceite:** Schema inválido retorna `{ errors: [{ field, message, code }] }`; mensagens em português
 - **Esforço:** 3h

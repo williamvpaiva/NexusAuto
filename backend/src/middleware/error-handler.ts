@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { AppError } from '../utils/app-error';
+import { logger } from '../utils/logger';
+import { errorTracker } from '../services/error-tracking.service';
 
 const env = process.env.APP_ENV || 'development';
 const isDev = env === 'development';
@@ -23,6 +25,7 @@ export function errorHandler(
   _next: NextFunction
 ) {
   const requestId = req.requestId;
+  console.error('ERROR HANDLER CAUGHT:', error);
 
   if (error instanceof ZodError) {
     return res.status(422).json({
@@ -55,15 +58,15 @@ export function errorHandler(
   const message = error instanceof Error ? error.message : 'Erro interno do servidor';
   const stack = error instanceof Error ? error.stack : undefined;
 
-  console.error(JSON.stringify({
-    level: 'error',
-    timestamp: new Date().toISOString(),
+  logger.error({
+    err: error,
     requestId,
     method: req.method,
     url: req.originalUrl,
-    message,
-    stack: isDev ? stack : undefined
-  }));
+    stack: isDev ? stack : undefined,
+  }, 'Unhandled error');
+
+  errorTracker.captureException(error, { requestId, method: req.method, url: req.originalUrl });
 
   return res.status(500).json({
     success: false,

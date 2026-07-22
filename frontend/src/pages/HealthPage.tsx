@@ -5,30 +5,36 @@ export function HealthPage() {
   const [data, setData] = useState<Health | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  async function loadHealth() {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await getHealth();
-      setData(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar healthcheck');
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    loadHealth();
-  }, []);
+    let cancelled = false;
+
+    getHealth()
+      .then(result => {
+        if (!cancelled) setData(result);
+      })
+      .catch(err => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Erro ao carregar healthcheck');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [reloadKey]);
+
+  const handleReload = () => {
+    setLoading(true);
+    setError(null);
+    setReloadKey(k => k + 1);
+  };
 
   return (
     <section className="card health-card">
       <div className="section-header">
         <h2>Healthcheck</h2>
-        <button onClick={loadHealth} disabled={loading} className="secondary">
+        <button onClick={handleReload} disabled={loading} className="secondary">
           {loading ? 'Consultando...' : 'Recarregar'}
         </button>
       </div>

@@ -13,24 +13,25 @@ export function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  async function loadUsers() {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await listUsers();
-      setUsers(data);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erro ao carregar usuários';
-      setError(message);
-      toast.error('Erro ao carregar', message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    loadUsers();
+    let cancelled = false;
+
+    listUsers()
+      .then(data => {
+        if (!cancelled) setUsers(data);
+      })
+      .catch(err => {
+        if (!cancelled) {
+          const message = err instanceof Error ? err.message : 'Erro ao carregar usuários';
+          setError(message);
+          toast.error('Erro ao carregar', message);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
   }, []);
 
   async function handleSubmit(event: FormEvent) {

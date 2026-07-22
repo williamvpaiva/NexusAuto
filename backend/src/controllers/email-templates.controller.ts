@@ -1,5 +1,6 @@
 import { asyncHandler } from '../utils/async-handler';
 import { emailTemplatesService } from '../services/email-templates.service';
+import { toEmailTemplateResponse } from '../dtos/email-template.dto';
 import type { Request, Response } from 'express';
 
 // ---------------------------------------------------------------------------
@@ -7,7 +8,7 @@ import type { Request, Response } from 'express';
 // ---------------------------------------------------------------------------
 export const list = asyncHandler(async (_req: Request, res: Response) => {
   const templates = await emailTemplatesService.list();
-  res.json({ success: true, data: templates, meta: { total: templates.length } });
+  res.json({ success: true, data: templates.map(toEmailTemplateResponse), meta: { total: templates.length } });
 });
 
 // ---------------------------------------------------------------------------
@@ -15,7 +16,7 @@ export const list = asyncHandler(async (_req: Request, res: Response) => {
 // ---------------------------------------------------------------------------
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const template = await emailTemplatesService.findById(req.params.id);
-  res.json({ success: true, data: template });
+  res.json({ success: true, data: toEmailTemplateResponse(template) });
 });
 
 // ---------------------------------------------------------------------------
@@ -23,7 +24,7 @@ export const getById = asyncHandler(async (req: Request, res: Response) => {
 // ---------------------------------------------------------------------------
 export const create = asyncHandler(async (req: Request, res: Response) => {
   const template = await emailTemplatesService.create(req.body);
-  res.status(201).json({ success: true, data: template });
+  res.status(201).json({ success: true, data: toEmailTemplateResponse(template) });
 });
 
 // ---------------------------------------------------------------------------
@@ -31,7 +32,7 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 // ---------------------------------------------------------------------------
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const template = await emailTemplatesService.update(req.params.id, req.body);
-  res.json({ success: true, data: template });
+  res.json({ success: true, data: toEmailTemplateResponse(template) });
 });
 
 // ---------------------------------------------------------------------------

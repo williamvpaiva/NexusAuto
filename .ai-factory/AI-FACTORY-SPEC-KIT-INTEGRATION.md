@@ -38,7 +38,7 @@ nexusauto/
 ├── .ai-factory/
 │   ├── brain/
 │   │   └── Constitution.md             # Espelho do .specify/constitution.md
-│   ├── agents/                         # 10 agentes existentes
+│   ├── agents/                         # 21 agentes especializados
 │   ├── MELHORIAS/                      # Agora populado via /nl-import-tasks
 │   └── scripts/
 │       ├── memory-manager.js           # Memória persistente
@@ -235,7 +235,7 @@ node scripts/test-spec-kit-integration.js
 
 - [Spec-Kit GitHub](https://github.com/github/spec-kit)
 - [TECH-LEAD.md](./TECH-LEAD.md)
-- [ORCHESTRATOR.md](./.ai-factory/ORCHESTRATOR.md)
+- [ORCHESTRATOR.md](./ORCHESTRATOR.md)
 - [Constitution](./.specify/constitution.md)
 
 ---

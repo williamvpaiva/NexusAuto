@@ -43,9 +43,12 @@
 | 🟡 Médio | 2 | 3 | ~1.000 | Components, utils, CSS |
 | 🟢 Cache | 3 | 0 | ~50 | Hash inalterado |
 
-### Scoring para Escalonamento (NOVO)
+### Fluxo de Decisão da Matriz de V&V Adaptativo
 
-Além da matriz V&V, usar **scoring** para decidir nível de escalonamento:
+O **Líder** utiliza um sistema de **scoring** para determinar o **Nível de V&V** apropriado para cada tarefa, otimizando o uso de tokens e garantindo a qualidade.
+
+**Etapa 1: Calcular Score de Criticidade**
+Avaliar a tarefa com base nos fatores abaixo para obter um score:
 
 | Fator | Score |
 |-------|-------|
@@ -55,10 +58,24 @@ Além da matriz V&V, usar **scoring** para decidir nível de escalonamento:
 | Nova dependência | +2 |
 | Apenas UI/CSS | +1 |
 
-**Escalonamento:**
-- **Score >= 8:** 🔴 Crítico → V&V Nível 1 (7 passos), 2 agents, daily report
-- **Score 4-7:** 🟡 Alto → V&V Nível 2 (3 passos), 1 agent senior
-- **Score < 4:** 🟢 Normal → V&V Nível 2 ou 3 (cache)
+**Etapa 2: Determinar Nível de V&V**
+O score calculado define o nível de validação:
+
+- **Score >= 8:** 🔴 **Crítico** → Aplica V&V Nível 1 (7 passos). Requer revisão por 2 agentes e relatório diário.
+- **Score 4-7:** 🟡 **Médio** → Aplica V&V Nível 2 (3 passos). Requer 1 agente sênior.
+- **Score < 4:** 🟢 **Normal/Cache** → Prioriza V&V Nível 3 (Cache) se aplicável, caso contrário, Nível 2.
+
+**Etapa 3: Verificação de Cache (Obrigatória antes de V&V completo)**
+Antes de iniciar qualquer validação dos Níveis 1 ou 2, o Líder DEVE verificar o cache:
+
+```bash
+node scripts/check-cache.js <caminho/do/arquivo/modificado.ts>
+```
+
+- Se o output indicar `cacheHit: true`: Pular validação completa e registrar "Cache Hit". Isso economiza aproximadamente ~3.000 tokens.
+- Se o output indicar `cacheHit: false`: Proceder com a validação conforme o Nível determinado na Etapa 2.
+
+Este fluxo garante que recursos sejam usados de forma eficiente, aplicando validação rigorosa apenas quando a criticidade da mudança realmente exige.
 
 **Consulta:** Ver `.ai-factory/chains/README.md` para cadeias de problemas compostos.
 
@@ -687,6 +704,7 @@ const taxaAprovacaoVV = (aprovados / totalValidacoes) * 100;
 | `retomar área X` | Retoma área pausada |
 | `priorizar área X` | Move área para topo da fila |
 | `escalar tarefa Y` | Adiciona mais agentes à tarefa bloqueada |
+| `crie um vídeo promocional para X` | Dispara o pipeline de mídia via `node scripts/media-factory.cjs --prompt="X"` conectando os serviços de imagem, vídeo, áudio e legendas automáticas |
 
 ---
 

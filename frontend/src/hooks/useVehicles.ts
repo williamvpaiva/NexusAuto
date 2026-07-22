@@ -37,51 +37,65 @@ export function useVehicles() {
    * Carrega veículos com filtros e paginação atuais
    */
   const loadVehicles = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+    const params = new URLSearchParams({
+      page: pagination.page.toString(),
+      perPage: pagination.perPage.toString(),
+      sortBy: pagination.sortBy,
+      sortOrder: pagination.sortOrder,
+      ...Object.entries(filters)
+        .filter(([_, value]) => value !== undefined)
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: String(value) }), {})
+    });
 
-    try {
-      const params = new URLSearchParams({
-        page: pagination.page.toString(),
-        perPage: pagination.perPage.toString(),
-        sortBy: pagination.sortBy,
-        sortOrder: pagination.sortOrder,
-        ...Object.entries(filters)
-          .filter(([_, value]) => value !== undefined)
-          .reduce((acc, [key, value]) => ({ ...acc, [key]: String(value) }), {})
-      });
-
-      const response = await fetch(`${API_BASE}?${params}`);
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: { message: 'Erro ao carregar veículos' } }));
-        throw new Error(errorData.error?.message || 'Erro ao carregar veículos');
-      }
-
-      const data = await response.json();
-      
-      if (!data.success || !data.data) {
-        throw new Error('Resposta inválida do servidor');
-      }
-
-      setVehicles(data.data);
-      setTotal(data.meta?.total || 0);
-      setTotalPages(data.meta?.totalPages || 0);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erro ao carregar veículos';
-      setError(message);
-      toast.error('Erro ao carregar', message);
-      setVehicles([]);
-    } finally {
-      setLoading(false);
+    const response = await fetch(`${API_BASE}?${params}`);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ error: { message: 'Erro ao carregar veículos' } }));
+      throw new Error(errorData.error?.message || 'Erro ao carregar veículos');
     }
-  }, [pagination, filters, toast]);
+
+    const data = await response.json();
+    
+    if (!data.success || !data.data) {
+      throw new Error('Resposta inválida do servidor');
+    }
+
+    setVehicles(data.data);
+    setTotal(data.meta?.total || 0);
+    setTotalPages(data.meta?.totalPages || 0);
+  }, [pagination, filters]);
 
   /**
    * Recarrega ao mudar paginação ou filtros
    */
+  function onLoadError(active: boolean, message: string) {
+    if (active) {
+      setError(message);
+      setVehicles([]);
+    }
+  }
+
+  function onLoadComplete(active: boolean) {
+    if (active) setLoading(false);
+  }
+
   useEffect(() => {
-    loadVehicles();
+    // eslint-disable react-hooks/set-state-in-effect
+    let cancelled = false;
+
+    loadVehicles()
+      .catch(err => {
+        if (cancelled) return;
+        const message = err instanceof Error ? err.message : 'Erro ao carregar veículos';
+        toast.error('Erro ao carregar', message);
+        onLoadError(!cancelled, message);
+      })
+      .finally(() => {
+        onLoadComplete(!cancelled);
+      });
+    // eslint-enable react-hooks/set-state-in-effect
+
+    return () => { cancelled = true; };
   }, [loadVehicles]);
 
   /**
@@ -169,6 +183,8 @@ export function useVehicles() {
    * Atualiza filtros
    */
   const updateFilters = (newFilters: Partial<VehicleFilters>) => {
+    setLoading(true);
+    setError(null);
     setFilters((prev) => ({ ...prev, ...newFilters }));
     setPagination((prev) => ({ ...prev, page: 1 })); // Reset para página 1
   };
@@ -177,6 +193,8 @@ export function useVehicles() {
    * Limpa filtros
    */
   const clearFilters = () => {
+    setLoading(true);
+    setError(null);
     setFilters({});
     setPagination((prev) => ({ ...prev, page: 1 }));
   };
@@ -185,14 +203,20 @@ export function useVehicles() {
    * Navegação de paginação
    */
   const goToPage = (page: number) => {
+    setLoading(true);
+    setError(null);
     setPagination((prev) => ({ ...prev, page }));
   };
 
   const nextPage = () => {
+    setLoading(true);
+    setError(null);
     setPagination((prev) => ({ ...prev, page: Math.min(prev.page + 1, totalPages) }));
   };
 
   const prevPage = () => {
+    setLoading(true);
+    setError(null);
     setPagination((prev) => ({ ...prev, page: Math.max(prev.page - 1, 1) }));
   };
 
@@ -200,6 +224,8 @@ export function useVehicles() {
    * Ordenação
    */
   const sortBy = (field: PaginationParams['sortBy']) => {
+    setLoading(true);
+    setError(null);
     setPagination((prev) => ({
       ...prev,
       sortBy: field,

@@ -1,4 +1,4 @@
-# 📄 Log de Validações V&V — POLYMARKETING
+# 📄 Log de Validações V&V — NexusAuto
 
 > Histórico centralizado de todas as validações Verificação & Validação executadas no projeto.
 

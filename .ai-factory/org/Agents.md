@@ -21,8 +21,8 @@
 - 2026-01-04: Implementou slash commands
 
 **Memórias Recentes:**
-- [[brain/Memories#2026-01-04 - Evolução para Memória Persistente]]
-- [[brain/Key Decisions#ADR-001]]
+- [Memories](../brain/Memories.md)
+- [Key Decisions](../brain/Key%20Decisions.md)
 
 ---
 
@@ -30,7 +30,7 @@
 **Especialidade:** React, TypeScript, Tailwind CSS, Next.js  
 **Status:** Ativo  
 **Sessões:** 0  
-**Skills:** [[skills/development/criar-componente-react]], [[skills/development/integrar-api-rest]]
+**Skills:** [criar-componente-react](../skills/development/criar-componente-react.md), [integrar-api-rest](../skills/development/integrar-api-rest.md)
 
 **Responsabilidades:**
 - Implementar componentes frontend
@@ -47,7 +47,7 @@
 **Especialidade:** Node.js, TypeScript, APIs REST, Bancos de Dados  
 **Status:** Ativo  
 **Sessões:** 0  
-**Skills:** [[skills/development/integrar-api-rest]], [[skills/security/escanear-dependencias]]
+**Skills:** [integrar-api-rest](../skills/development/integrar-api-rest.md), [escanear-dependencias](../skills/security/escanear-dependencias.md)
 
 **Responsabilidades:**
 - Implementar APIs REST
@@ -64,7 +64,7 @@
 **Especialidade:** Segurança de aplicações, OWASP, Auditoria de Código  
 **Status:** Ativo  
 **Sessões:** 0  
-**Skills:** [[skills/security/auditar-cors]], [[skills/security/escanear-dependencias]]
+**Skills:** [auditar-cors](../skills/security/auditar-cors.md), [escanear-dependencias](../skills/security/escanear-dependencias.md)
 
 **Responsabilidades:**
 - Auditar código por vulnerabilidades
@@ -81,7 +81,7 @@
 **Especialidade:** Testes E2E, Validação de Features, Automação  
 **Status:** Ativo  
 **Sessões:** 0  
-**Skills:** [[skills/documentation/gerar-changelog]], [[skills/automation/github-create-issue]]
+**Skills:** [gerar-changelog](../skills/documentation/gerar-changelog.md), [github-create-issue](../skills/automation/github-create-issue.md)
 
 **Responsabilidades:**
 - Validar features implementadas
@@ -98,7 +98,7 @@
 **Especialidade:** CI/CD, Deploy, Monitoramento, Infraestrutura  
 **Status:** Ativo  
 **Sessões:** 0  
-**Skills:** [[skills/automation/slack-notify]], [[skills/automation/github-create-issue]]
+**Skills:** [slack-notify](../skills/automation/slack-notify.md), [github-create-issue](../skills/automation/github-create-issue.md)
 
 **Responsabilidades:**
 - Configurar pipelines CI/CD
@@ -139,7 +139,7 @@ Inativo → Atribuído → Em Progresso → Em Revisão → Concluído
 ```
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[ORCHESTRATOR]] - Orquestração de agentes
-- [[brain/Skills]] - Catálogo de skills
-- [[org/Stakeholders]] - Stakeholders do projeto
+- [North Star](../brain/North%20Star.md) - Visão e missão
+- [ORCHESTRATOR](../ORCHESTRATOR.md) - Orquestração de agentes
+- [Skills](../brain/Skills.md) - Catálogo de skills
+- [Stakeholders](Stakeholders.md) - Stakeholders do projeto

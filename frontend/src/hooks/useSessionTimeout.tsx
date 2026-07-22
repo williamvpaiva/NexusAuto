@@ -225,7 +225,7 @@ export function SessionTimeoutWarning({
         </p>
 
         <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1.5rem' }}>
-          Clique em "Continuar" para prolongar sua sessão.
+          Clique em &quot;Continuar&quot; para prolongar sua sessão.
         </p>
 
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>

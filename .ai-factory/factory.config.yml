@@ -1,14 +1,13 @@
 project:
-  name: "polymarketing"
-  domain: "marketing digital"
+  name: "nexusauto"
+  domain: "software factory"
   language: "pt-BR"
   repository_strategy: "monorepo"
 
 stack:
   frontend: "react+vite+typescript"
   backend: "express+typescript"
-  database: "postgresql"
-  cache: "redis"
+  database: "sqlite"
   infra: "docker-compose"
   ci_cd: "github-actions"
 

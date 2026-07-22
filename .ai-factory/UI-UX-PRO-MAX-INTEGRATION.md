@@ -210,12 +210,12 @@ specs/spa-landing/
 
 ## 🔗 Links Relacionados
 
-- [[TECH-LEAD]] - Slash commands de design
-- [[ORCHESTRATOR]] - Fluxo de orquestração com etapa de design
-- [[design-workflow]] - Workflow detalhado de geração de design
-- [[ui-ux-pro-max-agent]] - Perfil completo do agente
-- [[brain/Key Decisions]] - Decisão arquitetural de integração
-- [[spec-kit]] - Especificação funcional complementar
+- [TECH-LEAD](TECH-LEAD.md) - Slash commands de design
+- [ORCHESTRATOR](../ORCHESTRATOR.md) - Fluxo de orquestração com etapa de design
+- [design-workflow](workflows/design-workflow.md) - Workflow detalhado de geração de design
+- [ui-ux-pro-max-agent](agents/ui-ux-pro-max-agent.md) - Perfil completo do agente
+- [Key Decisions](brain/Key%20Decisions.md) - Decisão arquitetural de integração
+- [spec-kit](workflows/spec-kit.md) - Especificação funcional complementar
 
 ## 📊 Métricas
 

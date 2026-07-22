@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0a0a1a; }
+      body { font-family: "Inter", sans-serif; }
+      .scene { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .bg-gradient { position: absolute; width: 100%; height: 100%; }
+      .title { font-size: 96px; font-weight: 800; color: #fff; letter-spacing: -2px; }
+      .subtitle { font-size: 48px; font-weight: 400; color: rgba(255,255,255,0.85); }
+      .highlight { font-size: 36px; font-weight: 500; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; }
+      .accent { color: #6c5ce7; }
+      .code-text { font-family: "JetBrains Mono", monospace; font-size: 32px; color: #00e676; background: rgba(255,255,255,0.05); padding: 16px 32px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+      .cta { font-size: 40px; font-weight: 700; color: #6c5ce7; border: 3px solid #6c5ce7; padding: 20px 48px; border-radius: 16px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1920" data-height="1080">
+
+      <!-- FUNDO GRADIENTE -->
+      <div class="bg-gradient" style="background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);"></div>
+
+      <!-- SCENE 1: Título NexusAuto (0s-4s) -->
+      <div class="scene">
+        <div class="title clip" data-start="0" data-duration="4" data-track-index="0" data-tag="title">Nexus<span class="accent">Auto</span></div>
+      </div>
+
+      <!-- SCENE 2: Subtítulo (3s-9s) -->
+      <div class="scene">
+        <div class="subtitle clip" data-start="3" data-duration="6" data-track-index="1" data-tag="byline">Fábrica de Software Autônoma</div>
+      </div>
+
+      <!-- SCENE 3: Features (8s-15s) -->
+      <div class="scene">
+        <div class="highlight clip" data-start="8" data-duration="7" data-track-index="2" data-tag="features">
+          21 Agentes Especializados<br />
+          <span style="color:#6c5ce7;">·</span> Memória Persistente 3-Tiers <span style="color:#6c5ce7;">·</span><br />
+          Fluxo Autônomo de Produção
+        </div>
+      </div>
+
+      <!-- SCENE 4: Comandos / Como Funciona (14s-21s) -->
+      <div class="scene">
+        <div class="highlight clip" data-start="14" data-duration="7" data-track-index="3" data-tag="commands">
+          <span class="code-text">/lider</span><br /><br />
+          Slash Commands · Spec-Kit · V&V Protocol<br />
+          Agentes em Paralelo · CI/CD Nativo
+        </div>
+      </div>
+
+      <!-- SCENE 5: Value Prop (20s-28s) -->
+      <div class="scene">
+        <div class="subtitle clip" data-start="20" data-duration="8" data-track-index="4" data-tag="valueprop">Transforme sua ideia em software</div>
+      </div>
+
+      <!-- SCENE 6: CTA Final (26s-30s) -->
+      <div class="scene">
+        <div class="cta clip" data-start="26" data-duration="4" data-track-index="5" data-tag="cta">🚀 nexusauto.app</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1: Title fade-in + scale
+      tl.fromTo("[data-tag='title']", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1, ease: "power3.out" }, 0);
+      tl.to("[data-tag='title']", { opacity: 0, scale: 1.1, duration: 0.8, ease: "power2.in" }, 3.2);
+
+      // Scene 2: Subtitle fade-in
+      tl.fromTo("[data-tag='byline']", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 3.5);
+      tl.to("[data-tag='byline']", { opacity: 0, y: -20, duration: 0.6, ease: "power2.in" }, 8.4);
+
+      // Scene 3: Features staggered
+      tl.fromTo("[data-tag='features']", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 8.5);
+      tl.to("[data-tag='features']", { opacity: 0, y: -30, duration: 0.6, ease: "power2.in" }, 14.4);
+
+      // Scene 4: Commands
+      tl.fromTo("[data-tag='commands']", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 14.5);
+      tl.to("[data-tag='commands']", { opacity: 0, y: -30, duration: 0.6, ease: "power2.in" }, 20.4);
+
+      // Scene 5: Value prop
+      tl.fromTo("[data-tag='valueprop']", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 20.5);
+      tl.to("[data-tag='valueprop']", { opacity: 0, scale: 0.9, duration: 0.6, ease: "power2.in" }, 25.9);
+
+      // Scene 6: CTA
+      tl.fromTo("[data-tag='cta']", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, 26.5);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

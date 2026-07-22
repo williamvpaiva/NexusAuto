@@ -174,6 +174,6 @@ props:
 - @testing-library/react (testes)
 
 # Links Relacionados
-- [[brain/Patterns]] - Padrões de código React
-- [[standards/frontend]] - Padrões frontend
-- [[skills/development/integrar-api-rest]] - Integração com backend
+- [Patterns](../../../brain/Patterns.md) - Padrões de código React
+- [frontend](../../../standards/frontend.md) - Padrões frontend
+- [integrar-api-rest](../integrar-api-rest/SKILL.md) - Integração com backend

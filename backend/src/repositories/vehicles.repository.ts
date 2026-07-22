@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import { db } from '../config/database';
 import type { CreateVehicleInput, UpdateVehicleInput, Vehicle, VehicleFilters } from '../types/vehicle';
+import type { IVehiclesRepository } from './interfaces/IVehiclesRepository';
 
-export class VehiclesRepository {
+export class VehiclesRepository implements IVehiclesRepository {
   async createTable(): Promise<void> {
     await db.run(`
       CREATE TABLE IF NOT EXISTS vehicles (

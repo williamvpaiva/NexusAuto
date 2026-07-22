@@ -7,6 +7,10 @@ import { env } from './config/env';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { securityHeaders, clickjackingProtection, apiLimiter } from './middleware/security';
 import { requestId } from './middleware/request-id';
+import { prettyError } from './middleware/pretty-error';
+import { logger } from './utils/logger';
+import { errorTracker } from './services/error-tracking.service';
+import { metricsMiddleware, getMetrics } from './utils/metrics';
 
 export const app = express();
 
@@ -20,19 +24,19 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"], // Necessário para CSS-in-JS
+        styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:', 'https:'],
         fontSrc: ["'self'"],
         connectSrc: ["'self'", 'http://localhost:3000', 'http://localhost:5173'],
-        frameAncestors: ["'none'"], // Previne clickjacking
+        frameAncestors: ["'none'"],
         baseUri: ["'self'"],
         formAction: ["'self'"],
         upgradeInsecureRequests: []
       }
     },
-    frameguard: { action: 'deny' }, // X-Frame-Options: DENY
-    noSniff: true, // X-Content-Type-Options: nosniff
-    xssFilter: true, // X-XSS-Protection
+    frameguard: { action: 'deny' },
+    noSniff: true,
+    xssFilter: true,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
     permittedCrossDomainPolicies: { permittedPolicies: 'none' },
     hsts: {
@@ -60,13 +64,27 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Request logging (development)
-if (env.appEnv === 'development') {
-  app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-    next();
+// Prometheus metrics middleware
+app.use(metricsMiddleware);
+
+// Request logging (structured)
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    logger.info({
+      req: { 
+        method: req.method, 
+        url: req.originalUrl, 
+        requestId: req.requestId,
+        ip: req.ip || req.socket?.remoteAddress,
+        userAgent: req.get('user-agent') || 'unknown'
+      },
+      res: { statusCode: res.statusCode },
+      durationMs: Date.now() - start,
+    }, 'request completed');
   });
-}
+  next();
+});
 
 // Root endpoint
 app.get('/', (_req, res) => {
@@ -80,6 +98,12 @@ app.get('/', (_req, res) => {
   });
 });
 
+// Prometheus Metrics endpoint
+app.get('/metrics', async (_req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send(await getMetrics());
+});
+
 // API routes
 app.use('/api/v1/auth', authRoutes);
 
@@ -88,6 +112,9 @@ app.use('/api/v1', apiRouter);
 
 // 404 handler
 app.use(notFoundHandler);
+
+// Pretty error stack (dev only, passes through to errorHandler)
+app.use(prettyError);
 
 // Global error handler
 app.use(errorHandler);

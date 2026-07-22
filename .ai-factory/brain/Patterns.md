@@ -140,13 +140,13 @@ function sanitizePath(input) {
 
 ## Padrões de Documentação
 
-### 1. Wikilinks em Todos os MD
+### 1. Links Relativos em Todos os MD
 ```markdown
-Sempre usar [[caminho/para/arquivo]] para criar grafo navegável.
+Sempre usar links relativos no formato `[nome](caminho/arquivo.md)`.
 
 Exemplo:
-- Veja [[brain/Key Decisions#ADR-001]] para detalhes da arquitetura
-- Consulte [[brain/Patterns]] para padrões de implementação
+- Veja [Key Decisions](Key%20Decisions.md) para detalhes da arquitetura
+- Consulte [Patterns](Patterns.md) para padrões de implementação
 ```
 
 ### 2. Frontmatter em Todos os Arquivos
@@ -212,7 +212,6 @@ async function searchMemories(query, { topK = 5, agent, type, tags }) {
 ```
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[brain/Key Decisions]] - Decisões arquiteturais
-- [[SOUL]] - Filosofia do NexusAuto
-- [[ORCHESTRATOR]] - Orquestração de agentes
+- [North Star](North%20Star.md) - Visão e missão
+- [Key Decisions](Key%20Decisions.md) - Decisões arquiteturais
+- [ORCHESTRATOR](../ORCHESTRATOR.md) - Orquestração de agentes

@@ -5,15 +5,14 @@ import {
   getVehicleById,
   listVehicles,
   updateVehicle,
-  createVehicleSchema,
-  updateVehicleSchema,
 } from '../controllers/vehicles.controller';
+import { createVehicleDto, updateVehicleDto, vehicleFiltersDto } from '../dtos/vehicle.dto';
 import { validate } from '../middleware/validate.middleware';
 
 export const vehiclesRouter = Router();
 
-vehiclesRouter.get('/', listVehicles);
-vehiclesRouter.post('/', validate(createVehicleSchema), createVehicle);
+vehiclesRouter.get('/', validate({ query: vehicleFiltersDto }), listVehicles);
+vehiclesRouter.post('/', validate({ body: createVehicleDto }), createVehicle);
 vehiclesRouter.get('/:id', getVehicleById);
-vehiclesRouter.put('/:id', validate(updateVehicleSchema), updateVehicle);
+vehiclesRouter.put('/:id', validate({ body: updateVehicleDto }), updateVehicle);
 vehiclesRouter.delete('/:id', deleteVehicle);

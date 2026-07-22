@@ -4,11 +4,9 @@ import type { TokenPayload } from '../services/token.service';
 
 export type AuthPayload = TokenPayload;
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: AuthPayload;
-    }
+declare module 'express' {
+  interface Request {
+    user?: AuthPayload;
   }
 }
 

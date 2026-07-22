@@ -2,14 +2,15 @@ import { Router, Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const MemoryManager = require(path.join(__dirname, '../../../scripts/memory-manager.js'));
-
 const router = Router();
 
 let mm: any;
 async function getMM() {
-  if (!mm) { mm = new (MemoryManager as any)(); await mm.init(); }
+  if (!mm) {
+    const mod = await import(path.join(__dirname, '../../../scripts/memory-manager.cjs'));
+    mm = new (mod.default as any)();
+    await mm.init();
+  }
   return mm;
 }
 

@@ -1,0 +1,28 @@
+{
+  "name": "nexusauto-dashboard",
+  "version": "1.0.0",
+  "description": "Líder Orchestration Dashboard - Real-time monitoring for NexusAuto AI Factory",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "start:web": "npx http-server web -p 3000 -c-1 --cors",
+    "dev": "concurrently \"npm run start\" \"npm run start:web\"",
+    "test": "node test.js",
+    "install-deps": "npm install"
+  },
+  "keywords": [
+    "nexusauto",
+    "dashboard",
+    "orchestration",
+    "ai-factory",
+    "monitoring"
+  ],
+  "author": "NexusAuto AI Factory",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

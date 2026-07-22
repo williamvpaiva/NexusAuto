@@ -89,5 +89,5 @@ async function getUser(id) {
 ```
 
 # Links
-- [[brain/Patterns]] - Padrões de código seguro
-- [[skills/security/auditar-cors]] - Auditoria CORS
+- [Patterns](../../brain/Patterns.md) - Padrões de código seguro
+- [auditar-cors](../security/auditar-cors/SKILL.md) - Auditoria CORS

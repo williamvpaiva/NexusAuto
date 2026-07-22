@@ -178,6 +178,6 @@ message: "Estrutura de memória implementada - Economia de 60% em tokens estimad
 - Variáveis de ambiente configuradas
 
 # Links Relacionados
-- [[brain/Brag Doc]] - Conquistas registradas
-- [[ORCHESTRATOR]] - Orquestração de agentes
-- [[skills/automation/github-create-issue]] - Criar issues
+- [Brag Doc](../../brain/Brag%20Doc.md) - Conquistas registradas
+- [ORCHESTRATOR](../../ORCHESTRATOR.md) - Orquestração de agentes
+- [github-create-issue](../github-create-issue/SKILL.md) - Criar issues

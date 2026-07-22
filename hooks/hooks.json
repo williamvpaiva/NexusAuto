@@ -17,9 +17,48 @@
       "quiet": true
     },
     "Stop": {
-      "description": "Solicita atualização do .ai-factory/wiki/session/hot.md com resumo da sessão antes de encerrar",
-      "command": "node -e \"console.log('[hooks] Sessao encerrada. Atualize .ai-factory/wiki/session/hot.md com o resumo.')\"",
+      "description": "Executa a compressao de contexto no padrao claude-mem para o cache da sessao",
+      "command": "node -e \"console.log('[Claude-Mem] Sessao encerrada. TAREFA OBRIGATORIA: Comprima os eventos desta sessao em topicos chave e atualize o .ai-factory/wiki/session/hot.md (MAX 500 tokens). Adicione as alteracoes longas no .ai-factory/wiki/session/log.md (append-only).')\"",
       "prompt": true
+    },
+    "PreBackendEdit": {
+      "description": "Valida documentacoes via padrao Context7 antes do codigo para evitar APIs desatualizadas",
+      "trigger": "before_write",
+      "patterns": [
+        "backend/**/*.ts",
+        "backend/**/*.js",
+        "package.json"
+      ],
+      "command": "node -e \"console.log('[Context7] ALERTA V&V: Antes de implementar ou alterar pacotes base, valide as versoes e metodos atuais. Nao utilize APIs legadas de memoria.')\"",
+      "silent": true,
+      "maxTokens": 300
+    },
+    "PreFrontendEdit": {
+      "description": "Garante que o design system baseado no Taste-Skill e Transitions.dev seja lido antes de alterar a UI",
+      "trigger": "before_write",
+      "patterns": [
+        "frontend/**/*.css",
+        "frontend/**/*.tsx",
+        "frontend/**/*.jsx",
+        "frontend/**/*.html",
+        "**/*.html",
+        "**/*.css"
+      ],
+      "command": "cat .ai-factory/wiki/concepts/design-system.md",
+      "silent": true,
+      "maxTokens": 600
+    },
+    "PostFeatureRelease": {
+      "description": "Gatilho para acionar o Growth Marketer (CRO, SEO, Copy) apos finalizar uma feature de produto",
+      "trigger": "after_write",
+      "patterns": [
+        "PROGRESSO.md",
+        "CHANGELOG.md",
+        "*.md"
+      ],
+      "command": "node -e \"console.log('[Growth/Marketing] DICA: Se uma funcionalidade foi finalizada, considere invocar o Agente Growth (.ai-factory/agents/growth-marketer.md) para gerar os roteiros de Social Media, Copy e auditoria de SEO.')\"",
+      "silent": false,
+      "maxTokens": 200
     }
   }
 }

@@ -26,7 +26,7 @@ Transformar o desenvolvimento de software em um pipeline contínuo de entrega de
 - 10+ skills padronizadas criadas e utilizadas em produção
 
 ## Links Relacionados
-- [[ORCHESTRATOR]] - Orquestração de agentes
-- [[brain/Key Decisions]] - Decisões arquiteturais
-- [[brain/Patterns]] - Padrões de implementação
-- [[SOUL]] - Filosofia do NexusAuto
+- [ORCHESTRATOR](../ORCHESTRATOR.md) - Orquestração de agentes
+- [Key Decisions](Key%20Decisions.md) - Decisões arquiteturais
+- [Patterns](Patterns.md) - Padrões de implementação
+- [SOUL.md](../../SOUL.md) - Filosofia do NexusAuto

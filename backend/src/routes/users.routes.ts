@@ -5,9 +5,8 @@ import {
   getUserById,
   listUsers,
   updateUser,
-  createUserSchema,
-  updateUserSchema
 } from '../controllers/users.controller';
+import { createUserDto, updateUserDto } from '../dtos/user.dto';
 import { validate } from '../middleware/validate.middleware';
 
 export const usersRouter = Router();
@@ -22,7 +21,7 @@ usersRouter.get('/', listUsers);
  * @route POST /api/v1/users
  * @description Cria novo usuário
  */
-usersRouter.post('/', validate(createUserSchema), createUser);
+usersRouter.post('/', validate({ body: createUserDto }), createUser);
 
 /**
  * @route GET /api/v1/users/:id
@@ -34,7 +33,7 @@ usersRouter.get('/:id', getUserById);
  * @route PUT /api/v1/users/:id
  * @description Atualiza usuário
  */
-usersRouter.put('/:id', validate(updateUserSchema), updateUser);
+usersRouter.put('/:id', validate({ body: updateUserDto }), updateUser);
 
 /**
  * @route DELETE /api/v1/users/:id

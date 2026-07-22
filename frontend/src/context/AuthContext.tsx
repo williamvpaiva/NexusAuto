@@ -36,10 +36,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   /**
    * Carrega dados da sessão ao iniciar
    */
-  useEffect(() => {
-    loadSession();
-  }, []);
-
   const loadSession = async () => {
     try {
       // Tenta carregar do localStorage (ou sessionStorage)
@@ -163,6 +159,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.setItem('user', JSON.stringify(updated));
   };
 
+  useEffect(() => {
+    // Deixa o React processar o estado inicial antes de carregar a sessão
+    const timer = setTimeout(() => {
+      loadSession();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
   const value = {
     user,
     token,
@@ -211,4 +215,16 @@ export function useIsAuthenticated() {
 export function useCurrentUser() {
   const auth = useAuth();
   return auth.user;
+}
+
+/**
+ * Obtém o token de acesso do localStorage.
+ * Útil para chamadas imperativas fora do contexto React.
+ */
+export function getAccessToken(): string | null {
+  try {
+    return localStorage.getItem('token');
+  } catch {
+    return null;
+  }
 }

@@ -27,4 +27,4 @@ labels: enhancement
 
 ## Agente Sugerido
 
-- [[agents/{agente}]] — agente que executaria esta tarefa
+- [agents/{agente}](.ai-factory/agents/{agente}.md) — agente que executaria esta tarefa

@@ -1,4 +1,5 @@
 import { memoryRepository } from '../repositories/memory.repository';
+import type { IMemoryRepository } from '../repositories/interfaces/IMemoryRepository';
 import { AppError, NotFoundError } from '../utils/app-error';
 import {
   CreateConversationDTO,
@@ -14,71 +15,72 @@ import {
 } from '../types/memory';
 
 export class MemoryService {
+  constructor(private memoryRepo: IMemoryRepository) {}
   // ==================== CONVERSATIONS ====================
 
   async createConversation(data: CreateConversationDTO): Promise<Conversation> {
-    return memoryRepository.createConversation(data);
+    return this.memoryRepo.createConversation(data);
   }
 
   async getConversation(id: string): Promise<Conversation | undefined> {
-    return memoryRepository.getConversationById(id);
+    return this.memoryRepo.getConversationById(id);
   }
 
   async getConversations(
     params: PaginationParams & { agent_id?: string; session_id?: string }
   ) {
-    return memoryRepository.getConversations(params);
+    return this.memoryRepo.getConversations(params);
   }
 
   async deleteConversation(id: string): Promise<void> {
-    await memoryRepository.deleteConversation(id);
+    await this.memoryRepo.deleteConversation(id);
   }
 
   // ==================== MESSAGES ====================
 
   async createMessage(data: CreateMessageDTO): Promise<Message> {
-    const message = await memoryRepository.createMessage(data);
+    const message = await this.memoryRepo.createMessage(data);
 
     // Atualizar token count da conversa
-    const messages = await memoryRepository.getMessagesByConversation(data.conversation_id);
+    const messages = await this.memoryRepo.getMessagesByConversation(data.conversation_id);
     const totalTokens = messages.data.reduce((sum, msg) => sum + msg.token_count, 0);
-    await memoryRepository.updateConversationTokenCount(data.conversation_id, totalTokens);
+    await this.memoryRepo.updateConversationTokenCount(data.conversation_id, totalTokens);
 
     return message;
   }
 
   async getMessages(conversationId: string, params?: PaginationParams) {
-    return memoryRepository.getMessagesByConversation(conversationId, params);
+    return this.memoryRepo.getMessagesByConversation(conversationId, params);
   }
 
   async getMessage(id: string): Promise<Message | undefined> {
-    return memoryRepository.getMessageById(id);
+    return this.memoryRepo.getMessageById(id);
   }
 
   async deleteMessage(id: string): Promise<void> {
-    await memoryRepository.deleteMessage(id);
+    await this.memoryRepo.deleteMessage(id);
   }
 
   // ==================== ERROR LOGS ====================
 
   async createErrorLog(data: CreateErrorLogDTO): Promise<ErrorLog> {
-    return memoryRepository.createErrorLog(data);
+    return this.memoryRepo.createErrorLog(data);
   }
 
   async getErrorLog(id: string): Promise<ErrorLog | undefined> {
-    return memoryRepository.getErrorLogById(id);
+    return this.memoryRepo.getErrorLogById(id);
   }
 
   async getErrorLogs(params: PaginationParams & { status?: string; conversation_id?: string }) {
-    return memoryRepository.getErrorLogs(params);
+    return this.memoryRepo.getErrorLogs(params);
   }
 
   async updateErrorLog(id: string, data: UpdateErrorLogDTO): Promise<ErrorLog> {
-    return memoryRepository.updateErrorLog(id, data);
+    return this.memoryRepo.updateErrorLog(id, data);
   }
 
   async resolveError(id: string, resolutionSummary: string, resolutionSteps: string[]): Promise<ErrorLog> {
-    return memoryRepository.updateErrorLog(id, {
+    return this.memoryRepo.updateErrorLog(id, {
       resolution_summary: resolutionSummary,
       resolution_steps: resolutionSteps,
       status: 'resolved',
@@ -86,7 +88,7 @@ export class MemoryService {
   }
 
   async deleteErrorLog(id: string): Promise<void> {
-    await memoryRepository.deleteErrorLog(id);
+    await this.memoryRepo.deleteErrorLog(id);
   }
 
   // ==================== TOKEN OPTIMIZATION ====================
@@ -100,7 +102,7 @@ export class MemoryService {
     optimizedTokens: number;
     savedTokens: number;
   }> {
-    const messages = await memoryRepository.getMessagesByConversation(conversationId);
+    const messages = await this.memoryRepo.getMessagesByConversation(conversationId);
 
     if (messages.data.length === 0) {
       throw new AppError('Conversation has no messages to optimize', 400);
@@ -131,7 +133,7 @@ export class MemoryService {
         break;
     }
 
-    const optimization = await memoryRepository.createTokenOptimization({
+    const optimization = await this.memoryRepo.createTokenOptimization({
       conversation_id: conversationId,
       original_token_count: originalTokens,
       optimized_token_count: optimizedTokens,
@@ -151,13 +153,13 @@ export class MemoryService {
   }
 
   async getTokenOptimizations(conversationId: string): Promise<TokenOptimization[]> {
-    return memoryRepository.getTokenOptimizationsByConversation(conversationId);
+    return this.memoryRepo.getTokenOptimizationsByConversation(conversationId);
   }
 
   // ==================== STATS ====================
 
   async getStats(): Promise<MemoryStats> {
-    return memoryRepository.getStats();
+    return this.memoryRepo.getStats();
   }
 
   // ==================== CONTEXT MANAGEMENT ====================
@@ -168,12 +170,12 @@ export class MemoryService {
     totalTokens: number;
     truncated: boolean;
   }> {
-    const conversation = await memoryRepository.getConversationById(conversationId);
+    const conversation = await this.memoryRepo.getConversationById(conversationId);
     if (!conversation) {
       throw new NotFoundError('Conversation');
     }
 
-    const messagesResult = await memoryRepository.getMessagesByConversation(conversationId, {
+    const messagesResult = await this.memoryRepo.getMessagesByConversation(conversationId, {
       perPage: 1000,
     });
 
@@ -210,22 +212,22 @@ export class MemoryService {
   }
 
   async clearConversationHistory(conversationId: string, keepLastN?: number): Promise<number> {
-    const messages = await memoryRepository.getMessagesByConversation(conversationId);
+    const messages = await this.memoryRepo.getMessagesByConversation(conversationId);
     const toDelete = keepLastN ? messages.data.slice(0, -keepLastN) : messages.data;
 
     for (const message of toDelete) {
-      await memoryRepository.deleteMessage(message.id);
+      await this.memoryRepo.deleteMessage(message.id);
     }
 
     // Atualizar contadores
-    const remainingMessages = await memoryRepository.getMessagesByConversation(conversationId);
+    const remainingMessages = await this.memoryRepo.getMessagesByConversation(conversationId);
     const totalTokens = remainingMessages.data.reduce((sum, msg) => sum + msg.token_count, 0);
 
-    await memoryRepository.updateConversationMessageCount(
+    await this.memoryRepo.updateConversationMessageCount(
       conversationId,
       remainingMessages.data.length
     );
-    await memoryRepository.updateConversationTokenCount(conversationId, totalTokens);
+    await this.memoryRepo.updateConversationTokenCount(conversationId, totalTokens);
 
     return toDelete.length;
   }
@@ -236,7 +238,7 @@ export class MemoryService {
     const { agent_id, limit = 50 } = options || {};
 
     // Busca simples por conteúdo
-    const allConversations = await memoryRepository.getConversations({
+    const allConversations = await this.memoryRepo.getConversations({
       agent_id,
       perPage: 1000,
     });
@@ -248,7 +250,7 @@ export class MemoryService {
     }> = [];
 
     for (const conv of allConversations.data) {
-      const messages = await memoryRepository.getMessagesByConversation(conv.id, {
+      const messages = await this.memoryRepo.getMessagesByConversation(conv.id, {
         perPage: 1000,
       });
 
@@ -276,4 +278,4 @@ export class MemoryService {
   }
 }
 
-export const memoryService = new MemoryService();
+export const memoryService = new MemoryService(memoryRepository);

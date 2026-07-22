@@ -108,7 +108,7 @@ Em uma fábrica de software com 10+ agentes trocando arquivos Markdown e código
 - [ ] Criar script `check-cache.js` para validação
 - [ ] Adicionar métricas de tokens no PROGRESS.md
 - [ ] Configurar cache expiration automático
-- [ ] Testar com 10 agentes em paralelo
+- [ ] Testar com 21 agentes em paralelo
 
 ## Próximos Passos
 

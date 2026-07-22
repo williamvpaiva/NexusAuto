@@ -138,6 +138,6 @@ outputFile: HOTFIX-CHANGELOG.md
 - Tags seguindo padrão semver (recomendado)
 
 # Links Relacionados
-- [[brain/Patterns]] - Padrões de documentação
-- [[standards/documentation]] - Standards de documentação
-- [[skills/automation/github-create-issue]] - Criar issues de release
+- [Patterns](../../../brain/Patterns.md) - Padrões de documentação
+- [documentation](../../../standards/documentation.md) - Standards de documentação
+- [github-create-issue](../../automation/github-create-issue/SKILL.md) - Criar issues de release

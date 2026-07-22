@@ -1,4 +1,4 @@
-# AI Factory Rules for POLYMARKETING
+# AI Factory Rules — NexusAuto
 
 > Regras obrigatórias para todos os agentes de IA trabalhando neste projeto
 

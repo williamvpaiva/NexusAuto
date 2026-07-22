@@ -33,6 +33,63 @@
 
 ---
 
+### 2026-07-06 — Auditoria de Conformidade
+**Agente:** tech-lead  
+**Tipo:** session  
+**Tags:** [audit, compliance, housekeeping]
+
+**Resumo:**
+- Auditoria completa contra identidade do NexusAuto (21 agentes, memória, Spec-Kit, UI/UX, OpenWA)
+- Score final: 93/100 🟢 — todas as exigências da identidade cumpridas
+- Corrigido tech-lead.md: frontmatter YAML adicionado (name, division, role, voice) — versão 1.1.0
+- Removido arquivo morto `memory-routes.ts` (nunca importado, memoryApi null)
+- Atualizado PROJECT_CONTEXT.md: gaps de memory routes + JWT auth marcados como ✅ RESOLVIDOS; adicionado item sobre legacy file removido
+- Nenhuma não conformidade crítica encontrada
+
+**Decisões Tomadas:**
+- tech-lead.md agora segue o padrão YAML frontmatter dos demais 12 agentes
+- Arquivos mortos (dead code) podem ser removidos — não viola princípio de compatibilidade
+- PROJECT_CONTEXT.md deve ser mantido sincronizado com o código real
+
+**Próximos Passos:**
+1. Resolver gap de Users sem persistência (mock em array)
+2. Resolver path hardcoded do SQLite (`./data/memory.db`)
+3. Adicionar devDependencies de teste no frontend
+4. Implementar design-spec.md nas próximas features
+
+---
+
+### 2026-07-06 — Correção de Testes + Validação Token Economy
+**Agente:** tech-lead  
+**Tipo:** session  
+**Tags:** [tests, debugging, token-economy, supertest, auth]
+
+**Resumo:**
+- Redis rate-limiter causava timeouts nos testes — corrigido; testes agora completam em ~10.9s
+- 3 testes ainda falhavam pós-correção do Redis; todos corrigidos:
+  1. `memory.test.ts`: bracket notation `request(app)[method]` não funciona com SuperTest — trocado para `.get()`, `.post()`, etc.
+  2. `error-handler.test.ts`: teste 422 usava tokens fake `'test-token'` — middleware de auth executa ANTES do validation pipe, então precisa de JWT real + CSRF registrado
+  3. `users.test.ts`: código de erro `NOT_FOUND` não correspondia ao `USER_NOT_FOUND` lançado pelo service — alinhado
+- **Test suite final:** 84/84 passando, 0 falhas, ~10.9s
+
+**Validação Token Economy:**
+- Summary de 330 bytes (~82 tokens) substitui ~59.250 tokens de contexto cheio
+- Economia: **722× menor** (~99.9% menos tokens por turno)
+- Método: `summary_bytes × 0.25 = tokens_estimados`
+
+**Decisões Tomadas:**
+- `Supertest` em TypeScript: usar `.get()`, `.post()` direto, não `[method]` (bracket notation retorna undefined)
+- Testes de validação (422) precisam de auth real (JWT + CSRF), não fake tokens
+- `HttpStatus` codes em testes devem bater exatamente com os códigos lançados pelo service layer
+
+**Próximos Passos (mantidos):**
+1. Resolver gap de Users sem persistência (mock em array)
+2. Resolver path hardcoded do SQLite (`./data/memory.db`)
+3. Adicionar devDependencies de teste no frontend
+4. Implementar design-spec.md nas próximas features
+
+---
+
 ## Lições Aprendidas
 
 ### Lição 001 - Contexto em Camadas Economiza Tokens
@@ -79,7 +136,7 @@
 
 **Decisão:** Usar SQLite com sqlite-vec para memória vetorial.
 
-**Motivo:** 
+**Motivo:**
 - Zero custos de infraestrutura
 - Simples de gerenciar
 - Consultas rápidas (<100ms)
@@ -99,7 +156,7 @@
 
 **Conquista:** Implementada estrutura completa de memória persistente em uma única sessão.
 
-**Impacto:** 
+**Impacto:**
 - NexusAuto agora tem memória de longo prazo
 - Sessões futuras começarão com contexto carregado
 - Economia de 60-80% de tokens estimada
@@ -138,18 +195,18 @@ await memoryManager.saveMemory(content, {
 
 | Métrica | Valor |
 |---------|-------|
-| Total de memórias | 5 |
-| Decisões | 1 |
+| Total de memórias | 7 |
+| Decisões | 2 |
 | Lições | 2 |
 | Wins | 1 |
-| Sessões | 1 |
+| Sessões | 3 |
 | Embeddings cacheados | 4 |
 | Respostas cacheadas | 0 |
 
 ---
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[brain/Key Decisions]] - Decisões consolidadas
-- [[brain/Patterns]] - Padrões de implementação
-- [[brain/Brag Doc]] - Conquistas
+- [North Star](North%20Star.md) - Visão e missão
+- [Key Decisions](Key%20Decisions.md) - Decisões consolidadas
+- [Patterns](Patterns.md) - Padrões de implementação
+- [Brag Doc](Brag%20Doc.md) - Conquistas

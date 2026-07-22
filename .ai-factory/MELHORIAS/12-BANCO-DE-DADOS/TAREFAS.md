@@ -46,7 +46,7 @@
 - **Prioridade:** Média
 
 ### BAN-006 — Migração futura para PostgreSQL (Doc/Plan)
-- [ ] **Status:** 🔴 Pendente
+- [x] **Status:** 🟢 Concluído
 - **Descrição:** Documentar plano de migração SQLite → PostgreSQL: mapeamento de tipos, compatibilidade de queries, estratégia de zero-downtime
 - **Critério de aceite:** Documento `docs/adr/0002-postgresql-migration.md` com análise de impacto, riscos e plano passo-a-passo
 - **Esforço:** 2h

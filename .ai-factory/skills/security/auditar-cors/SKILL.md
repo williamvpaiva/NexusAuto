@@ -141,6 +141,6 @@ origensEsperadas: [https://app.example.com, https://admin.example.com]
 - Lista de origens autorizadas
 
 # Links Relacionados
-- [[brain/Patterns]] - Padrões de segurança
-- [[standards/security]] - Standards de segurança
-- [[skills/automation/github-create-issue]] - Criar issue de segurança
+- [Patterns](../../../brain/Patterns.md) - Padrões de segurança
+- [security](../../../standards/security.md) - Standards de segurança
+- [github-create-issue](../../automation/github-create-issue/SKILL.md) - Criar issue de segurança

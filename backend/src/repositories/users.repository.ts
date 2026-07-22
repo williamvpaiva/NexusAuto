@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 import { db } from '../config/database';
 import type { CreateUserInput, UpdateUserInput, User } from '../types/user';
+import type { IUsersRepository } from './interfaces/IUsersRepository';
 
-export class UsersRepository {
+export class UsersRepository implements IUsersRepository {
   async createTable(): Promise<void> {
     await db.run(`
       CREATE TABLE IF NOT EXISTS users (
@@ -70,7 +71,7 @@ export class UsersRepository {
   }
 
   async delete(id: string): Promise<boolean> {
-    const result = await db.run('DELETE FROM users WHERE id = ?', [id]);
+    await db.run('DELETE FROM users WHERE id = ?', [id]);
     return true;
   }
 

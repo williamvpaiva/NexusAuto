@@ -1,8 +1,7 @@
 import { Router, Request, Response } from 'express';
 import path from 'path';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const MemoryManager = require(path.join(__dirname, '../../../scripts/memory-manager.js'));
+import { validate } from '../middleware/validate.middleware';
+import { SaveLocalMemorySchema, SearchLocalMemoriesSchema, TogglePrivateLocalMemorySchema } from '../dtos/memories-local.dto';
 
 const router = Router();
 
@@ -10,7 +9,11 @@ const sseClients: Response[] = [];
 
 let mm: any;
 async function getMM() {
-  if (!mm) { mm = new (MemoryManager as any)(); await mm.init(); }
+  if (!mm) {
+    const mod = await import(path.join(__dirname, '../../../scripts/memory-manager.cjs'));
+    mm = new (mod.default as any)();
+    await mm.init();
+  }
   return mm;
 }
 
@@ -23,7 +26,7 @@ export function broadcast(event: Record<string, unknown>) {
 
 getMM().then(m => m.onSave = (ev: any) => broadcast({ type: 'memory:saved', ...ev }));
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', validate(SearchLocalMemoriesSchema), async (req: Request, res: Response) => {
   try {
     const manager = await getMM();
     const query = (req.query.query as string) || '';
@@ -39,12 +42,11 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validate(SaveLocalMemorySchema), async (req: Request, res: Response) => {
   try {
     const { content, agent, type, tags } = req.body;
-    if (!content) { res.status(400).json({ error: 'content is required' }); return; }
     const manager = await getMM();
-    const result = await manager.saveMemory(content, { agent: agent || 'api', type: type || 'general', tags: tags || [] });
+    const result = await manager.saveMemory(content, { agent, type, tags });
     res.json(result);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -64,7 +66,7 @@ router.get('/stream', (req: Request, res: Response) => {
   });
 });
 
-router.post('/:id/private', async (req: Request, res: Response) => {
+router.post('/:id/private', validate(TogglePrivateLocalMemorySchema), async (req: Request, res: Response) => {
   try {
     const manager = await getMM();
     const { id } = req.params;

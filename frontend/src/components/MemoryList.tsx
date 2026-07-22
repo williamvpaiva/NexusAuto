@@ -27,13 +27,8 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
 
   const perPage = 20;
 
-  useEffect(() => {
-    fetchConversations();
-  }, [page, searchTerm]);
-
   const fetchConversations = async () => {
     try {
-      setLoading(true);
       const params = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
@@ -49,10 +44,21 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
       }
     } catch (error) {
       console.error('Error fetching conversations:', error);
-    } finally {
-      setLoading(false);
     }
   };
+
+  function finishLoading(active: boolean) {
+    if (active) setLoading(false);
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchConversations().finally(() => finishLoading(!cancelled));
+
+    return () => { cancelled = true; };
+  }, [page, searchTerm]);
 
   const handleSelectConversation = async (id: string) => {
     if (selectedConversation === id) {
@@ -208,7 +214,7 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
       {/* Pagination */}
       <div className="flex justify-center items-center space-x-4">
         <button
-          onClick={() => setPage(Math.max(1, page - 1))}
+          onClick={() => { setLoading(true); setPage(Math.max(1, page - 1)); }}
           disabled={page === 1}
           className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
         >
@@ -218,7 +224,7 @@ export function MemoryList({ selectedConversation, onSelectConversation }: Memor
           Página {page} de {Math.ceil(total / perPage)}
         </span>
         <button
-          onClick={() => setPage(page + 1)}
+          onClick={() => { setLoading(true); setPage(page + 1); }}
           disabled={page >= Math.ceil(total / perPage)}
           className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
         >

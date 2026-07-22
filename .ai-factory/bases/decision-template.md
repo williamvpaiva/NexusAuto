@@ -64,12 +64,12 @@ Qual é a decisão tomada? Descreva de forma clara e concisa.
 
 ## Compliance
 Esta decisão está alinhada com:
-- [[brain/North Star]] - Princípios fundamentais
-- [[brain/Patterns]] - Padrões estabelecidos
+- [brain/North Star](../brain/North%20Star.md) - Princípios fundamentais
+- [brain/Patterns](../brain/Patterns.md) - Padrões estabelecidos
 
 ## Links Relacionados
-- [[brain/Key Decisions]] - Todas as decisões
-- [[brain/Patterns]] - Padrões relacionados
+- [brain/Key Decisions](../brain/Key%20Decisions.md) - Todas as decisões
+- [brain/Patterns](../brain/Patterns.md) - Padrões relacionados
 - [Link externo se aplicável]
 
 ## Notas de Implementação

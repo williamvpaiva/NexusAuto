@@ -12,13 +12,13 @@ O NexusAuto agora possui **memória persistente**, **busca semântica**, **otimi
 
 ### Componentes Principais
 
-1. **Spec-Kit (Especificação Primeiro)** ([[../.specify/constitution.md]])
+1. **Spec-Kit (Especificação Primeiro)** (../.specify/constitution.md)
    - Specs vivas e versionadas para cada feature
    - Geração de spec.md, plan.md, tasks.md
    - Rastreabilidade total: spec → tasks → código
    - Economia de 75% de tokens vs. prompts soltos
 
-2. **Memória Persistente** ([[brain/Memories]])
+2. **Memória Persistente** ([Memories](brain/Memories.md))
    - SQLite + sqlite-vec para busca semântica
    - Embeddings locais (@xenova/transformers)
    - Cache de respostas e embeddings
@@ -39,12 +39,12 @@ O NexusAuto agora possui **memória persistente**, **busca semântica**, **otimi
    - `/nl-brag "conquista"` - Registra win
    - `/nl-retrospective` - Análise de sprint
 
-3. **Skills Padronizadas** ([[brain/Skills]])
+3. **Skills Padronizadas** ([Skills](brain/Skills.md))
    - Formato SKILL.md com frontmatter YAML
    - Descobrimento automático
    - Carregamento progressivo (apenas relevantes)
 
-4. **Token Budget** ([[brain/Patterns#token-budget]])
+4. **Token Budget** ([Patterns](brain/Patterns.md))
    - Limite de 50k tokens por tarefa
    - Divisão automática de tarefas grandes
    - Cache e sumarização obrigatórios

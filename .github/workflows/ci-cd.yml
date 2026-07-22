@@ -128,6 +128,16 @@ jobs:
           fi
           echo "✅ TECH-LEAD.md exists"
 
+      - name: Build Backend
+        run: npm run build --workspace backend
+        env:
+          NODE_ENV: production
+
+      - name: Build Frontend
+        run: npm run build --workspace frontend
+        env:
+          NODE_ENV: production
+
       - name: Validate Build Success
         run: |
           if [ ! -d "backend/dist" ] || [ ! -d "frontend/dist" ]; then

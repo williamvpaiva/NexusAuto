@@ -234,9 +234,9 @@ No início de cada sessão com o Tech Lead:
 
 ## Links Relacionados
 
-- [[brain/North Star]] - Visão e missão da evolução
-- [[brain/Key Decisions]] - Decisões arquiteturais detalhadas
-- [[brain/Patterns]] - Padrões de implementação
-- [[SOUL]] - Filosofia do NexusAuto
-- [[ORCHESTRATOR]] - Orquestração de agentes
-- [[TECH-LEAD]] - Documentação completa do Tech Lead
+- [North Star](brain/North%20Star.md) - Visão e missão da evolução
+- [Key Decisions](brain/Key%20Decisions.md) - Decisões arquiteturais detalhadas
+- [Patterns](brain/Patterns.md) - Padrões de implementação
+- [SOUL.md](../SOUL.md) - Filosofia do NexusAuto
+- [ORCHESTRATOR](../ORCHESTRATOR.md) - Orquestração de agentes
+- [TECH-LEAD](TECH-LEAD.md) - Documentação completa do Tech Lead

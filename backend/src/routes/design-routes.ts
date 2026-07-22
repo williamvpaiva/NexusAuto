@@ -1,6 +1,8 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs/promises';
+import { validate } from '../middleware/validate.middleware';
+import { GenerateDesignSchema, SaveDesignSchema } from '../dtos/design.dto';
 
 const router = express.Router();
 
@@ -11,12 +13,8 @@ const UIUXProMaxBridge: any = null;
  * POST /api/design/generate
  * Gera design system completo a partir de descrição
  */
-router.post('/generate', async (req, res) => {
+router.post('/generate', validate(GenerateDesignSchema), async (req, res) => {
   const { description } = req.body;
-  
-  if (!description) {
-    return res.status(400).json({ error: 'Descrição é obrigatória' });
-  }
   
   try {
     if (!UIUXProMaxBridge) {
@@ -95,12 +93,8 @@ router.post('/generate', async (req, res) => {
  * POST /api/design/save
  * Gera design system e salva como especificação
  */
-router.post('/save', async (req, res) => {
+router.post('/save', validate(SaveDesignSchema), async (req, res) => {
   const { description, featureName } = req.body;
-  
-  if (!description || !featureName) {
-    return res.status(400).json({ error: 'Descrição e nome da feature são obrigatórios' });
-  }
   
   try {
     if (!UIUXProMaxBridge) {
@@ -181,12 +175,8 @@ Hero + Features + CTA + Footer
  * POST /api/design/palette
  * Gera apenas a paleta de cores
  */
-router.post('/palette', async (req, res) => {
+router.post('/palette', validate(GenerateDesignSchema), async (req, res) => {
   const { description } = req.body;
-  
-  if (!description) {
-    return res.status(400).json({ error: 'Descrição é obrigatória' });
-  }
   
   try {
     if (!UIUXProMaxBridge) {
@@ -215,12 +205,8 @@ router.post('/palette', async (req, res) => {
  * POST /api/design/typography
  * Gera apenas a tipografia
  */
-router.post('/typography', async (req, res) => {
+router.post('/typography', validate(GenerateDesignSchema), async (req, res) => {
   const { description } = req.body;
-  
-  if (!description) {
-    return res.status(400).json({ error: 'Descrição é obrigatória' });
-  }
   
   try {
     if (!UIUXProMaxBridge) {
@@ -260,12 +246,8 @@ router.post('/typography', async (req, res) => {
  * POST /api/design/checklist
  * Gera apenas o checklist
  */
-router.post('/checklist', async (req, res) => {
+router.post('/checklist', validate(GenerateDesignSchema), async (req, res) => {
   const { description } = req.body;
-  
-  if (!description) {
-    return res.status(400).json({ error: 'Descrição é obrigatória' });
-  }
   
   try {
     if (!UIUXProMaxBridge) {

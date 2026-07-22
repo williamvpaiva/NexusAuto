@@ -63,5 +63,5 @@ src/
 
 ## Agentes Relacionados
 
-- [[agents/{agente}]] — descrição
-- [[agents/{agente}]] — descrição
+- [agents/{agente}](.ai-factory/agents/{agente}.md) — descrição
+- [agents/{agente}](.ai-factory/agents/{agente}.md) — descrição

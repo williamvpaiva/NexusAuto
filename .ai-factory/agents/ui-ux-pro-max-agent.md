@@ -348,9 +348,9 @@ Todo design gerado DEVE:
 
 ## 🔗 Links Relacionados
 
-- [[ORCHESTRATOR]] - Fluxo de orquestração com UI/UX Pro Max
-- [[TECH-LEAD]] - Slash commands de design
-- [[frontend-dev]] - Agente que implementa o design
-- [[ui-designer]] - Agente que refina o design
-- [[qa-tester]] - Valida contra o checklist
-- [[workflows/design-workflow]] - Fluxo detalhado de geração de design
+- [ORCHESTRATOR](../../ORCHESTRATOR.md) - Fluxo de orquestração com UI/UX Pro Max
+- [TECH-LEAD](../TECH-LEAD.md) - Slash commands de design
+- [frontend-dev](../agents/frontend-dev.md) - Agente que implementa o design
+- [ui-designer](../agents/ui-designer.md) - Agente que refina o design
+- [qa-tester](../agents/qa-tester.md) - Valida contra o checklist
+- [design-workflow](../workflows/design-workflow.md) - Fluxo detalhado de geração de design

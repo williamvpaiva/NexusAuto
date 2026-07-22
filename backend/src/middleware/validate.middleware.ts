@@ -1,11 +1,36 @@
 import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
-import { AppError } from '../utils/app-error';
+import { AnyZodObject, ZodError, ZodEffects } from 'zod';
 
-export const validate = (schema: AnyZodObject) => {
+type ValidationSchema = AnyZodObject | ZodEffects<AnyZodObject>;
+
+export interface RequestValidation {
+  body?: ValidationSchema;
+  query?: ValidationSchema;
+  params?: ValidationSchema;
+}
+
+export const validate = (schemas: RequestValidation | ValidationSchema) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parseAsync(req.body);
+      // Se for passado apenas um schema (compatibilidade com versão anterior)
+      if (schemas instanceof ZodEffects || ('shape' in schemas && typeof schemas.shape === 'object')) {
+        await (schemas as ValidationSchema).parseAsync(req.body);
+        return next();
+      }
+
+      // Validação múltipla (body, query, params)
+      const validations = schemas as RequestValidation;
+      
+      if (validations.body) {
+        req.body = await validations.body.parseAsync(req.body);
+      }
+      if (validations.query) {
+        req.query = await validations.query.parseAsync(req.query);
+      }
+      if (validations.params) {
+        req.params = await validations.params.parseAsync(req.params);
+      }
+
       next();
     } catch (error) {
       if (error instanceof ZodError) {

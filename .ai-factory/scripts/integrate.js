@@ -112,6 +112,7 @@ Modos:
   sync   - Apenas sincronização de memória
   vv     - Apenas validação V&V
   economy - Apenas relatório de economia
+  economy - Apenas relatório de economia
 
 Uso:
   node integrate.js [mode]

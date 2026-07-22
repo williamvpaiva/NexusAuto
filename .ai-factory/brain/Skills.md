@@ -76,8 +76,8 @@ Passo a passo detalhado:
 - Permissões necessárias
 
 # Links Relacionados
-- [[brain/Patterns]] - Padrões relacionados
-- [[brain/Key Decisions]] - Decisões relevantes
+- [Patterns](Patterns.md) - Padrões relacionados
+- [Key Decisions](Key%20Decisions.md) - Decisões relevantes
 ```
 
 ## Skills Disponíveis
@@ -85,25 +85,25 @@ Passo a passo detalhado:
 ### Development
 | Skill | Descrição | Agente | Tags |
 |-------|-----------|--------|------|
-| [[skills/development/criar-componente-react]] | Cria componente React com TypeScript e Tailwind | frontend-dev | frontend, react, typescript |
-| [[skills/development/integrar-api-rest]] | Integra API REST com backend | backend-dev | backend, api, rest |
+| [criar-componente-react](../skills/development/criar-componente-react.md) | Cria componente React com TypeScript e Tailwind | frontend-dev | frontend, react, typescript |
+| [integrar-api-rest](../skills/development/integrar-api-rest.md) | Integra API REST com backend | backend-dev | backend, api, rest |
 
 ### Security
 | Skill | Descrição | Agente | Tags |
 |-------|-----------|--------|------|
-| [[skills/security/auditar-cors]] | Audita configuração CORS | security | security, cors, web |
-| [[skills/security/escanear-dependencias]] | Escaneia dependências por vulnerabilidades | security | security, dependencies, audit |
+| [auditar-cors](../skills/security/auditar-cors.md) | Audita configuração CORS | security | security, cors, web |
+| [escanear-dependencias](../skills/security/escanear-dependencias.md) | Escaneia dependências por vulnerabilidades | security | security, dependencies, audit |
 
 ### Documentation
 | Skill | Descrição | Agente | Tags |
 |-------|-----------|--------|------|
-| [[skills/documentation/gerar-changelog]] | Gera changelog a partir de commits | qa-tester | documentation, changelog, git |
+| [gerar-changelog](../skills/documentation/gerar-changelog.md) | Gera changelog a partir de commits | qa-tester | documentation, changelog, git |
 
 ### Automation
 | Skill | Descrição | Agente | Tags |
 |-------|-----------|--------|------|
-| [[skills/automation/github-create-issue]] | Cria issue no GitHub | qa-tester | automation, github, issues |
-| [[skills/automation/slack-notify]] | Envia notificação no Slack | devops | automation, slack, notifications |
+| [github-create-issue](../skills/automation/github-create-issue.md) | Cria issue no GitHub | qa-tester | automation, github, issues |
+| [slack-notify](../skills/automation/slack-notify.md) | Envia notificação no Slack | devops | automation, slack, notifications |
 
 ## Como Usar Skills
 
@@ -170,7 +170,7 @@ await memoryManager.saveMemory({
 - **Patch (1.0.0 → 1.0.1):** Bug fix, sem mudança de comportamento
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[brain/Patterns]] - Padrões de implementação
-- [[ORCHESTRATOR]] - Orquestração de agentes
-- [[SOUL]] - Filosofia do NexusAuto
+- [North Star](North%20Star.md) - Visão e missão
+- [Patterns](Patterns.md) - Padrões de implementação
+- [ORCHESTRATOR.md](../../ORCHESTRATOR.md) - Orquestração de agentes
+- [SOUL.md](../../SOUL.md) - Filosofia do NexusAuto

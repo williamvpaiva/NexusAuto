@@ -11,8 +11,9 @@ import {
   UpdateErrorLogDTO,
   PaginationParams,
 } from '../types/memory';
+import type { IMemoryRepository } from './interfaces/IMemoryRepository';
 
-export class MemoryRepository {
+export class MemoryRepository implements IMemoryRepository {
   // ==================== CONVERSATIONS ====================
 
   async createConversation(data: CreateConversationDTO): Promise<Conversation> {

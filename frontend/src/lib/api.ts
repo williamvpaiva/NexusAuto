@@ -20,7 +20,7 @@ export type ApiSuccess<T> = {
 };
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api/v1';
-const REQUEST_TIMEOUT = 30000;
+const REQUEST_TIMEOUT = 10000;
 const MAX_RETRIES = 3;
 const BASE_DELAY = 1000;
 
@@ -259,4 +259,36 @@ export async function withFallback<T>(
     if (onError) onError(error);
     return fallback;
   }
+}
+
+// Tarefas API
+export type Tarefa = {
+  id: string;
+  title: string;
+  description: string;
+  completed: boolean;
+};
+
+export function listTarefas() {
+  return request<Tarefa[]>('/crud-tarefas-test');
+}
+
+export function createTarefa(payload: { title: string; description: string; completed: boolean }) {
+  return request<Tarefa>('/crud-tarefas-test', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
+export function updateTarefa(id: string, payload: { title?: string; description?: string; completed?: boolean }) {
+  return request<Tarefa>(`/crud-tarefas-test/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload)
+  });
+}
+
+export function deleteTarefa(id: string) {
+  return request<void>(`/crud-tarefas-test/${id}`, {
+    method: 'DELETE'
+  });
 }

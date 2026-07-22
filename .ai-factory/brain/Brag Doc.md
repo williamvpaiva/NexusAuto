@@ -111,8 +111,30 @@ await memoryManager.saveMemory(content, {
 ---
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[brain/Memories]] - Log completo de sessões
-- [[brain/Key Decisions]] - Decisões arquiteturais
+- [North Star](North%20Star.md) - Visão e missão
+- [Memories](Memories.md) - Log completo de sessões
+- [Key Decisions](Key%20Decisions.md) - Decisões arquiteturais
 ### 2026-07-06 15:43:33
 - nl.js CLI wrapper created with 30+ slash commands
+
+### 2026-07-17 - Sessão de Diagnóstico e Correção
+**Agente:** tech-lead  
+**Impacto:** High  
+**Tags:** [diagnosis, cleanup, documentation]
+
+**O que foi conquistado:**
+- Mapeamento completo de todos os 21 agentes em `.ai-factory/agents/`
+- Diagnóstico de 11 problemas críticos no ecossistema
+- Correção de wikilinks quebrados (ORCHESTRATOR, SOUL, Tasks, Cookbook)
+- Criação de `ORCHESTRATOR.md` e `SOUL.md` na raiz
+- Script `scripts/auto-sync-hooks.js` para hooks cross-platform
+- CI/CD atualizado (build steps antes de validate-dist)
+- Hooks.json migrado para comando Node.js cross-platform
+- package.json renomeado de `polymarketing` para `nexusauto`
+- `factory.config.yml` padronizado
+
+**Por que é importante:**
+- Ecossistema inteiro passou a referenciar arquivos que existem
+- Hooks agora funcionam em Windows e Unix
+- Projeto oficialmente renomeado para NexusAuto
+- Pipeline CI/CD não quebrará mais por falta de build steps

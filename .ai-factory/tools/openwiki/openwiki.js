@@ -17,13 +17,21 @@ const CONFIG = {
   excludePatterns: [
     'node_modules',
     '.git',
+    '.gnhf',
+    '.gnhf-logs',
+    '.kilo',
+    '.kilocode',
+    '.specify',
     'dist',
     'build',
     '*.test.*',
     '*.spec.*',
     'coverage',
     '.venv',
-    '__pycache__'
+    '__pycache__',
+    'cowagent',
+    'data',
+    'produto-ia-pratica'
   ],
   includePatterns: [
     '**/*.md',

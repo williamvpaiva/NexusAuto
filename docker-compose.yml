@@ -1,56 +1,78 @@
-﻿version: '3.8'
+﻿services:
+  redis:
+    image: redis:7-alpine
+    container_name: nexusauto-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - backend
 
-services:
-  app:
+  backend:
     build:
       context: .
-      dockerfile: docker/Dockerfile
-    container_name: nexusauto-app
+      dockerfile: backend/Dockerfile
+    container_name: nexusauto-backend
     restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
       - APP_ENV=${APP_ENV:-production}
-      - PORT=3000
-      - FRONTEND_ORIGIN=${FRONTEND_ORIGIN:-http://localhost:5173}
+      - APP_PORT=3000
+      - FRONTEND_ORIGIN=${FRONTEND_ORIGIN:-http://localhost:8080}
       - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
       - JWT_EXPIRES_IN=24h
-      - OPENWA_API_KEY=${OPENWA_API_KEY:-change-me-in-production}
-      - OPENWA_WEBHOOK_BASE_URL=${OPENWA_WEBHOOK_BASE_URL:-http://nexusauto-app:3000}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LOG_LEVEL=${LOG_LEVEL:-info}
     volumes:
-      - app-data:/app/backend/data
+      - backend-data:/app/data
     depends_on:
-      - openwa
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/v1/health', r => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     networks:
-      - nexusauto-network
+      - backend
 
-  openwa:
-    image: ghcr.io/rmyndharis/openwa:latest
-    container_name: openwa
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: nexusauto-frontend
     restart: unless-stopped
     ports:
-      - "2785:2785"
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=sqlite:/app/data/openwa.db
-      - STORAGE_DRIVER=local
-      - STORAGE_LOCAL_PATH=/app/data/storage
-      - MCP_ENABLED=true
-      - MCP_READONLY=false
-      - API_KEY=${OPENWA_API_KEY:-change-me-in-production}
-      - WEBHOOK_BASE_URL=${OPENWA_WEBHOOK_BASE_URL:-http://nexusauto-app:3000}
-      - RATE_LIMIT_MAX=100
-      - RATE_LIMIT_WINDOW_MS=60000
-    volumes:
-      - openwa-data:/app/data
+      - "8080:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
     networks:
-      - nexusauto-network
+      - frontend
 
 volumes:
-  openwa-data:
-  app-data:
+  redis-data:
+  backend-data:
 
 networks:
-  nexusauto-network:
+  backend:
+    driver: bridge
+  frontend:
     driver: bridge

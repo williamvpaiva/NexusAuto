@@ -3,10 +3,12 @@ import { healthRouter } from './health.routes';
 import { usersRouter } from './users.routes';
 import { vehiclesRouter } from './vehicles.routes';
 import { authRoutes } from './auth.routes';
+import { leadRoutes } from './lead.routes';
+import { tarefasRouter } from './tarefas.routes';
 import memoryRouter from '../controllers/memory.controller';
 import tencentMemoryRouter from './memory-tencent-routes';
 import designRouter from './design-routes';
-import { apiLimiter, memoryLimiter, usersLimiter } from '../middleware/rate-limiter';
+import { apiLimiter, memoryLimiter, usersLimiter, authLimiter } from '../middleware/rate-limiter';
 import { authenticate } from '../middleware/auth';
 import { adminOnly } from '../middleware/admin-only';
 import { validateCsrf } from '../middleware/csrf';
@@ -41,10 +43,15 @@ apiRouter.use('/design', designRouter);
 
 // Rotas públicas
 apiRouter.use('/auth', authRoutes);
+apiRouter.use('/leads', leadRoutes);
 
-// Rotas protegidas
-apiRouter.use('/users', authenticate, validateCsrf, usersLimiter, usersRouter);
-apiRouter.use('/memory', authenticate, validateCsrf, memoryLimiter, memoryRouter);
-apiRouter.use('/memory/tencent', authenticate, validateCsrf, memoryLimiter, tencentMemoryRouter);
-apiRouter.use('/veiculos', authenticate, validateCsrf, vehiclesRouter);
-apiRouter.use('/admin', authenticate, adminOnly, validateCsrf, adminRouter);
+// Rotas do CRUD (Públicas para teste)
+apiRouter.use('/crud-tarefas-test', tarefasRouter);
+
+// Rotas protegidas (authLimiter usa user.id como chave = 1000 req/min)
+const protectedRoutes = [authLimiter, authenticate, validateCsrf];
+apiRouter.use('/users', ...protectedRoutes, usersLimiter, usersRouter);
+apiRouter.use('/memory', ...protectedRoutes, memoryLimiter, memoryRouter);
+apiRouter.use('/memory/tencent', ...protectedRoutes, memoryLimiter, tencentMemoryRouter);
+apiRouter.use('/veiculos', ...protectedRoutes, vehiclesRouter);
+apiRouter.use('/admin', ...protectedRoutes, adminOnly, adminRouter);

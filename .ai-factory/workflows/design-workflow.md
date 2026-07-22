@@ -332,9 +332,9 @@ Se o checklist tiver muitos itens:
 
 ## 🔗 Links Relacionados
 
-- [[TECH-LEAD]] - Slash commands de design
-- [[ORCHESTRATOR]] - Fluxo de orquestração
-- [[ui-ux-pro-max-agent]] - Agente UI/UX Pro Max
-- [[frontend-dev]] - Agente de implementação
-- [[qa-tester]] - Agente de validação
-- [[spec-kit]] - Especificação funcional
+- [TECH-LEAD](../TECH-LEAD.md) - Slash commands de design
+- [ORCHESTRATOR](../../ORCHESTRATOR.md) - Fluxo de orquestração
+- [ui-ux-pro-max-agent](../agents/ui-ux-pro-max-agent.md) - Agente UI/UX Pro Max
+- [frontend-dev](../agents/frontend-dev.md) - Agente de implementação
+- [qa-tester](../agents/qa-tester.md) - Agente de validação
+- [spec-kit](../workflows/spec-kit.md) - Especificação funcional

@@ -79,5 +79,5 @@ Low: 1 point (optional)
 ```
 
 # Links
-- [[brain/Patterns]] - Padrões de segurança
-- [[skills/code-review]] - Code review
+- [Patterns](../../brain/Patterns.md) - Padrões de segurança
+- [code-review](../code-review/SKILL.md) - Code review

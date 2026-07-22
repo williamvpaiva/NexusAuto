@@ -24,12 +24,12 @@ Por que esta tarefa é importante? Qual problema resolve?
 - [ ] Critério 3 (testável)
 
 ## Skills Necessárias
-- [[skills/categoria/skill-1]]
-- [[skills/categoria/skill-2]]
+- [skills/categoria/skill-1](../skills/categoria/skill-1/SKILL.md)
+- [skills/categoria/skill-2](../skills/categoria/skill-2/SKILL.md)
 
 ## Dependências
-- [[outra-tarefa]] - Bloqueia esta tarefa
-- [[outra-tarefa]] - Esta tarefa bloqueia
+- [outra-tarefa](outra-tarefa.md) - Bloqueia esta tarefa
+- [outra-tarefa](outra-tarefa.md) - Esta tarefa bloqueia
 
 ## Handoffs
 ### Handoff 1: {origem} → {destino}
@@ -38,8 +38,8 @@ Por que esta tarefa é importante? Qual problema resolve?
 - Status: ✅ Completo | ⚠️ Parcial | ❌ Bloqueado
 
 ## Memórias Relacionadas
-- [[brain/Memories#sessão-x]]
-- [[brain/Key Decisions#ADR-X]]
+- [brain/Memories#sessão-x](../brain/Memories.md#sessão-x)
+- [brain/Key Decisions#ADR-X](../brain/Key%20Decisions.md#ADR-X)
 
 ## Notas de Implementação
 ```
@@ -47,6 +47,6 @@ Espaço para notas durante a implementação
 ```
 
 ## Links Relacionados
-- [[brain/North Star]]
-- [[ORCHESTRATOR]]
-- [[brain/Patterns]]
+- [brain/North Star](../brain/North%20Star.md)
+- [ORCHESTRATOR](../ORCHESTRATOR.md)
+- [brain/Patterns](../brain/Patterns.md)

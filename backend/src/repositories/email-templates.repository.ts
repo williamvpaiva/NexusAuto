@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { db } from '../config/database';
+import type { IEmailTemplatesRepository } from './interfaces/IEmailTemplatesRepository';
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -30,7 +31,7 @@ export interface UpdateEmailTemplateInput {
 // Repository
 // ---------------------------------------------------------------------------
 
-export class EmailTemplatesRepository {
+export class EmailTemplatesRepository implements IEmailTemplatesRepository {
   async findAll(): Promise<EmailTemplate[]> {
     const rows = await db.all<{
       id: string;

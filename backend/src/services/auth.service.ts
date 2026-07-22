@@ -1,40 +1,58 @@
 import bcrypt from 'bcryptjs';
-import { env } from '../config/env';
-import { AppError } from '../utils/app-error';
-import { usersService } from './users.service';
-import { tokenService } from './token.service';
+import jwt from 'jsonwebtoken';
+import { prisma } from '../config/prisma';
 
-export interface AuthResponse {
-  user: { id: string; name: string; email: string; role: string };
-  tokens: { accessToken: string; refreshToken: string; expiresIn: number };
+const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_key_nexus_auto_2026';
+
+export class AuthService {
+  static async register(data: any) {
+    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
+    if (existingUser) {
+      throw new Error('Email already registered');
+    }
+    const passwordHash = await bcrypt.hash(data.password, 10);
+    const user = await prisma.user.create({
+      data: {
+        email: data.email,
+        passwordHash,
+        name: data.name,
+        role: data.role || 'CLIENT'
+      }
+    });
+    return this.generateTokens(user);
+  }
+
+  static async login(data: any) {
+    const user = await prisma.user.findUnique({ where: { email: data.email } });
+    if (!user) throw new Error('Invalid credentials');
+    
+    const isValid = await bcrypt.compare(data.password, user.passwordHash);
+    if (!isValid) throw new Error('Invalid credentials');
+    
+    return this.generateTokens(user);
+  }
+
+  static async generateTokens(user: any) {
+    const accessToken = jwt.sign(
+      { id: user.id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+    
+    const refreshToken = jwt.sign(
+      { id: user.id },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    await prisma.session.create({
+      data: {
+        userId: user.id,
+        refreshToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      }
+    });
+
+    return { accessToken, refreshToken, user: { id: user.id, email: user.email, role: user.role } };
+  }
 }
-
-export const authService = {
-  async register(name: string, email: string, password: string): Promise<AuthResponse> {
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await usersService.create({ name, email, password: hashedPassword });
-    const tokens = await tokenService.generateTokenPair(user);
-    return {
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
-      tokens,
-    };
-  },
-
-  async login(email: string, password: string): Promise<AuthResponse> {
-    const user = await usersService.findByEmail(email);
-    if (!user) {
-      throw new AppError('Email ou senha inválidos', 401, 'INVALID_CREDENTIALS');
-    }
-
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      throw new AppError('Email ou senha inválidos', 401, 'INVALID_CREDENTIALS');
-    }
-
-    const tokens = await tokenService.generateTokenPair(user);
-    return {
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
-      tokens,
-    };
-  },
-};

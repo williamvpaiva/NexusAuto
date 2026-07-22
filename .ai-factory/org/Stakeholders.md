@@ -129,9 +129,9 @@ Product Owners / Managers
 1. **Identificar novo stakeholder**
 2. **Adicionar seção** com Perfil, Dores, Expectativas, Como o NexusAuto ajuda
 3. **Atualizar mapa** de stakeholders
-4. **Linkar** em [[brain/North Star]] se relevante
+4. **Linkar** em [North Star](../brain/North%20Star.md) se relevante
 
 ## Links Relacionados
-- [[brain/North Star]] - Visão e missão
-- [[org/Agents]] - Agentes do NexusAuto
-- [[brain/Memories]] - Log de sessões
+- [North Star](../brain/North%20Star.md) - Visão e missão
+- [Agents](Agents.md) - Agentes do NexusAuto
+- [Memories](../brain/Memories.md) - Log de sessões

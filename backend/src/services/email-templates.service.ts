@@ -1,4 +1,5 @@
 import { AppError, NotFoundError } from '../utils/app-error';
+import type { IEmailTemplatesRepository } from '../repositories/interfaces/IEmailTemplatesRepository';
 import { emailTemplatesRepository } from '../repositories/email-templates.repository';
 import type { CreateEmailTemplateInput, UpdateEmailTemplateInput, EmailTemplate } from '../repositories/email-templates.repository';
 
@@ -59,74 +60,56 @@ const DEFAULT_RESET_TEMPLATE: EmailTemplate = {
 // Templates Service
 // ---------------------------------------------------------------------------
 
-export const emailTemplatesService = {
-  /**
-   * Lista todos os templates.
-   */
-  async list(): Promise<EmailTemplate[]> {
-    return emailTemplatesRepository.findAll();
-  },
+export class EmailTemplatesService {
+  constructor(private emailTemplatesRepo: IEmailTemplatesRepository) {}
 
-  /**
-   * Busca template por ID.
-   */
+  async list(): Promise<EmailTemplate[]> {
+    return this.emailTemplatesRepo.findAll();
+  }
+
   async findById(id: string): Promise<EmailTemplate> {
-    const template = await emailTemplatesRepository.findById(id);
+    const template = await this.emailTemplatesRepo.findById(id);
     if (!template) {
       throw new NotFoundError('Template de email');
     }
     return template;
-  },
+  }
 
-  /**
-   * Cria um novo template.
-   */
   async create(data: CreateEmailTemplateInput): Promise<EmailTemplate> {
-    const existing = await emailTemplatesRepository.findByName(data.name.trim());
+    const existing = await this.emailTemplatesRepo.findByName(data.name.trim());
     if (existing) {
       throw new AppError('Já existe um template com este nome', 409, 'TEMPLATE_NAME_EXISTS');
     }
-    return emailTemplatesRepository.create(data);
-  },
+    return this.emailTemplatesRepo.create(data);
+  }
 
-  /**
-   * Atualiza um template existente.
-   */
   async update(id: string, data: UpdateEmailTemplateInput): Promise<EmailTemplate> {
     if (data.name) {
-      const existing = await emailTemplatesRepository.findByName(data.name.trim());
+      const existing = await this.emailTemplatesRepo.findByName(data.name.trim());
       if (existing && existing.id !== id) {
         throw new AppError('Já existe um template com este nome', 409, 'TEMPLATE_NAME_EXISTS');
       }
     }
-    const updated = await emailTemplatesRepository.update(id, data);
+    const updated = await this.emailTemplatesRepo.update(id, data);
     if (!updated) {
       throw new NotFoundError('Template de email');
     }
     return updated;
-  },
+  }
 
-  /**
-   * Remove um template.
-   * Não permite deletar o template padrão 'reset-password-default'.
-   */
   async delete(id: string): Promise<void> {
     if (id === 'reset-password-default') {
       throw new AppError('O template padrão não pode ser removido', 400, 'CANNOT_DELETE_DEFAULT');
     }
-    const template = await emailTemplatesRepository.findById(id);
+    const template = await this.emailTemplatesRepo.findById(id);
     if (!template) {
       throw new NotFoundError('Template de email');
     }
-    await emailTemplatesRepository.delete(id);
-  },
+    await this.emailTemplatesRepo.delete(id);
+  }
 
-  /**
-   * Busca um template pelo nome e faz o replace das variáveis.
-   * Se não encontrar no DB, usa o template padrão built-in.
-   */
   async render(name: string, variables: Record<string, string>): Promise<{ subject: string; html: string }> {
-    let template = await emailTemplatesRepository.findByName(name);
+    let template = await this.emailTemplatesRepo.findByName(name);
 
     if (!template) {
       template = DEFAULT_RESET_TEMPLATE;
@@ -142,5 +125,7 @@ export const emailTemplatesService = {
     }
 
     return { subject, html };
-  },
-};
+  }
+}
+
+export const emailTemplatesService = new EmailTemplatesService(emailTemplatesRepository);

@@ -30,5 +30,16 @@ export const env = {
   rateLimitMaxRequests: Number(process.env.RATE_LIMIT_MAX_REQUESTS || 100),
   
   // Logs
-  logLevel: process.env.LOG_LEVEL || 'info'
+  logLevel: process.env.LOG_LEVEL || 'info',
+
+  // Email (Resend)
+  resendApiKey: process.env.RESEND_API_KEY || '',
+
+  // Email (SMTP)
+  emailFrom: process.env.EMAIL_FROM || 'noreply@nexusauto.app',
+  smtpHost: process.env.SMTP_HOST || '',
+  smtpPort: Number(process.env.SMTP_PORT || 587),
+  smtpSecure: process.env.SMTP_SECURE === 'true',
+  smtpUser: process.env.SMTP_USER || '',
+  smtpPass: process.env.SMTP_PASS || '',
 };

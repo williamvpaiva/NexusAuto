@@ -19,8 +19,20 @@ backend/data/*.db
 bundle-analysis.html
 test-stderr.txt
 test-stdout.txt
-nul
-backend/nul
 # wiki persistence — hot.md is per-session cache
 .ai-factory/wiki/session/hot.md
 .ai-factory/wiki/meta/
+
+# Added by Integrity Audit
+.ai-factory/logs/
+.ai-factory/token-manager/RELATORIOS/
+**/build/
+**/coverage/
+*.disabled
+cowagent/venv/
+venv/
+__pycache__/
+*.pyc
+**/node_modules/
+.kilo/
+nul

@@ -9,8 +9,8 @@ Complete guide for using Orca IDE with the NexusAuto AI Factory ecosystem.
 ```bash
 # In any Orca worktree, load NexusAuto context:
 Leia NEXUS-ORCA.md           # This file - master integration guide
-Leia .ai-factory/ORCHESTRATOR.md  # How AI Factory works
-Leia .ai-factory/PROJECT_CONTEXT.md # Current project state
+Leia ORCHESTRATOR.md  # How AI Factory works
+Leia PROJECT_CONTEXT.md # Current project state
 ```
 
 ---
@@ -22,7 +22,7 @@ Orca IDE
 ├── Worktrees (parallel isolated environments)
 ├── API Providers (OpenRouter, NVIDIA, DeepSeek, Claude, etc.)
 └── NexusAuto AI Factory
-    ├── 22 Specialized Agents
+    ├── 21 Specialized Agents
     ├── 15+ Skills (NexusAuto + CowAgent)
     ├── 3-Tier Memory System
     └── Tech Lead Orchestrator
@@ -30,7 +30,7 @@ Orca IDE
 
 ---
 
-## Available Agents (22)
+## Available Agents (21)
 
 Located in `.ai-factory/agents/`
 
@@ -93,6 +93,7 @@ orca worktree create --agent opencode -- nexus-frontend-dev
 | **theme-factory** | `skills/theme-factory/SKILL.md` | Theme creation system |
 | **doc-coauthoring** | `skills/doc-coauthoring/SKILL.md` | Documentation collaboration |
 | **brand-guidelines** | `skills/brand-guidelines/SKILL.md` | Brand design guidance |
+| **hyperframes** | `skills/hyperframes/SKILL.md` | Video creation via HTML (HeyGen Hyperframes) |
 
 ### CowAgent Skills (`cowagent/skills/`)
 
@@ -224,10 +225,10 @@ orca worktree create --agent opencode -- project-security
 | File | Purpose |
 |------|---------|
 | `NEXUS-ORCA.md` | This file - master integration guide |
-| `.ai-factory/ORCHESTRATOR.md` | AI Factory workflow and agent routing |
-| `.ai-factory/PROJECT_CONTEXT.md` | Current project state |
-| `.ai-factory/TECH-LEAD.md` | Tech Lead responsibilities |
-| `.ai-factory/COMPLETE.md` | 22 areas of improvement |
+| `ORCHESTRATOR.md` | AI Factory workflow and agent routing |
+| `PROJECT_CONTEXT.md` | Current project state |
+| `TECH-LEAD.md` | Tech Lead responsibilities |
+| `.ai-factory/MELHORIAS/INDEX.md` | Areas of improvement |
 | `skills/*/SKILL.md` | NexusAuto skills |
 | `cowagent/skills/*/SKILL.md` | CowAgent skills |
 | `cowagent/agent/protocol/agent.py` | CowAgent core |

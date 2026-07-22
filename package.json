@@ -1,5 +1,6 @@
 {
   "name": "nexusauto",
+  "type": "module",
   "private": true,
   "version": "1.0.0",
   "description": "AI Factory Full Stack - NexusAuto",
@@ -22,10 +23,10 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
-    "memory:save": "node scripts/memory-manager.js save",
-    "memory:search": "node scripts/memory-manager.js search",
-    "memory:stats": "node scripts/memory-manager.js stats",
-    "memory:test": "node scripts/memory-test.js"
+    "memory:save": "node scripts/memory-manager.cjs save",
+    "memory:search": "node scripts/memory-manager.cjs search",
+    "memory:stats": "node scripts/memory-manager.cjs stats",
+    "memory:test": "node scripts/memory-test.cjs"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

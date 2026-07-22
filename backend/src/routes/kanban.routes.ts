@@ -1,14 +1,15 @@
 import { Router, Request, Response } from 'express';
 import path from 'path';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const KanbanBridge = require(path.join(__dirname, '../../../.ai-factory/scripts/kanban-bridge.js'));
-
 const router = Router();
 
 let bridge: any;
 async function getBridge() {
-  if (!bridge) { bridge = new (KanbanBridge as any)(); await bridge.init(); }
+  if (!bridge) {
+    const mod = await import(path.join(__dirname, '../../../.ai-factory/scripts/kanban-bridge.cjs'));
+    bridge = new (mod.default as any)();
+    await bridge.init();
+  }
   return bridge;
 }
 

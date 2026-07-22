@@ -1,8 +1,8 @@
 # NexusAuto
 
-> Fábrica de software autônoma — orquestradora de projetos SaaS com 10 agentes de IA especializados.
+> Fábrica de software autônoma — orquestradora de projetos SaaS com 21 agentes de IA especializados.
 
-NexusAuto é um **orquestrador autônomo de projetos de software**. Você descreve o que precisa construir (SaaS, API, sistema web, etc.), e 10 agentes de IA especializados — product owner, architect, devs, security, QA, devops — se coordenam via markdown para planejar, arquitetar, desenvolver, testar e entregar. Tudo orquestrado pelo comando **`/lider`** (que baseia-se nas regras do TECH-LEAD.md).
+NexusAuto é um **orquestrador autônomo de projetos de software**. Você descreve o que precisa construir (SaaS, API, sistema web, etc.), e 21 agentes de IA especializados — product owner, architect, devs, security, QA, devops — se coordenam via markdown para planejar, arquitetar, desenvolver, testar e entregar. Tudo orquestrado pelo comando **`/lider`** (que baseia-se nas regras do TECH-LEAD.md).
 
 ---
 
@@ -23,7 +23,7 @@ Não há interface — o projeto funciona 100% via arquivos e agentes de IA.
 ```
 nexusauto/
 ├── .ai-factory/              # Núcleo de agentes e orquestração
-│   ├── agents/               # 10 agentes especializados (tech-lead, po, devs, etc)
+│   ├── agents/               # 21 agentes especializados
 │   ├── skills/               # Habilidades transversais dos agentes
 │   ├── standards/            # Padrões obrigatórios de código e testes
 │   ├── workflows/            # Fluxos: new-feature, bugfix
@@ -69,7 +69,7 @@ nexusauto/
 │   └── workflows/            # CI/CD (GitHub Actions)
 │
 ├── scripts/                  # Scripts utilitários
-├── docker-compose.yml        # PostgreSQL + Redis
+├── docker-compose.yml        # app + openwa (WhatsApp)
 ├── TECH-LEAD.md              # → ORQUESTRADOR PRINCIPAL ←
 ├── AI-FACTORY.md             # Visão geral da fábrica de IA
 ├── SETUP.md                  # Guia de instalação
@@ -100,12 +100,12 @@ nexusauto/
 
 ## Stack
 
-| Camada       | Tecnologia                                         |
-|-------------|----------------------------------------------------|
-| Frontend    | React 18, TypeScript, Vite, React Router           |
-| Backend     | Node.js, Express, TypeScript, Zod, SQLite, Vitest  |
-| Infra       | Docker Compose (PostgreSQL 15, Redis 7 opcionais)  |
-| CI/CD       | GitHub Actions                                     |
+| Camada       | Tecnologia                                                  |
+|-------------|-------------------------------------------------------------|
+| Frontend    | React 18, TypeScript, Vite, React Router                    |
+| Backend     | Node.js, Express, TypeScript, Zod, SQLite (sqlite-vec), Vitest |
+| Infra       | Docker Compose (app + openwa WhatsApp)                      |
+| CI/CD       | GitHub Actions                                              |
 
 ---
 
@@ -158,3 +158,12 @@ O diretório `.ai-factory/MELHORIAS/` contém 22 áreas de melhoria com tarefas 
 | 22 | Pentest e Seg. Avançada       | Baixa      |
 
 ---
+
+## Contribuindo
+
+Consulte [CONTRIBUTING.md](CONTRIBUTING.md) para:
+
+- Como adicionar um novo agente
+- Padrões de código e commits
+- Fluxo Spec-Driven Development
+- Checklist de V&V (Validação & Verificação)

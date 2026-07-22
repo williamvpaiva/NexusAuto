@@ -21,7 +21,7 @@ Use o template em `.ai-factory/bases/agent-template.md`.
 
 - [ ] Nome, especialidade e status no frontmatter
 - [ ] Responsabilidades claras e mensuráveis
-- [ ] Skills vinculadas (usando `[[skills/...]]`)
+- [ ] Skills vinculadas (usando links relativos: `[nome](caminho/SKILL.md)`)
 - [ ] Handoffs definidos (entrada/saída)
 - [ ] Matriz de roteamento atualizada (COMO-USAR.md)
 - [ ] Testado com ao menos 1 tarefa real
